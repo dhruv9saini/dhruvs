@@ -62,57 +62,79 @@
             margin-top: 0.55rem;
         }
 
-        .content-link {
+        .identity-link {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .identity-link:hover {
             color: var(--accent);
-            font-weight: 600;
+        }
+
+        .content-link {
+            color: inherit;
+            font-weight: 500;
             text-decoration-line: underline;
             text-decoration-thickness: 1px;
             text-underline-offset: 0.18em;
             transition: color 0.2s ease;
         }
 
+        .content-link::after {
+            content: " ↗";
+            color: var(--accent);
+            font-size: 0.72em;
+            font-weight: 700;
+            vertical-align: 0.08em;
+        }
+
         .content-link:hover {
-            color: #60a5fa;
+            color: var(--accent);
+        }
+
+        .contact-list {
+            margin-top: 1.5rem;
+        }
+
+        .contact-row {
+            margin-top: 0.6rem;
+            color: var(--muted);
+        }
+
+        .contact-row strong {
+            color: var(--text);
+            font-weight: 600;
         }
     </style>
 </head>
 <body class="pt-12 px-6 sm:px-10 lg:px-16">
   <div class="page-shell">
       <header class="mb-12">
-        <h1 class="text-4xl font-bold">Dhruv Saini<span class="text-blue-500">.</span></h1>
+        <h1 class="text-4xl font-bold">
+          <a href="https://dhruvs.pages.dev/" target="_blank" rel="noopener noreferrer" class="identity-link">Dhruv Saini<span class="text-blue-500">.</span></a>
+        </h1>
         <p class="mt-2 text-gray-400">ICML 2026 quick links and contact.</p>
       </header>
 
       <div class="section">
         <h2 class="text-2xl font-bold">Contact</h2>
-
-        <div class="entry">
-          <h3 class="font-semibold">Direct</h3>
-          <p class="text-gray-400">Phone, email, and resume.</p>
-          <div class="entry-actions">
-            <a href="tel:+14254695646" class="content-link">425-469-5646</a>
-            <a href="mailto:dhruv9saini@gmail.com" class="content-link">dhruv9saini@gmail.com</a>
-            <a href="../dhruv_resume.pdf" class="content-link">Resume</a>
-          </div>
-        </div>
-
-        <div class="entry">
-          <h3 class="font-semibold">Online</h3>
-          <p class="text-gray-400">Website, code, and updates.</p>
-          <div class="entry-actions">
-            <a href="https://dhruvs.pages.dev/" target="_blank" rel="noopener noreferrer" class="content-link">Website</a>
-            <a href="https://github.com/oof-baroomf" target="_blank" rel="noopener noreferrer" class="content-link">GitHub</a>
-            <a href="https://x.com/oofbaroomf" target="_blank" rel="noopener noreferrer" class="content-link">X / Twitter</a>
-          </div>
+        <div class="contact-list">
+          <p class="contact-row"><strong>Phone:</strong> <a href="tel:+14254695646" class="content-link">425-469-5646</a></p>
+          <p class="contact-row"><strong>Email:</strong> <a href="mailto:dhruv9saini@gmail.com" class="content-link">dhruv9saini@gmail.com</a></p>
+          <p class="contact-row"><strong>Resume:</strong> <a href="../dhruv_resume.pdf" class="content-link">dhruv_resume.pdf</a></p>
+          <p class="contact-row"><strong>Website:</strong> <a href="https://dhruvs.pages.dev/" target="_blank" rel="noopener noreferrer" class="content-link">dhruvs.pages.dev</a></p>
+          <p class="contact-row"><strong>Code:</strong> <a href="https://github.com/oof-baroomf" target="_blank" rel="noopener noreferrer" class="content-link">github.com/oof-baroomf</a></p>
+          <p class="contact-row"><strong>Twitter:</strong> <a href="https://x.com/oofbaroomf" target="_blank" rel="noopener noreferrer" class="content-link">x.com/oofbaroomf</a></p>
         </div>
       </div>
 
       <div class="section">
-        <h2 class="text-2xl font-bold">Benchmarks</h2>
+        <h2 class="text-2xl font-bold">Work</h2>
 
         <div class="entry">
           <h3 class="font-semibold">CAD-bench</h3>
-          <p class="text-gray-400">Benchmarking language models on functional CAD generation.</p>
+          <p class="text-gray-400">An LLM benchmark for CAD that functionally evaluates and simulates, in 3D, finished designs.</p>
           <div class="entry-actions">
             <a href="https://cdn.jsdelivr.net/gh/CAD-bench/cad-bench@main/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">Paper</a>
             <a href="assets/cad-bench-aiwild-poster-24x36.pdf" class="content-link">Poster</a>
@@ -121,22 +143,26 @@
 
         <div class="entry">
           <h3 class="font-semibold">EDA-bench</h3>
-          <p class="text-gray-400">A benchmark for KiCad PCB reconstruction agents.</p>
+          <p class="text-gray-400">An LLM benchmark for end-to-end PCB design, including component selection, schematics, and routing, evaluated by simulation of the finished product.</p>
           <div class="entry-actions">
             <a href="https://cdn.jsdelivr.net/gh/EDA-bench/eda-bench@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">Paper</a>
             <a href="assets/eda-bench-fagen-poster-24x36.pdf" class="content-link">Poster</a>
           </div>
         </div>
-      </div>
-
-      <div class="section">
-        <h2 class="text-2xl font-bold">More Work</h2>
 
         <div class="entry">
-          <h3 class="font-semibold">Projects</h3>
-          <p class="text-gray-400">Other projects and preprints, including ThinkSwitch and Residual Controllers.</p>
+          <h3 class="font-semibold">Residual Controllers</h3>
+          <p class="text-gray-400">Interpreting how inference-time reasoning switches interact with models.</p>
           <div class="entry-actions">
-            <a href="../projects/" class="content-link">/projects</a>
+            <a href="https://cdn.jsdelivr.net/gh/oof-baroomf/residual-controllers@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">Paper</a>
+          </div>
+        </div>
+
+        <div class="entry">
+          <h3 class="font-semibold">ThinkSwitch</h3>
+          <p class="text-gray-400">A method for co-training paired instruct and thinking checkpoints of the same model to iteratively self-improve on reasoning tasks.</p>
+          <div class="entry-actions">
+            <a href="https://arxiv.org/abs/2606.01080" target="_blank" rel="noopener noreferrer" class="content-link">Paper</a>
           </div>
         </div>
       </div>

@@ -9,6 +9,8 @@ Static personal site deployed at `https://dhruvs.pages.dev/`.
   navigation, sitemaps, and robots.txt so they are only available to people who
   already have the URL. Add `noindex,nofollow` metadata and matching Pages
   headers for the route and any attached assets.
+- `sitemap.xml` lists only the public homepage. Do not add unlisted event
+  routes there.
 
 ## ICML QR
 

@@ -16,6 +16,7 @@
             --body-copy: #374151;
             --surface-border: #d1d5db;
             --accent: #2563eb;
+            --link-mark: rgba(37, 99, 235, 0.45);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -26,6 +27,7 @@
                 --body-copy: #d1d5db;
                 --surface-border: #374151;
                 --accent: #60a5fa;
+                --link-mark: rgba(96, 165, 250, 0.55);
             }
         }
 
@@ -70,21 +72,35 @@
         .content-link {
             color: inherit;
             text-decoration-line: underline;
+            text-decoration-color: var(--link-mark);
             text-decoration-thickness: 1px;
             text-underline-offset: 0.18em;
-            transition: color 0.2s ease;
-        }
-
-        .content-link::after {
-            content: " ↗";
-            color: var(--accent);
-            font-size: 0.72em;
-            font-weight: 700;
-            vertical-align: 0.08em;
+            transition: color 0.2s ease, text-decoration-color 0.2s ease;
         }
 
         .content-link:hover {
             color: var(--accent);
+            text-decoration-color: currentColor;
+        }
+
+        .title-link {
+            text-decoration-line: none;
+            border-bottom: 1px solid var(--link-mark);
+        }
+
+        .title-link::after {
+            content: "↗";
+            color: var(--accent);
+            display: inline-block;
+            font-size: 0.68em;
+            font-weight: 700;
+            margin-left: 0.35em;
+            opacity: 0.8;
+            vertical-align: 0.12em;
+        }
+
+        .title-link:hover {
+            border-bottom-color: currentColor;
         }
 
         @media (max-width: 639px) {
@@ -122,7 +138,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/CAD-bench/cad-bench@main/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">CAD Bench</a>
+                <a href="https://cdn.jsdelivr.net/gh/CAD-bench/cad-bench@main/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link title-link">CAD Bench</a>
                 <span class="text-gray-400">
                   (Accepted to
                   <a href="https://agentwild-workshop.github.io/icml2026/" target="_blank" rel="noopener noreferrer" class="content-link">ICML 2026 Workshop AIWILD</a>)
@@ -141,7 +157,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/EDA-bench/eda-bench@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">EDA Bench</a>
+                <a href="https://cdn.jsdelivr.net/gh/EDA-bench/eda-bench@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link title-link">EDA Bench</a>
                 <span class="text-gray-400">
                   (Accepted to
                   <a href="https://fagen-workshop.github.io/" target="_blank" rel="noopener noreferrer" class="content-link">ICML 2026 Workshop FAGEN</a>)
@@ -155,7 +171,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/oof-baroomf/residual-controllers@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">Residual Controllers</a>
+                <a href="https://cdn.jsdelivr.net/gh/oof-baroomf/residual-controllers@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link title-link">Residual Controllers</a>
               </h3>
               <p class="text-gray-400">Interpreting how inference-time reasoning switches interact with models.</p>
             </div>
@@ -165,7 +181,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://arxiv.org/abs/2606.01080" target="_blank" rel="noopener noreferrer" class="content-link">ThinkSwitch</a>
+                <a href="https://arxiv.org/abs/2606.01080" target="_blank" rel="noopener noreferrer" class="content-link title-link">ThinkSwitch</a>
               </h3>
               <p class="text-gray-400">A method for co-training paired instruct and thinking checkpoints of the same model to iteratively self-improve on reasoning tasks.</p>
             </div>
@@ -259,7 +275,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://github.com/oof-baroomf/muon/" target="_blank" rel="noopener noreferrer" class="content-link">Muon</a>
+                <a href="https://github.com/oof-baroomf/muon/" target="_blank" rel="noopener noreferrer" class="content-link title-link">Muon</a>
               </h3>
               <p class="text-gray-400">An infinite canvas web browser built with Electron and TypeScript.</p>
             </div>
@@ -269,7 +285,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://github.com/oof-baroomf/promptmaxx" target="_blank" rel="noopener noreferrer" class="content-link">PromptMaxx</a>
+                <a href="https://github.com/oof-baroomf/promptmaxx" target="_blank" rel="noopener noreferrer" class="content-link title-link">PromptMaxx</a>
               </h3>
               <p class="text-gray-400">A tool to automate context gathering and applying changes when pair programming with online LLMs.</p>
             </div>
@@ -279,7 +295,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://github.com/oof-baroomf/chat-google-docs" target="_blank" rel="noopener noreferrer" class="content-link">Chat with Google Docs</a>
+                <a href="https://github.com/oof-baroomf/chat-google-docs" target="_blank" rel="noopener noreferrer" class="content-link title-link">Chat with Google Docs</a>
               </h3>
               <p class="text-gray-400">A Google OAuth app for chatting with RAG over your Google Docs.</p>
             </div>
@@ -289,7 +305,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://huggingface.co/oof-baroomf/MuseGPT" target="_blank" rel="noopener noreferrer" class="content-link">MuseFalcon</a>
+                <a href="https://huggingface.co/oof-baroomf/MuseGPT" target="_blank" rel="noopener noreferrer" class="content-link title-link">MuseFalcon</a>
               </h3>
               <p class="text-gray-400">A Falcon 40B-based model that generates music in ABC notation.</p>
             </div>
@@ -299,7 +315,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://www.instructables.com/Powerful-Raspberry-Pi-Smart-Glasses-for-Under-50-W-1/" target="_blank" rel="noopener noreferrer" class="content-link">Raspberry Pi Smart Glasses</a>
+                <a href="https://www.instructables.com/Powerful-Raspberry-Pi-Smart-Glasses-for-Under-50-W-1/" target="_blank" rel="noopener noreferrer" class="content-link title-link">Raspberry Pi Smart Glasses</a>
               </h3>
               <p class="text-gray-400">$55 for a Linux desktop on your glasses.</p>
             </div>
@@ -335,7 +351,7 @@
         <div class="space-x-4 text-sm">
           <a href="mailto:dhruv9saini@gmail.com" class="content-link">Email</a>
           <a href="https://github.com/oof-baroomf" target="_blank" rel="noopener noreferrer" class="content-link">GitHub</a>
-          <a href="https://x.com/oofbaroomf" target="_blank" rel="noopener noreferrer" class="content-link">X</a>
+          <a href="https://x.com/oofbaroomf" target="_blank" rel="noopener noreferrer" class="content-link">Twitter</a>
         </div>
       </div>
   </div>

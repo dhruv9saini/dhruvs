@@ -5,6 +5,8 @@ Static personal site deployed at `https://dhruvs.pages.dev/`.
 ## Routes
 
 - `/` is the public homepage.
+- Retired routes should redirect to `/` in `_redirects` instead of keeping
+  standalone pages around.
 - Event contact pages may be unlisted. Keep those routes out of public
   navigation, sitemaps, and robots.txt so they are only available to people who
   already have the URL. Add `noindex,nofollow` metadata and matching Pages

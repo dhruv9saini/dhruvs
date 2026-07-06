@@ -16,7 +16,6 @@
             --bg: #f5f7fb;
             --text: #111827;
             --muted: #4b5563;
-            --body-copy: #374151;
             --surface-border: #d1d5db;
             --accent: #2563eb;
         }
@@ -26,7 +25,6 @@
                 --bg: #000000;
                 --text: #ffffff;
                 --muted: #9ca3af;
-                --body-copy: #d1d5db;
                 --surface-border: #374151;
                 --accent: #60a5fa;
             }
@@ -45,217 +43,101 @@
             padding-bottom: 1.25rem;
         }
 
-        .nav-button {
-            display: inline-flex;
-            align-items: center;
-            border: 1px solid var(--surface-border);
-            border-radius: 9999px;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--text);
-            transition: color 0.2s ease, border-color 0.2s ease;
-        }
-
-        .nav-button:hover {
-            color: var(--accent);
-            border-color: var(--accent);
-        }
-
         .text-gray-400 {
             color: var(--muted) !important;
         }
 
-        .entry-subtitle {
-            font-style: italic;
+        .section {
+            margin-top: 3rem;
         }
 
-        .entry-link:hover {
-            color: #60a5fa;
-        }
-
-        .entry-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1.5rem;
+        .entry {
             margin-top: 1.5rem;
         }
 
-        .entry-meta {
-            color: var(--muted);
-            white-space: nowrap;
+        .entry-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.55rem;
         }
 
-        @media (max-width: 639px) {
-            .entry-row {
-                flex-direction: column;
-                gap: 0.25rem;
-            }
+        .content-link {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration-line: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.18em;
+            transition: color 0.2s ease;
+        }
 
-            .entry-meta {
-                white-space: normal;
-            }
+        .content-link:hover {
+            color: #60a5fa;
         }
     </style>
 </head>
 <body class="pt-12 px-6 sm:px-10 lg:px-16">
   <div class="page-shell">
-      <header class="mb-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 class="text-4xl font-bold">Dhruv Saini<span class="text-blue-500">.</span></h1>
-          <p class="mt-2 text-gray-400">ICML 2026 quick links and contact.</p>
-        </div>
-        <div class="flex items-center gap-4">
-          <a href="https://dhruvs.pages.dev/" target="_blank" rel="noopener noreferrer" class="nav-button">Website</a>
-        </div>
+      <header class="mb-12">
+        <h1 class="text-4xl font-bold">Dhruv Saini<span class="text-blue-500">.</span></h1>
+        <p class="mt-2 text-gray-400">ICML 2026 quick links and contact.</p>
       </header>
 
-      <div class="mt-12">
-        <h2 class="text-2xl font-bold">Links</h2>
-        <div class="mt-4">
-
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="https://dhruvs.pages.dev/" target="_blank" rel="noopener noreferrer" class="entry-link transition-colors">Website</a>
-              </h3>
-              <p class="text-gray-400">Homepage, publications, projects, and resume.</p>
-            </div>
-            <div class="entry-meta">dhruvs.pages.dev</div>
-          </div>
-
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="https://github.com/oof-baroomf" target="_blank" rel="noopener noreferrer" class="entry-link transition-colors">GitHub</a>
-              </h3>
-              <p class="text-gray-400">Code and research artifacts.</p>
-            </div>
-            <div class="entry-meta">oof-baroomf</div>
-          </div>
-
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="https://x.com/oofbaroomf" target="_blank" rel="noopener noreferrer" class="entry-link transition-colors">X / Twitter</a>
-              </h3>
-              <p class="text-gray-400">Updates and assorted thoughts.</p>
-            </div>
-            <div class="entry-meta">@oofbaroomf</div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="mt-12">
+      <div class="section">
         <h2 class="text-2xl font-bold">Contact</h2>
-        <div class="mt-4">
 
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="tel:+14254695646" class="entry-link transition-colors">425-469-5646</a>
-              </h3>
-              <p class="text-gray-400">Phone</p>
-            </div>
-            <div class="entry-meta">Call or text</div>
+        <div class="entry">
+          <h3 class="font-semibold">Direct</h3>
+          <p class="text-gray-400">Phone, email, and resume.</p>
+          <div class="entry-actions">
+            <a href="tel:+14254695646" class="content-link">425-469-5646</a>
+            <a href="mailto:dhruv9saini@gmail.com" class="content-link">dhruv9saini@gmail.com</a>
+            <a href="../dhruv_resume.pdf" class="content-link">Resume</a>
           </div>
+        </div>
 
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="mailto:dhruv9saini@gmail.com" class="entry-link transition-colors">dhruv9saini@gmail.com</a>
-              </h3>
-              <p class="text-gray-400">Email</p>
-            </div>
-            <div class="entry-meta">Best async</div>
+        <div class="entry">
+          <h3 class="font-semibold">Online</h3>
+          <p class="text-gray-400">Website, code, and updates.</p>
+          <div class="entry-actions">
+            <a href="https://dhruvs.pages.dev/" target="_blank" rel="noopener noreferrer" class="content-link">Website</a>
+            <a href="https://github.com/oof-baroomf" target="_blank" rel="noopener noreferrer" class="content-link">GitHub</a>
+            <a href="https://x.com/oofbaroomf" target="_blank" rel="noopener noreferrer" class="content-link">X / Twitter</a>
           </div>
-
         </div>
       </div>
 
-      <div class="mt-12">
+      <div class="section">
         <h2 class="text-2xl font-bold">Benchmarks</h2>
-        <div class="mt-4">
 
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/CAD-bench/cad-bench@main/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="entry-link transition-colors">CAD-bench paper</a>
-              </h3>
-              <p class="text-gray-400">Benchmarking language models on functional CAD generation.</p>
-            </div>
-            <div class="entry-meta">Paper</div>
+        <div class="entry">
+          <h3 class="font-semibold">CAD-bench</h3>
+          <p class="text-gray-400">Benchmarking language models on functional CAD generation.</p>
+          <div class="entry-actions">
+            <a href="https://cdn.jsdelivr.net/gh/CAD-bench/cad-bench@main/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">Paper</a>
+            <a href="assets/cad-bench-aiwild-poster-24x36.pdf" class="content-link">Poster</a>
           </div>
+        </div>
 
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="assets/cad-bench-aiwild-poster-24x36.pdf" class="entry-link transition-colors">CAD-bench AIWILD poster</a>
-              </h3>
-              <p class="text-gray-400">ICML 2026 Workshop AIWILD poster.</p>
-            </div>
-            <div class="entry-meta">Poster</div>
+        <div class="entry">
+          <h3 class="font-semibold">EDA-bench</h3>
+          <p class="text-gray-400">A benchmark for KiCad PCB reconstruction agents.</p>
+          <div class="entry-actions">
+            <a href="https://cdn.jsdelivr.net/gh/EDA-bench/eda-bench@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">Paper</a>
+            <a href="assets/eda-bench-fagen-poster-24x36.pdf" class="content-link">Poster</a>
           </div>
-
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/EDA-bench/eda-bench@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="entry-link transition-colors">EDA-bench paper</a>
-              </h3>
-              <p class="text-gray-400">A benchmark for KiCad PCB reconstruction agents.</p>
-            </div>
-            <div class="entry-meta">Paper</div>
-          </div>
-
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="assets/eda-bench-fagen-poster-24x36.pdf" class="entry-link transition-colors">EDA-bench FAGEN poster</a>
-              </h3>
-              <p class="text-gray-400">ICML 2026 Workshop FAGEN poster.</p>
-            </div>
-            <div class="entry-meta">Poster</div>
-          </div>
-
         </div>
       </div>
 
-      <div class="mt-12">
-        <h2 class="text-2xl font-bold">Other Publications</h2>
-        <div class="mt-4">
+      <div class="section">
+        <h2 class="text-2xl font-bold">More Work</h2>
 
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="../#publications" class="entry-link transition-colors">All publications</a>
-              </h3>
-              <p class="text-gray-400">Includes ThinkSwitch and Residual Controllers.</p>
-            </div>
-            <div class="entry-meta">Website</div>
+        <div class="entry">
+          <h3 class="font-semibold">Projects</h3>
+          <p class="text-gray-400">Other projects and preprints, including ThinkSwitch and Residual Controllers.</p>
+          <div class="entry-actions">
+            <a href="../projects/" class="content-link">/projects</a>
           </div>
-
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="https://arxiv.org/abs/2606.01080" target="_blank" rel="noopener noreferrer" class="entry-link transition-colors">ThinkSwitch</a>
-              </h3>
-              <p class="text-gray-400">Preprint.</p>
-            </div>
-            <div class="entry-meta">arXiv</div>
-          </div>
-
-          <div class="entry-row">
-            <div>
-              <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/oof-baroomf/residual-controllers@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="entry-link transition-colors">Residual Controllers</a>
-              </h3>
-              <p class="text-gray-400">Preprint.</p>
-            </div>
-            <div class="entry-meta">Paper</div>
-          </div>
-
         </div>
       </div>
   </div>

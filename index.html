@@ -68,6 +68,29 @@
             font-style: italic;
         }
 
+        .content-link {
+            color: var(--accent);
+            text-decoration-line: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 0.18em;
+            transition: color 0.2s ease;
+        }
+
+        .content-link:hover {
+            color: #60a5fa;
+        }
+
+        @media (max-width: 639px) {
+            .page-shell .justify-between.items-start {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            .page-shell .whitespace-nowrap {
+                white-space: normal;
+            }
+        }
+
     </style>
 </head>
 <body class="pt-12 px-6 sm:px-10 lg:px-16">
@@ -75,6 +98,12 @@
       <header class="mb-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div class="text-4xl font-bold">Hi, I'm Dhruv<span class="text-blue-500">.</span></div>
         <div class="flex items-center gap-4">
+          <a
+            href="projects/"
+            class="nav-button"
+          >
+            Projects
+          </a>
           <a
             href="dhruv_resume.pdf"
             class="nav-button"
@@ -92,15 +121,15 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/CAD-bench/cad-bench@main/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">CAD Bench</a>
+                <a href="https://cdn.jsdelivr.net/gh/CAD-bench/cad-bench@main/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">CAD Bench</a>
                 <span class="text-gray-400">
                   (Accepted to
-                  <a href="https://agentwild-workshop.github.io/icml2026/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">ICML 2026 Workshop AIWILD</a>)
+                  <a href="https://agentwild-workshop.github.io/icml2026/" target="_blank" rel="noopener noreferrer" class="content-link">ICML 2026 Workshop AIWILD</a>)
                 </span>
               </h3>
               <p class="text-gray-400">A benchmark for language-model CAD agents with Build123D tasks, difficulty-weighted scoring, model harnesses, and a public leaderboard.</p>
               <div class="mt-2">
-                <a href="https://cad-bench.github.io/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline">
+                <a href="https://cad-bench.github.io/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium content-link">
                   <i class="fas fa-external-link-alt mr-2"></i>
                   Results site
                 </a>
@@ -112,10 +141,10 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/EDA-bench/eda-bench@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">EDA Bench</a>
+                <a href="https://cdn.jsdelivr.net/gh/EDA-bench/eda-bench@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">EDA Bench</a>
                 <span class="text-gray-400">
                   (Accepted to
-                  <a href="https://fagen-workshop.github.io/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">ICML 2026 Workshop FAGEN</a>)
+                  <a href="https://fagen-workshop.github.io/" target="_blank" rel="noopener noreferrer" class="content-link">ICML 2026 Workshop FAGEN</a>)
                 </span>
               </h3>
               <p class="text-gray-400">A benchmark for agents that reconstruct KiCad PCB projects, combining frozen task packs with ngspice-driven I/O simulation graders.</p>
@@ -126,7 +155,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://arxiv.org/abs/2606.01080" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">ThinkSwitch</a>
+                <a href="https://arxiv.org/abs/2606.01080" target="_blank" rel="noopener noreferrer" class="content-link">ThinkSwitch</a>
               </h3>
               <p class="text-gray-400">A method for co-training paired instruct and thinking checkpoints, moving part of explicit reasoning into model weights with QLoRA and weight interpolation.</p>
             </div>
@@ -136,7 +165,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://cdn.jsdelivr.net/gh/oof-baroomf/residual-controllers@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">Residual Controllers</a>
+                <a href="https://cdn.jsdelivr.net/gh/oof-baroomf/residual-controllers@master/paper/main.pdf" target="_blank" rel="noopener noreferrer" class="content-link">Residual Controllers</a>
               </h3>
               <p class="text-gray-400">Research on residual controllers for reasoning switches, exploring how controllers can steer when reasoning systems change strategies.</p>
             </div>
@@ -223,14 +252,14 @@
       </div>
 
       <!-- Projects -->
-      <div class="mt-12">
+      <div id="projects" class="mt-12">
         <h2 class="text-2xl font-bold">Projects</h2>
         <div class="mt-4">
 
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://github.com/oof-baroomf/muon/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">Muon</a>
+                <a href="https://github.com/oof-baroomf/muon/" target="_blank" rel="noopener noreferrer" class="content-link">Muon</a>
               </h3>
               <p class="text-gray-400">An infinite canvas web browser built with Electron and TypeScript.</p>
             </div>
@@ -240,7 +269,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://github.com/oof-baroomf/promptmaxx" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">PromptMaxx</a>
+                <a href="https://github.com/oof-baroomf/promptmaxx" target="_blank" rel="noopener noreferrer" class="content-link">PromptMaxx</a>
               </h3>
               <p class="text-gray-400">A tool to automate context gathering and applying changes when pair programming with online LLMs.</p>
             </div>
@@ -250,7 +279,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://github.com/oof-baroomf/chat-google-docs" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">Chat with Google Docs</a>
+                <a href="https://github.com/oof-baroomf/chat-google-docs" target="_blank" rel="noopener noreferrer" class="content-link">Chat with Google Docs</a>
               </h3>
               <p class="text-gray-400">A Google OAuth app for chatting with RAG over your Google Docs.</p>
             </div>
@@ -260,7 +289,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://huggingface.co/oof-baroomf/MuseGPT" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">MuseFalcon</a>
+                <a href="https://huggingface.co/oof-baroomf/MuseGPT" target="_blank" rel="noopener noreferrer" class="content-link">MuseFalcon</a>
               </h3>
               <p class="text-gray-400">A Falcon 40B-based model that generates music in ABC notation.</p>
             </div>
@@ -270,7 +299,7 @@
           <div class="flex justify-between items-start mt-6">
             <div>
               <h3 class="font-semibold">
-                <a href="https://www.instructables.com/Powerful-Raspberry-Pi-Smart-Glasses-for-Under-50-W-1/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-400 transition-colors">Raspberry Pi Smart Glasses</a>
+                <a href="https://www.instructables.com/Powerful-Raspberry-Pi-Smart-Glasses-for-Under-50-W-1/" target="_blank" rel="noopener noreferrer" class="content-link">Raspberry Pi Smart Glasses</a>
               </h3>
               <p class="text-gray-400">$55 for a Linux desktop on your glasses.</p>
             </div>
@@ -301,8 +330,10 @@
       <!-- Footer -->
       <div class="flex justify-between items-center mt-12">
         <div class="text-gray-400">Dhruv Saini</div>
-        <div class="space-x-4">
-          <a href="mailto:dhruv9saini@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        <div class="space-x-4 text-sm">
+          <a href="mailto:dhruv9saini@gmail.com" class="content-link">Email</a>
+          <a href="https://github.com/oof-baroomf" target="_blank" rel="noopener noreferrer" class="content-link">GitHub</a>
+          <a href="https://x.com/oofbaroomf" target="_blank" rel="noopener noreferrer" class="content-link">X</a>
         </div>
       </div>
   </div>

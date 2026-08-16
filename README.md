@@ -18,3 +18,10 @@ Static personal site deployed at `https://dhruvs.pages.dev/`.
 
 QR codes for event contact pages should use the `dhruvs.pages.dev` deployment
 domain, not a preview or alternate host.
+
+## Resume PDFs
+
+- `dhruv_resume.typ` is the editable source for `dhruv_resume.pdf`.
+- `edu_resume.typ` is the editable source for `edu_resume.pdf`.
+- `resume_template.typ` holds their shared one-page layout.
+- Build both PDFs with `nix run --impure nixpkgs#gnumake -- resumes`.

@@ -1,0 +1,8 @@
+.build/
+*.aux
+*.bcf
+*.bbl
+*.blg
+*.log
+*.out
+*.run.xml

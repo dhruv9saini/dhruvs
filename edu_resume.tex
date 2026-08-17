@@ -1,0 +1,169 @@
+\documentclass[8pt,a4paper]{altacv}
+
+\geometry{left=1cm,right=1cm,top=1cm,bottom=1cm,columnsep=1.2cm}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[default,scale=0.9]{lato}
+\usepackage[colorlinks=true,urlcolor=black]{hyperref}
+
+\hypersetup{pdftitle={Dhruv Saini Education Resume}}
+
+\definecolor{resumeheading}{rgb}{0.06276,0.06276,0.06276}
+\definecolor{resumebody}{rgb}{0.01962,0.01962,0.01962}
+\colorlet{accent}{black}
+\colorlet{heading}{resumeheading}
+\colorlet{emphasis}{resumeheading}
+\colorlet{body}{resumebody}
+
+\setlist{leftmargin=*,labelsep=0.5em,nosep,itemsep=0pt,after=\vskip1.942pt}
+\renewcommand{\itemmarker}{\textbullet}
+\newcommand{\resumebodysize}{\fontsize{8pt}{9pt}\selectfont}
+\renewcommand{\divider}{\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.285em}}\vspace{4.096pt}}
+\newcommand{\projectdivider}{\vskip-1.937pt\divider}
+
+\makeatletter
+\renewcommand{\makecvheader}{%
+  \begingroup
+    \raggedright\color{emphasis}%
+    {\Huge\bfseries\MakeUppercase{\@name}\par}
+    \vspace{4.3pt}
+    {\small\bfseries\@personalinfo\par}
+  \endgroup
+}
+\renewcommand{\cvsection}[2][]{%
+  \bigskip%
+  \vspace{3.686pt}%
+  \ifstrequal{#1}{}{}{\marginpar{\vspace*{\dimexpr1pt-\baselineskip}\raggedright\input{#1}}}%
+  {\color{heading}\large\bfseries\MakeUppercase{#2}}\\[-1ex]\vspace{1.489pt}%
+  {\color{heading}\rule{\linewidth}{2pt}\par}\medskip\vspace{1.179pt}
+}
+\renewcommand{\cvevent}[4]{%
+  {\fontsize{9pt}{9pt}\selectfont\color{black}\hspace*{-0.282pt}#1\par}
+  \ifstrequal{#2}{}{}{%
+    \vspace{2.144pt}
+    {\fontsize{9pt}{9pt}\selectfont\textbf{\color{accent}#2}\hspace{0.5em}\resumebodysize\faCalendar\hspace{0.5em}#3\par}%
+  }%
+  \vspace{2.145pt}\resumebodysize
+}
+\makeatother
+
+\title{Dhruv Saini Education Resume}
+\name{Dhruv Saini}
+\tagline{}
+\personalinfo{%
+  \homepage{dhruvs.pages.dev}
+  \email{\href{mailto:dhruv9saini@gmail.com}{dhruv9saini@gmail.com}}
+}
+
+\begin{document}
+
+\makecvheader
+\vskip0.917pt
+\resumebodysize
+
+\cvsection{Experience}
+\vskip0.464pt
+
+\cvevent{\textcolor{black}{\textbf{A Sustainable Future}}}{\textnormal{CEO |}}{Oct 2023 - Present}{}
+\begin{itemize}
+\item Built and scaled the \textbf{PCM}, an AI-powered mobile app predicting paper use, to \textbf{30,000 students} nationwide in over 150 schools
+\item Trained a symbolic regression model with \textbf{PySR} to predict paper consumption based on school demographics
+\item Leading \textbf{a team of 20} to develop a nonprofit website and iterating on AI model, now helping save 1.7M sheets of paper per year
+\item Received \textbf{\$30k} in grants supporting sustainability impact
+\end{itemize}
+\divider
+
+\cvevent{\textcolor{black}{\textbf{West Virginia University: SG-REAL Lab}}}{\textnormal{GIS/Software Research Intern |}}{Jul 2025 - Present}{}
+\begin{itemize}
+\item Created a 3D modeling and flood segmentation pipeline on any power grid to determine which nodes need most investment
+\end{itemize}
+\divider
+
+\cvevent{\textcolor{black}{\textbf{Dimension}}}{\textnormal{Software Engineer Intern |}}{Jun 2025 - Sept 2025}{}
+\begin{itemize}
+\item Implemented webhooks to allow external companies to integrate with the enterprise collaboration platform
+\item Led the process to allow Stripe, Vercel, Github, and many other hosted bots in channels
+\item Revamped and modernized the UI, completing several refactors that culminated in a \textbf{70\%} reduction of load time
+\end{itemize}
+\divider
+
+\cvevent{\textcolor{black}{\textbf{University of Washington}}}{\textnormal{Quantum Technical Writing Intern |}}{Aug 2024 – Sept 2024}{}
+\begin{itemize}
+\item Worked with Prof. Anantram to develop an editing workflow for his book \textit{Quantum Mechanics for Scientists and Engineers}
+\item Used Python and React to automatically compare textbook versions and allow students to easily select the best version of any paragraph
+\item Accelerated editing time by \textbf{15x}
+\end{itemize}
+
+\vskip-4.265pt
+\cvsection{Projects}
+\vskip-1.479pt
+
+\cvevent{\textcolor{black}{\textbf{CAD-bench: Benchmarking Language Models on Functional CAD Generation}}}{}{}{}
+\begin{itemize}
+\item Built a test suite for AI-generated 3D parts that checks whether a part works as intended, not only whether it looks correct
+\item Ran physics simulations of mechanisms such as gearboxes to test whether generated parts work in motion
+\item Accepted to the ICML AIWILD and FAGEN workshops; currently under review at NeurIPS, with code available \href{https://github.com/cad-bench/cad-bench}{here} and paper available \href{https://github.com/CAD-bench/cad-bench/blob/main/paper/main.pdf}{here}
+\end{itemize}
+\projectdivider
+
+\cvevent{\textcolor{black}{\textbf{EDA Bench: An Execution-Based Benchmark for Language Model Agents on Functional PCB Construction}}}{}{}{}
+\begin{itemize}
+\item Built a test suite for AI-designed circuit boards that checks electrical behavior, not only whether a design file opens
+\item Combined KiCad, connection and safety checks, circuit simulation, and real-world input/output requirements to test whether a circuit functions
+\item Accepted to the ICML FAGEN workshop; currently under review at NeurIPS, with code available \href{https://github.com/eda-bench/eda-bench}{here} and paper available \href{https://github.com/eda-bench/eda-bench/blob/master/paper/main.pdf}{here}
+\end{itemize}
+\projectdivider
+
+\cvevent{\textcolor{black}{\textbf{Residual Controllers}}}{}{}{}
+\begin{itemize}
+\item Studied a small internal signal that tells an open AI model whether to begin step-by-step reasoning or give a direct answer
+\item On all 30 AIME 2026 problems, a one-step controller entered thinking mode on 30/30 and scored 16/30, compared with 1/30 when thinking was off; paper available \href{https://cdn.jsdelivr.net/gh/dhruv9saini/residual-controllers@master/paper/main.pdf}{here}
+\end{itemize}
+\divider
+
+\cvevent{\textcolor{black}{\textbf{ThinkSwitch: Iterative LoRA training and Weight Interpolation for Low-Compute Improvement on Specific-Purpose Reasoning Tasks}}}{}{}{}
+\begin{itemize}
+\item Used two low-cost methods---small trainable additions and blended saved model weights---to improve Qwen3-4B on AIME with only \$3 in compute
+\item Awarded 1\textsuperscript{st} place at the Washington State Science and Engineering Fair, preprint available \href{https://arxiv.org/abs/2606.01080}{here}
+\end{itemize}
+\divider
+
+\cvevent{\textcolor{black}{\textbf{NASA Glenn High School Engineering Institute}} \textnormal{| Selected Participant}}{}{}{}
+\begin{itemize}
+\item Designed and tested jet-noise, spacecraft-power, and lunar-rover prototypes
+\end{itemize}
+
+\vskip-4.273pt
+\cvsection{Awards and Honors}
+\vskip0.464pt
+
+\cvevent{\textcolor{black}{\textbf{National Science Bowl}}}{\textnormal{Team Captain |}}{2021-Present}{}
+\begin{itemize}
+\item Founded Bellevue High School’s first science bowl team, winning 1\textsuperscript{st} place at the nationwide virtual competition
+\item Won a fully-funded trip to Washington D.C. for the National Finals
+\end{itemize}
+\divider
+
+\cvevent{\textcolor{black}{\textbf{Olympiad Awards}}}{\textnormal{Various |}}{2024-Present}{}
+\begin{itemize}
+\item USACO Platinum Rank
+\item USAAIO National Finalist, Bronze Medal
+\end{itemize}
+\divider
+
+\cvevent{\textcolor{black}{\textbf{ARC - The American Rocketry Challenge}}}{\textnormal{Team Captain |}}{2025}{}
+\begin{itemize}
+\item Captained a team of five to build a model rocket following specific criteria, qualified for National Finals twice
+\end{itemize}
+
+\vskip-3.343pt
+\cvsection{Education}
+\vskip-1.479pt
+
+\cvevent{\textcolor{black}{\textbf{Bellevue High School}}}{}{}{}
+\begin{itemize}
+\item 36 ACT, 100+ hours of community service, DECA ICDC finalist
+\item President of Programming Club, coach at Tyee MS and Odle MS programming clubs
+\end{itemize}
+
+\end{document}

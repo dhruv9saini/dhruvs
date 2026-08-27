@@ -21,14 +21,18 @@ domain, not a preview or alternate host.
 
 ## Resume PDFs
 
-- `resume.tex` is the reconstructed editable source for the older canonical
+- `resume.tex` is the pixel-matched production source for the older canonical
   `resume.pdf`.
 - `dhruv_resume.tex` is the editable source for `dhruv_resume.pdf`.
 - `edu_resume.tex` is the editable source for `edu_resume.pdf`.
-- `altacv.cls` is a vendored historical AltaCV v1.1.5 class. It preserves the
-  legacy FontAwesome and Lato-based design used by the canonical original PDF.
-- The original TeX source was unavailable. The LaTeX sources were reconstructed
-  against the canonical original PDF and then updated deliberately.
+- `altacv.cls` is the production copy of the historical AltaCV v1.1.5 class.
+- `overleaf-source/` contains the authentic recovered Overleaf source lineage
+  for the older resume. Its resume is corrected to remove the unsupported
+  USACO claim and to retain the verified USAAIO result and competition scope.
+  Its recovered class has only the duplicate `cvproject` definition removed so
+  current LaTeX compilers can build it without errors.
+- The production sources remain deliberately updated and pixel-matched; the
+  recovered source is preserved separately so those changes are not lost.
 - The standard resume removes the HAB Camp entry and adds Residual Controllers.
 - The education resume uses general-reader project language, includes NASA Glenn
   HSEI, and does not include Muon Browser.

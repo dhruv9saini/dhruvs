@@ -1,7 +1,7 @@
 PDFLATEX ?= pdflatex
 TEXFLAGS := -interaction=nonstopmode -halt-on-error -file-line-error
 BUILD_DIR := .build
-RESUMES := dhruv_resume.pdf edu_resume.pdf
+RESUMES := resume.pdf dhruv_resume.pdf edu_resume.pdf
 
 .PHONY: all resumes
 

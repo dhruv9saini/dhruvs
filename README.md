@@ -21,6 +21,8 @@ domain, not a preview or alternate host.
 
 ## Resume PDFs
 
+- `resume.tex` is the reconstructed editable source for the older canonical
+  `resume.pdf`.
 - `dhruv_resume.tex` is the editable source for `dhruv_resume.pdf`.
 - `edu_resume.tex` is the editable source for `edu_resume.pdf`.
 - `altacv.cls` is a vendored historical AltaCV v1.1.5 class. It preserves the
@@ -30,7 +32,7 @@ domain, not a preview or alternate host.
 - The standard resume removes the HAB Camp entry and adds Residual Controllers.
 - The education resume uses general-reader project language, includes NASA Glenn
   HSEI, and does not include Muon Browser.
-- Build both PDFs with:
+- Build all three PDFs with:
 
   ```sh
   nix-shell --pure -p 'texliveSmall.withPackages (ps: with ps; [ fontawesome lato fontaxes mweights xkeyval dashrule ifmtarg tcolorbox tikzfill enumitem ragged2e etoolbox changepage pgf xcolor biblatex multirow tools ])' gnumake --run 'make resumes'

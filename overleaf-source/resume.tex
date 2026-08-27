@@ -1,0 +1,223 @@
+\documentclass[9pt,a4paper,ragged2e]{altacv}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\geometry{left=1cm,right=1cm,marginparwidth=6.8cm,marginparsep=1.2cm,top=1cm,bottom=1cm}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[default,scaled=0.9]{lato}
+\usepackage{paracol}
+\color{black}
+\definecolor{VividPurple}{HTML}{000000}
+\definecolor{SlateGrey}{HTML}{101010}
+\definecolor{LightGrey}{HTML}{050505}
+\definecolor{red}{HTML}{ff0000}
+\colorlet{heading}{SlateGrey}
+\colorlet{accent}{VividPurple}
+\colorlet{emphasis}{SlateGrey}
+\colorlet{body}{LightGrey}
+
+% Change the bullets for itemize and rating marker
+% for \cvskill if you want to
+\renewcommand{\itemmarker}{{\small\textbullet}}
+\renewcommand{\ratingmarker}{\faCircle}
+
+%% sample.bib contains your publications
+\addbibresource{sample.bib}
+
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,
+    urlcolor=black,
+    pdftitle={Dhruv Saini Resume},
+    pdfpagemode=FullScreen,
+}
+
+\tolerance=1
+\emergencystretch=\maxdimen
+\hyphenpenalty=10000
+\hbadness=10000
+
+\begin{document}
+\name{Dhruv Saini}
+\tagline{}
+\personalinfo{%
+  \homepage{dhruvs.pages.dev}
+  \email{\underline{\href{mailto:dhruv9saini@gmail.com}{dhruv9saini@gmail.com}}}
+
+}
+
+\begin{fullwidth}
+  \makecvheader
+\end{fullwidth}
+
+\AtBeginEnvironment{itemize}{\small}
+
+
+\cvsection{Experience}
+
+\cvevent{\textbf{A Sustainable Future}}{CEO}{Oct 2023 - Present}{}
+\begin{itemize} \itemsep 0pt  % reduce space between items
+    \item Built and scaled the \textbf{PCM}, an AI-powered mobile app predicting paper use, to \textbf{30,000 students} nationwide in over {150 schools}
+    \item Trained a symbolic regression model with \textbf{PySR} to predict paper consumption based on school demographics
+  \item Leading \textbf{a team of 20} to develop a nonprofit website and iterating on AI model, now helping save 1.7M sheets of paper per year
+  \item Received \textbf{\$30k} in grants supporting sustainability impact
+\end{itemize}
+
+\divider
+
+\cvevent{\textbf{University of West Virginia: SG-REAL Lab}}{GIS/Software Research Intern}{Jul 2025 - Present}{}
+\begin{itemize} \itemsep 0pt  % reduce space between items
+    \item Created a 3D modeling and flood segmentation pipeline on any power grid to determine which nodes need most investment
+\end{itemize}
+
+\divider
+
+\cvevent{\textbf{Dimension}}{Software Engineer Intern}{Jun 2025 - Sept 2025}{}
+\begin{itemize} \itemsep 0pt  % reduce space between items
+    \item Implemented webhooks to allow external companies to integrate with the enterprise collaboration platform
+    \item Led the process to allow Stripe, Vercel, Github, and many other hosted bots in channels
+    \item Revamped and modernized the UI, completing several refactors that culminated in a \textbf{70\%} reduction of load time
+\end{itemize}
+
+\divider
+
+\cvevent{\textbf{University of Washington}}{Quantum Technical Writing Intern}{Aug 2024 – Sept 2024}{}
+\begin{itemize} \itemsep 0pt  % reduce space between items
+  \item Worked with Prof. Anantram to develop an editing workflow for his book \textit{Quantum Mechanics for Scientists and Engineers}
+  \item Used Python and React to automatically compare textbook versions and allow students to easily select the best version of any paragraph
+   \item Accelerated editing time by \textbf{15x}
+\end{itemize}
+
+
+\cvsection{Projects}
+
+\cvproject{Urban Heat Islands: A Geospatial Analysis}{Jupyter, Pandas, Matplotlib, Pytorch}
+\begin{itemize} \itemsep 0pt
+    \item Trained an ML model in \textbf{Pytorch} on satellite image samples to predict the most effective method for a city to reduce urban heat stress
+    \item Created a computer vision engine to detect small water bodies from satellite imagery and analyze effects of water infrastructure on heat stress
+    \item Awarded 2\textsuperscript{nd} place at the Washington State Science and Engineering Fair
+\end{itemize}
+
+\divider
+% \cvproject{PowerBand}{C++, Onshape, KiCad}
+% \begin{itemize} \itemsep 0pt
+%     \item Ideated and built a smart resistance band designed to encourage activity and breaks from the screen
+%     \item Created custom PCB using \textbf{KiCad} with an \textbf{ESP32 microcontroller}, contained within a 3D printed case designed with \textbf{Onshape}
+%     \item Implemented automatic locking, gamifying features, and an insights dashboard with \textbf{C++} and \textbf{ArduinoBLE}
+%     \item Encouraged exercise and limited sedentary screen usage by automatically adjusting screen time limits based on activity
+% \end{itemize}
+
+% \divider
+
+\cvproject{ThinkSwitch: Iterative LoRA training and Weight Interpolation for Low-Compute Improvement on Specific-Purpose Reasoning Tasks}{Python, Transformers}
+\begin{itemize} \itemsep 0pt
+    \item Applied weight interpolation and LoRA to iterative distillation and amplification to greatly improve Qwen3-4B AIME score with only \$3 in compute
+    \item Awarded 1\textsuperscript{st} place at the Washington State Science and Engineering Fair
+\end{itemize}
+
+\divider
+
+\cvproject{Muon Browser}{Typescript, Electron}
+\begin{itemize} \itemsep 0pt
+    \item Created a web browser that allows the user to open and browse pages and notes on an infinite canvas
+    \item Available to download and use \href{http://github.com/oof-baroomf/muon}{here}
+\end{itemize}
+
+
+\divider
+
+
+
+\cvproject{High-Altitude Balloon Payload (NASA Space Grant Consortium HAB Camp)}{Python, Data Analysis}
+\begin{itemize} \itemsep 0pt
+    \item Designed and built a payload for a high-altitude balloon flight to near-space altitude
+    \item Instrumented the payload to measure and record altitude, pressure, temperature, humidity, audio, video, and a feed of a live cricket
+    \item Wrote Python notebooks to clean, visualize, and analyze the recorded data and summarize results, presenting
+\end{itemize}
+
+\cvsection{Awards and Honors}
+ \cvevent{National Science Bowl}{Team Captain}{2021-Present}{a}
+\begin{itemize} \itemsep 0pt
+  \item Founded Bellevue High School's first science bowl team, winning 1\textsuperscript{st} place at the nationwide virtual competition
+  \item Won a fully-funded trip to Washington D.C. for the National Finals
+\end{itemize}
+
+ \divider
+
+
+ \cvevent{USAAIO}{Competition}{2024-Present}{a}
+\begin{itemize} \itemsep 0pt
+  \item National Finalist, Bronze Medal
+  \item Competition covered AI theory and programming in machine learning, deep learning, transformers, natural language processing, computer vision, and generative AI
+\end{itemize}
+
+
+
+\divider
+
+\cvevent{ARC - The American Rocketry Challenge}{Team Captain}{2025}{a}
+\begin{itemize} \itemsep 0pt
+  \item Captained a team of five to build a rocket that transports two eggs to 790 feet and brings them down safely within 41-44 seconds
+  \item Qualified for the National Finals twice
+\end{itemize}
+
+%  \divider
+
+
+%  \cvevent{Science Fair Awards}{}{2025}{a}
+% \begin{itemize} \itemsep 0pt
+%   \item Captained a team of five to build a rocket that transports two eggs to 790 feet and brings them down safely within 41-44 seconds
+%   \item Qualified for the National Finals twice
+% \end{itemize}
+
+    % \divider
+
+%  \cveventp{WebHack}{1\textsuperscript{st} place}{Feb 2024}{a}
+% \begin{itemize} \itemsep 0pt
+%   \item Developed \textbf{Quizard}, a quiz room app with a \textbf{Django backend}, \textbf{React / Tailwind} frontend, and \textbf{GPT-3.5} tutoring for missed questions
+%   \item Enhanced learning efficiency beyond traditional methods by generating personalized concept explanations
+% \end{itemize}
+
+
+%   \divider
+
+%   \cveventp{Pyxis Hacks II}{1\textsuperscript{st} place}{Apr 2023}{a}
+% \begin{itemize} \itemsep 0pt
+%   \item Built \textbf{EssayWay}, a web app providing writing instruction with generated writing prompts, a distraction-free writing interface, and real-time feedback
+%   \item Powered by the \textbf{OpenAI API}, \textbf{Flask backend}, and \textbf{Tailwind frontend}
+% \end{itemize}
+
+%    \divider
+
+%   \cveventp{FremontHacks, EduHack}{1\textsuperscript{st} place, 2\textsuperscript{nd} place}{Feb 2023}{a}
+%   \begin{itemize} \itemsep 0pt
+%     \item Created \textbf{Constructive Connections}, an AI moderation Chrome extension using GPT-3 to instantly filter toxic social media comments for content creators
+%   \end{itemize}
+
+
+
+\cvsection{Education}
+
+\cvproject{\textbf{Bellevue High School}}{}{}{}
+\begin{itemize} \itemsep 0pt  % reduce space between items
+  \item 36 ACT, 100+ hours of community service, DECA ICDC finalist
+  \item President of Programming Club, coach at Tyee MS and Odle MS programming clubs
+\end{itemize}
+
+ % \cveventp{\textbf{International Academic Competitions}}{2\textsuperscript{nd} place}{March 2023}{a}
+ %  \begin{itemize} \itemsep 0pt  % reduce space between items
+ %    \item Nationwide Science Bee competition covering Physics, Chemistry, Biology, Earth Science and Computer Science
+ %  \end{itemize}
+% \cvsection{Skills}
+% \small
+% \begin{itemize} \itemsep 0pt  % reduce space between items
+%   \item Languages: Java, Python, SQL, HTML/CSS/JS/TS, Ruby, PHP
+%   \item Onshape (3D CAD), Spanish/Hindi, KiCad
+% \end{itemize}
+\clearpage
+
+\nocite{*}
+\end{document}

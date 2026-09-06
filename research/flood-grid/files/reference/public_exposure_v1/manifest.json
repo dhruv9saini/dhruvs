@@ -1,0 +1,22 @@
+{
+  "engine": {
+    "numpy": "2.5.2",
+    "platform": "Linux-6.18.36-x86_64-with-glibc2.42",
+    "python": "3.13.14 (main, Jun 11 2026, 04:03:13) [Clang 22.1.3 ]",
+    "rasterio": "1.5.1"
+  },
+  "files": {
+    "REPORT.md": "934c301156ef32f1e14646025b2101944a8dd2d4de98d2db92aafefad975748e",
+    "study.json": "72e697fb755e89c8822308ef72eb499f4c994e7d9eee1fc01dd428311b2fdd53"
+  },
+  "generator_sha256": "b0e1aae0641bcd860c207a70e4f858dde88f5eeab00432ae44afd8e5662dc479",
+  "inputs": {
+    "depth_release_zip": "09d7100eca1c5f224c9bb93af4bd02e036e48794a03235622d519ca5903039d8",
+    "facility_geometry": "f37524ef23d3570a339324859995d49a64c023fffa201c5ca87fdbb2ff6ae293"
+  },
+  "result": {
+    "estimator_count": 21,
+    "fire_department_higher_observed_event_depth_under_all_estimators": true,
+    "minimum_fire_minus_police_ft": 0.146484375
+  }
+}

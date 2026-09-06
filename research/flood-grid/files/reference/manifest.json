@@ -1,0 +1,37 @@
+{
+  "engine": {
+    "numpy": "2.5.2",
+    "opendss_engine": "DSS C-API Library version 0.14.5 revision 87d85c2622c8281b92255335bc7c09b11191b21d based on OpenDSS SVN 3723 [FPC 3.2.2] (64-bit build) MVMULT INCREMENTAL_Y CONTEXT_API PM 20240329033721; License Status: Open \nDSS-Python version: 0.15.7\nOpenDSSDirect.py version: 0.9.4",
+    "opendssdirect": "0.9.4",
+    "platform": "Linux-6.18.36-x86_64-with-glibc2.42",
+    "python": "3.13.14 (main, Jun 11 2026, 04:03:13) [Clang 22.1.3 ]",
+    "rasterio": "1.5.1"
+  },
+  "files": {
+    "REPORT.md": "f6dda0be0b72cf781521c4686d77bdd59fb50162271db08e4752f20943a394cf",
+    "study.json": "16bb93472871c6bb17fa9e884259579a27ead0acc3a680dff57544a8cb3e51d4"
+  },
+  "generator_sha256": "0a7ce4f9ea814199ccdb1b105dc0dc9158fb6c6c8a111fe3f00d4d3439b250bb",
+  "inputs": {
+    "depth_zip_sha256": "09d7100eca1c5f224c9bb93af4bd02e036e48794a03235622d519ca5903039d8",
+    "native_dss_dependencies": {
+      "model/ieee123_isolated/IEEE123Loads.DSS": "fd28f52836205506a1980b52c5a7e12ca585aa626c52a6249502c1c3b2fc2255",
+      "model/ieee123_isolated/IEEE123Master.dss": "42cf12b93e33ce41e63bf3b8dab23237a555c1a5e9cce51e9292e22a6a7a4552",
+      "model/ieee123_isolated/IEEE123Regulators.DSS": "cd6ad77980dc018631ce39faab528afce40b0b9a50a6bc1c9ac8049ffb8207d7",
+      "model/ieee123_isolated/IEEELineCodes.DSS": "4bc8e3a0b24ad7b1cb4321f1c3b6c8458b646dd3a83b3cd11cccc02444624cb2"
+    },
+    "raster": {
+      "cell_size_m": [
+        3.0,
+        3.0
+      ],
+      "crs": "EPSG:26917",
+      "shape": [
+        2432,
+        1975
+      ],
+      "valid_depth_cell_count": 319264
+    },
+    "usgs_depth_release": "https://doi.org/10.5066/F76T0K4K"
+  }
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Flood-grid reproducibility | Dhruv</title><style>body{max-width:820px;margin:3rem auto;padding:0 1.2rem;font:18px/1.6 system-ui,sans-serif;color:#202124}h1,h2{line-height:1.25}a{color:#165a9f}code{font-size:.9em}pre{overflow:auto;background:#f5f6f7;padding:1rem;font-size:14px}li{margin:.5rem 0}.meta{color:#555}</style></head><body>
+<p><a href="/">Dhruv</a> / Research</p>
+<h1>Flood-grid study: code and complete results</h1>
+<p>Reproduce the IEEE 123-node feeder comparison using the original source, flood raster, native feeder files and pinned environment. The published data retain all <strong>360 scenarios and 11,880 AC power-flow solves</strong>, including infeasible cases.</p>
+<h2>Direct downloads</h2>
+<ul>
+<li><a href="reproducibility.zip">Complete reproduction package (ZIP)</a>: code, inputs, results, environment and instructions.</li>
+<li><a href="files/reference/study.json.xz">Complete result data (XZ-compressed JSON)</a>: 400,692,377 bytes after decompression.</li>
+<li><a href="files/run_synthetic_flood_grid_resilience.py">Original simulation source</a> and <a href="files/generate_synthetic_resilience_note.py">report generator</a>.</li>
+<li><a href="files/reference/summary.json">Compact results summary</a> and <a href="files/reference/manifest.json">original experiment manifest</a>.</li>
+<li><a href="files/requirements-lock.txt">Exact Python package versions</a>, <a href="files/shell.nix">Nix development environment</a>, and <a href="files/README.md">complete execution instructions</a>.</li>
+<li><a href="files/ARTIFACTS.json">All artifact sizes and SHA-256 hashes</a> and <a href="files/SOURCES.md">input provenance and upstream terms</a>.</li>
+</ul>
+<h2>Verify the downloaded package</h2>
+<pre>unzip reproducibility.zip
+cd flood-grid-reproducibility
+python3 verify_artifacts.py
+python3 check_results.py</pre>
+<p>The first checker verifies every file and the original uncompressed result hash. The second recomputes all 288 aggregate values and counts from the retained solves, and verifies the worked backup-overload example. Neither checker runs a new power-flow simulation.</p>
+<h2>Run the original experiment</h2>
+<pre>uv venv --python 3.13.14 .venv
+uv pip install --python .venv/bin/python -r requirements-lock.txt
+.venv/bin/python run_synthetic_flood_grid_resilience.py
+.venv/bin/python generate_synthetic_resilience_note.py</pre>
+<p>On NixOS, enter the included <code>nix-shell</code> first. The README covers runtime libraries and the separate Rainelle public-facility sampling analysis. New simulation output is written separately from the published reference data.</p>
+<h2>Native inputs</h2>
+<ul>
+<li><a href="files/data/Meadow_Sewell_dem_derived.zip">Original USGS Rainelle depth raster</a>.</li>
+<li>IEEE 123 feeder: <a href="files/model/ieee123_isolated/IEEE123Master.dss">master</a>, <a href="files/model/ieee123_isolated/IEEELineCodes.DSS">line codes</a>, <a href="files/model/ieee123_isolated/IEEE123Loads.DSS">loads</a>, <a href="files/model/ieee123_isolated/IEEE123Regulators.DSS">regulators</a>, and <a href="files/model/ieee123_isolated/UPSTREAM_LICENSE.txt">upstream license</a>.</li>
+</ul>
+<p class="meta">Full-result SHA-256: <code>16bb93472871c6bb17fa9e884259579a27ead0acc3a680dff57544a8cb3e51d4</code></p>
+</body></html>

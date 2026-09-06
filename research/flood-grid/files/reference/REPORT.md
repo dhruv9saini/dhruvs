@@ -1,0 +1,18 @@
+# Synthetic Flood-Grid Resilience Experiment
+
+## What this experiment measures
+
+The experiment couples empirical USGS June 2016 Rainelle flood-depth samples with a public IEEE 123 feeder through disclosed synthetic siting. It compares flood-correlated failures, where the deepest assigned assets fail, with exact uniform independent-failure baselines at the same one through four failed-asset counts.
+
+Every ordinary IEEE 123 load remains enabled. A terminal failure opens only its designated line and listed capacitor when applicable; a backup energizes the actual isolated terminal island, including downstream ordinary demand. Each policy gets two abstract intervention slots. Depth-informed hardening and backup are compared with all 15 random two-slot assignments in their own policy family. Every retained result solves AC power flow and records every enabled feeder load's voltage state, critical served kW, source checks, and island-boundary checks.
+
+## Aggregate results
+
+- 1 failed synthetic asset: correlated no action 145.26 kW among 5/6 feasible solves; depth-informed hardening 181.65 kW among 6/6 feasible solves; depth-informed backup unconstrained solved mean 181.29 kW and feasible-only mean 181.21 kW among 5/6 feasible solves. Independent-outage no action 149.27 kW among 30/36 feasible solves; hardening 160.74 kW among 32/36 feasible solves; backup unconstrained solved mean 160.77 kW and feasible-only mean 159.26 kW among 30/36 feasible solves.
+- 2 failed synthetic assets: correlated no action 125.67 kW among 5/6 feasible solves; depth-informed hardening 181.65 kW among 6/6 feasible solves; depth-informed backup unconstrained solved mean 181.35 kW and feasible-only mean 181.65 kW among 3/6 feasible solves. Independent-outage no action 124.56 kW among 72/90 feasible solves; hardening 141.20 kW among 74/90 feasible solves; backup unconstrained solved mean 139.97 kW and feasible-only mean 140.88 kW among 62/90 feasible solves.
+- 3 failed synthetic assets: correlated no action 93.33 kW among 5/6 feasible solves; depth-informed hardening 149.56 kW among 5/6 feasible solves; depth-informed backup unconstrained solved mean 151.36 kW and feasible-only mean 151.19 kW among 4/6 feasible solves. Independent-outage no action 90.11 kW among 102/120 feasible solves; hardening 119.98 kW among 98/120 feasible solves; backup unconstrained solved mean 119.17 kW and feasible-only mean 116.13 kW among 88/120 feasible solves.
+- 4 failed synthetic assets: correlated no action 67.84 kW among 6/6 feasible solves; depth-informed hardening 124.68 kW among 6/6 feasible solves; depth-informed backup unconstrained solved mean 124.47 kW and feasible-only mean 126.24 kW among 4/6 feasible solves. Independent-outage no action 62.05 kW among 84/90 feasible solves; hardening 98.66 kW among 77/90 feasible solves; backup unconstrained solved mean 98.33 kW and feasible-only mean 98.38 kW among 64/90 feasible solves.
+
+## Boundaries
+
+The correlated failure rule and the depth-informed policy both use the assigned depth ranking. Any advantage is therefore mechanism-aligned, not independent predictive validation. Backup's unconstrained solved-service values include results that violate stated source constraints, so they are not presented as feasible service. No ampacity, thermal, real-utility, equipment-damage, access, cost, or restoration claim is made. The public feeder supplies electrical equations and the USGS raster supplies an observed flood field; their association is synthetic. See `study.json` for all 11,880 policy solves, every feeder-load voltage record, failure set, constraint check, and input hash.

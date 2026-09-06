@@ -1,0 +1,140 @@
+{
+  "format_version": 1,
+  "files": [
+    {
+      "path": ".python-version",
+      "bytes": 8,
+      "sha256": "f8faecf2505680716c6279bf2cdec3d5a5ba2ba852f0d7df45d51ac1ce8d9ade"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4282,
+      "sha256": "bad7101742ba94e5cded71527320b6fc39a3a225e3d2a7f8e8f193c4767c3d1a"
+    },
+    {
+      "path": "SOURCES.md",
+      "bytes": 2064,
+      "sha256": "ee90b1c6b75e35ca51c58f77563539f06a9cc0cc0c100cfe3860abdbe2f5e34c"
+    },
+    {
+      "path": "check_results.py",
+      "bytes": 4311,
+      "sha256": "91fb57f4f25932eb2dae1ccd6dfac5e2c0f4d55a9fd9dc941af0143f9b021865"
+    },
+    {
+      "path": "data/Meadow_Sewell_dem_derived.zip",
+      "bytes": 947139,
+      "sha256": "09d7100eca1c5f224c9bb93af4bd02e036e48794a03235622d519ca5903039d8"
+    },
+    {
+      "path": "data_v2/greenbrier_essential_facilities_with_geometry.geojson",
+      "bytes": 893,
+      "sha256": "f37524ef23d3570a339324859995d49a64c023fffa201c5ca87fdbb2ff6ae293"
+    },
+    {
+      "path": "generate_synthetic_resilience_note.py",
+      "bytes": 15625,
+      "sha256": "6cbffdcd1c5f8cf863d42bc7e619ae485dc278344954b7cb022bc08109bbd740"
+    },
+    {
+      "path": "model/ieee123_isolated/IEEE123Loads.DSS",
+      "bytes": 8289,
+      "sha256": "fd28f52836205506a1980b52c5a7e12ca585aa626c52a6249502c1c3b2fc2255"
+    },
+    {
+      "path": "model/ieee123_isolated/IEEE123Master.dss",
+      "bytes": 15353,
+      "sha256": "42cf12b93e33ce41e63bf3b8dab23237a555c1a5e9cce51e9292e22a6a7a4552"
+    },
+    {
+      "path": "model/ieee123_isolated/IEEE123Regulators.DSS",
+      "bytes": 1861,
+      "sha256": "cd6ad77980dc018631ce39faab528afce40b0b9a50a6bc1c9ac8049ffb8207d7"
+    },
+    {
+      "path": "model/ieee123_isolated/IEEELineCodes.DSS",
+      "bytes": 11851,
+      "sha256": "4bc8e3a0b24ad7b1cb4321f1c3b6c8458b646dd3a83b3cd11cccc02444624cb2"
+    },
+    {
+      "path": "model/ieee123_isolated/UPSTREAM_LICENSE.txt",
+      "bytes": 1816,
+      "sha256": "f13543277f32a6437d4f583200858f0988d3acc9598a6a1a292d710009ec21ef"
+    },
+    {
+      "path": "reference/REPORT.md",
+      "bytes": 3637,
+      "sha256": "f6dda0be0b72cf781521c4686d77bdd59fb50162271db08e4752f20943a394cf"
+    },
+    {
+      "path": "reference/manifest.json",
+      "bytes": 1683,
+      "sha256": "423253314234dfff46e5c3078bd285dc3f538ca3e7d3958002d02aaca5ee2ee1"
+    },
+    {
+      "path": "reference/public_exposure_v1/REPORT.md",
+      "bytes": 1510,
+      "sha256": "934c301156ef32f1e14646025b2101944a8dd2d4de98d2db92aafefad975748e"
+    },
+    {
+      "path": "reference/public_exposure_v1/manifest.json",
+      "bytes": 848,
+      "sha256": "940d2f9cf7a5c8158fbe52ca0f14aeb7a9566498fd65fa9af7faffc4bf155129"
+    },
+    {
+      "path": "reference/public_exposure_v1/study.json",
+      "bytes": 7710,
+      "sha256": "72e697fb755e89c8822308ef72eb499f4c994e7d9eee1fc01dd428311b2fdd53"
+    },
+    {
+      "path": "reference/study.json.xz",
+      "bytes": 1840476,
+      "sha256": "a161b3a6ab4e7f6c44f3663b9e18dc86b14bee1e2a5e8b6380ce7a2428fea514"
+    },
+    {
+      "path": "reference/summary.json",
+      "bytes": 32027,
+      "sha256": "594c837771c5f29ddbaa841c9907eea4b990c934a53e05a1106221c6babd9aad"
+    },
+    {
+      "path": "reference/uncompressed_data.json",
+      "bytes": 129,
+      "sha256": "96f4d9d4aded413497c3895e9eb3540f7e8dcea64cf4b55f3e22b4b512066425"
+    },
+    {
+      "path": "requirements-lock.txt",
+      "bytes": 229,
+      "sha256": "e8ae09fb557a0a400d6af615034676a4e444a1a89a1a85f4c00ed837cad5a784"
+    },
+    {
+      "path": "requirements-public-exposure-study.txt",
+      "bytes": 29,
+      "sha256": "818b266f5ddb05664133ffa2466c9ec34b0f878b802c141cbc78c58675e16c83"
+    },
+    {
+      "path": "requirements-synthetic-grid-study.txt",
+      "bytes": 53,
+      "sha256": "45e0484f51e2c70d79ec9fd708817d285a10f6207ef73c6980781b36673bc795"
+    },
+    {
+      "path": "run_public_exposure_study.py",
+      "bytes": 11994,
+      "sha256": "b0e1aae0641bcd860c207a70e4f858dde88f5eeab00432ae44afd8e5662dc479"
+    },
+    {
+      "path": "run_synthetic_flood_grid_resilience.py",
+      "bytes": 22314,
+      "sha256": "0a7ce4f9ea814199ccdb1b105dc0dc9158fb6c6c8a111fe3f00d4d3439b250bb"
+    },
+    {
+      "path": "shell.nix",
+      "bytes": 173,
+      "sha256": "305c793f581582e6fd1055ea68047ce1dc23489f1ecf1f053524f5c34ab54e8f"
+    },
+    {
+      "path": "verify_artifacts.py",
+      "bytes": 2101,
+      "sha256": "73ced70618763fc13f8d0565a94b03d34c1bed56027097e597788351c7d5eed8"
+    }
+  ]
+}

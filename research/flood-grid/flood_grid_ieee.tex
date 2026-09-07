@@ -20,15 +20,25 @@
 
 \begin{abstract}
 
-Served critical load can make hardening and backup appear equally effective even though they differ in the number of electrically feasible states that they are able to serve. This paper generates experimental results that illuminate and quantify this possibility, so as to help evaluate infrastructure interventions by distinguishing the effects of restored load from the full implications of electrical feasibility. The experiment involves an IEEE 123-node feeder subject to depth-correlated failures using synthetic depth assignments. Simulations consider both depth hardening and backup with identical two-asset budgets. With two depth-correlated failures, depth hardening achieves a served-load mean of 181.65 kW with all six sitings electrically feasible; backup achieves an all-solve served-load mean of 181.35 kW but only three of the six sitings are feasible. The backup strategy serves the ordinary demand on the islanded branch as well as its critical load, including in infeasible states, and for the backup rating used, the rating is checked against the solved state. The results are based on 360 different scenarios and 11,880 AC power-flow solves. The comparison between hardening and backup reports both served-load means and counts of the number of feasible cases. The failure design in this experiment distinguishes between component outages correlated with depth and outages independent of depth. The source and voltage measurements that support the feasibility determinations are retained.
+Hardening and backup can restore similar amounts of critical load while producing different numbers of electrically feasible states. We compare the two interventions on an IEEE 123-node feeder with synthetic flood-depth assignments and equal two-asset budgets. With two depth-correlated failures, hardening serves a mean of 181.65 kW and is feasible in all six scenarios. Backup serves an all-solve mean of 181.35 kW but is feasible in only three scenarios. A backup can serve the critical load while exceeding its rating because it also supplies ordinary loads on the islanded branch. Across 360 scenarios and 11,880 AC power-flow solves, we report served-load means with feasible-case counts. We test both depth-correlated and depth-independent failures and retain the load, source and isolation measurements used to assess electrical feasibility.
 
 \end{abstract}
 
 \section{Introduction}
 
-For a critical load, a backup source can supply the load with acceptable voltage while the backup source itself is still operating beyond its rating. If an intervention evaluation looks only at what gets restored in terms of kW, such a situation can be misleading. This paper distinguishes between hardening, which prevents a branch from being disconnected from the upstream source, and backup, which is placed on the isolated side of a disconnection, where it is able to supply the demand of the islanded lower branch. The primary contrast in intervention effectiveness involves the two protected assets, but experimentally the paper considers a single IEEE 123-node feeder and the same two assets, different studies per each intervention, and records both service to the critical loads and electrical feasibility. The central result is a near tie in terms of average served load that conceals a twofold difference in the number of feasible cases that each intervention is able to serve. Depth-independent outages provide a helpful comparison where one may continue to favor the deepest assets, but without the direct correspondence to the failure rule.
+A backup source can supply a critical load at acceptable voltage while exceeding its own rating. An evaluation based only on restored kW would miss that overload. Hardening and backup change the supply path in different ways: hardening preserves the upstream connection, while backup supplies the loads on the branch isolated by a failure.
+
+We compare these interventions with two protected assets per policy on the IEEE 123-node feeder. Each solve records critical-load service and electrical feasibility. Depth-independent failures provide a comparison in which selecting the deepest assets no longer directly follows the failure rule.
 
 \section{Experimental Design}
+
+\subsection{Flood-depth assignments and failures}
+
+We draw six depths without replacement from the 319,264 valid 3-m raster cells in the June 2016 Rainelle flood map \cite{usgs}. We assign them in fixed order to six terminal assets of the IEEE 123-node feeder \cite{ieee}. Seeds 1103, 2203, 3303, 4403, 5503 and 6603 produce six asset-depth rankings. The depth values come from the observed map; their assignment to feeder assets is synthetic.
+
+For each ranking, depth-correlated failures disconnect the deepest one, two, three or four assets. Depth-independent failures give equal weight to every failure subset of the same size. These rules produce 24 correlated and 336 independent scenarios.
+
+\subsection{Intervention policies}
 
 \begin{table*}[!t]
 \caption{Flood-Correlated Failures}
@@ -54,20 +64,6 @@ Values are feasible-only mean served critical load in kW (feasible / all solves)
 \end{minipage}
 \end{table*}
 
-The flood-depth assignments and failure sets are as follows. Use the actual depth field from the June 2016 Rainelle flood map \cite{usgs}, draw six depths at random with no replacement from the 319,264 valid 3-m raster cells in the field and assign them in fixed order as flood depths to the six terminal assets in the IEEE 123-node feeder \cite{ieee}. Use six different seed values (1103, 2203, 3303, 4403, 5503, 6603) to produce six different depth-based asset rankings. The sampled depths are what were measured on the map; their assignment to assets is synthetic. The depth-correlated case fails the deepest one, two, three, or four assets; the depth-independent case gives equal weight to every failure subset of the same size. That gives 24 correlated scenarios, 336 independent, and sets the depth rule that specifies exactly which assets fail for each correlated failure count. Each intervention policy gets a two-asset budget; depth-informed hardening and backup select the two deepest assets. The random-placement comparison policy enumerates all 15 different two-asset assignments; so for each scenario, there is a no-action solve, two depth-informed solves, and 30 random-placement solves (33 total, 11,880 overall). Note that the budget equates the number of equipped assets, not the cost of technology. The electrical model and acceptance criteria are as follows. The six designated critical loads are A: S84c (20 kW), B: S83c (20 kW), C: S90b (40 kW), D: S92c (40 kW), E: S94a (40 kW), F: S96b (20 kW), a nominal total of 180 kW. On failure, disable the associated line (L83, L84, L89, L91, L93, L95) and its capacitor where present (C83, C90b, C92c); other loads are enabled. Hardening will prevent a branch from ever being disconnected; backup adds a single-phase 2.402-kV source rated 60 kVA on the isolated side of the disabled line. The backup will supply the island with its own source. The model is a radial voltage-source power flow, with apparent-power and current ratings as acceptance tests on the solved state. That is, acceptable voltage at a critical load does not guarantee that the backup supplying it will also be within rating. The criteria for electrical feasibility are that the solve converges, all energized feeder-load buses fall within the acceptable voltage band, i.e., within 0.95--1.05 pu, each critical load intended to remain supplied (not failed, hardened, or backed up) meets its service requirement, each backup is within the specified ratings, and each disabled isolation line has zero current. A critical load is counted as served when voltage is in band and delivered real power $\geq$99\% of its nominal demand; deenergized loads are recorded separately. $P_j$ is the sum of actual solved real power delivered to served critical loads in result j; $F_j=1$ if the state in which $P_j$ is solved is feasible; report all-solve mean $\sum_j P_j/N$ and feasible-only mean $\sum_j F_jP_j/\sum_j F_j$ together with the number of cases used to compute that feasible-only mean; note that $P_j$ can slightly exceed 180 kW.
-
-\section{Results}
-
-Similar mean served load can conceal a twofold difference in full electrical feasibility.
-
-\subsection{Flood-correlated failures}
-
-Each column corresponds to the number of failed assets (1 through 4), with counts for six separate depth assignments inside each cell. Used six ranked sets of flood depths obtained from the Rainelle flood-map depth field; for each of these assignments, the deepest one through four assets failed; within each of these 24 scenarios, each case is run under the specified hardening or backup strategies and no action. With two failed assets (i.e., under the column headed 2), depth hardening produces all six feasible, mean 181.65 kW; depth backup all-solve mean 181.35 kW, 0.30 kW lower, but only three of the six feasible; the feasible-only mean of backup then returns to 181.65 kW because it is the mean over only the accepted states. In that case, either mean alone would have concealed the difference in how often intervention produces an acceptable state. With four correlated failures (i.e., under the column headed 4), depth hardening produces six feasible (see the column under depth hardening), mean 124.68 kW; depth backup produces four feasible, feasible-only mean 126.24 kW; no action produces only 67.84 kW in all six; random hardening produces 107.53 kW across 73 of 90 feasible; random backup produces a lower feasible-only mean of 105.14 kW across 60 of 90 feasible cases.
-
-\subsection{Why a served load can still leave an infeasible island}
-
-Example: Consider the correlated scenario, seed 2203, failed assets A and D; depth backup serves 181.60 kW, asset A's 20-kW load at 0.990 pu; but the backup supplies 67.14 kVA and 28.24 A, exceeding its 60-kVA and 24.98-A limits. Opening L83 separates the branch with buses 84 and 85; there, the depth backup at bus 84 supplies critical load S84c (20 kW, 10 kvar) and ordinary downstream load S85c (40 kW, 20 kvar), nominal combined 60 kW and 30 kvar (67.08 kVA). Sizing the backup's real power against critical load alone overlooks connected island demand; restored critical kW and overloaded backup coexist in the reported mean.
-
 \begin{table*}[!t]
 \caption{Depth-Independent Failures}
 \label{tab:ind}
@@ -89,23 +85,63 @@ Values are feasible-only mean served critical load in kW (feasible / all solves)
 \end{minipage}
 \end{table*}
 
-\subsection{Flood-independent failures}
+Each intervention policy has a two-asset budget. Depth-informed hardening and backup select the two deepest assets. The random-placement comparison enumerates all 15 two-asset assignments. Each scenario has one no-action solve, two depth-informed solves and 30 random-placement solves, giving 33 solves per scenario and 11,880 in total. The budget equates asset counts, not technology costs.
 
-Used 319,264 valid 3-m raster cells from the June 2016 Rainelle flood-map depth field, randomly sampled six depths, assigned each to one of six terminal assets of the IEEE 123-node feeder (same six as in Table I); from the field of 319,264, many more samples of flood depths were possible; for each ranked depth assignment, all failure subsets of one through four assets were tested independently of flood depth; within each of these 336 scenarios, each case is run under the specified hardening or backup strategies and no action. At two failed assets (i.e., under the column headed 2), depth hardening leads to 74 feasible, feasible-only mean 141.20 kW; backup leads to 62 feasible, feasible-only mean 140.88 kW; no action leads to 72 feasible, feasible-only mean 124.56 kW. Each policy's feasible-only mean is the mean over only the accepted states; it is therefore a summary of the empirical distribution of $P_j$ conditional on $F_j=1$ under each policy, not a summary of the paired gain under both policies; this is why the two feasible-only means near 141 kW do not represent a gain. Reporting the counts prevents a single higher-service subset of cases from standing in for all the cases actually tested. The full records retain common scenario identifiers, permitting inspection of the different policies on the same failure sets.
+\subsection{Electrical model and acceptance criteria}
+
+The designated critical loads are A: S84c (20 kW), B: S83c (20 kW), C: S90b (40 kW), D: S92c (40 kW), E: S94a (40 kW) and F: S96b (20 kW), totaling 180 kW nominally. Failure disables the corresponding line, respectively L83, L84, L89, L91, L93 or L95, and its capacitor where present: C83, C90b or C92c. Other feeder loads remain enabled.
+
+Hardening prevents the branch disconnection. Backup adds a single-phase, 2.402-kV source rated at 60 kVA on the isolated side of the disabled line. This source supplies the island in the radial voltage-source power-flow model. Apparent-power and current ratings are acceptance tests on the solved state, so acceptable load voltage alone does not establish that the backup is within its rating.
+
+A state is electrically feasible when the solve converges, every energized feeder-load bus is within 0.95--1.05 pu, every critical load intended to remain supplied meets its service requirement, each backup is within its ratings, and each disabled isolation line has zero current. Intended service covers assets that have not failed or have hardening or backup. A critical load counts as served when its voltage is in band and its delivered real power is at least 99\% of nominal demand. Deenergized loads are recorded separately.
+
+\subsection{Service metrics}
+
+Let $P_j$ be the sum of actual solved real power delivered to served critical loads in result j, and let $F_j=1$ when that complete state is feasible. For N cases, the all-solve mean is $\sum_j P_j/N$ and the feasible-only mean is $\sum_j F_jP_j/\sum_j F_j$. We report feasible and total case counts with each feasible-only mean. Because $P_j$ uses solved power, it can slightly exceed the 180-kW nominal critical demand.
+
+\section{Results}
+
+\subsection{Flood-correlated failures}
+
+Table I reports the correlated cases. Each column gives a failure count from one to four. Each depth-informed policy is evaluated over six depth assignments; each random-placement policy is evaluated over 90 assignment-placement combinations.
+
+With two failed assets, depth hardening is feasible in all six cases and serves a mean of 181.65 kW. Depth backup has an all-solve mean of 181.35 kW, only 0.30 kW lower, but is feasible in three of six cases. Its feasible-only mean is 181.65 kW because that average includes only the three accepted states. Either mean alone would hide the difference in feasible-case counts.
+
+With four correlated failures, depth hardening is feasible in six cases and has a mean of 124.68 kW. Depth backup is feasible in four cases and has a feasible-only mean of 126.24 kW. No action produces 67.84 kW in all six feasible cases. Random hardening has a feasible-only mean of 107.53 kW across 73 of 90 feasible cases; random backup has a mean of 105.14 kW across 60 of 90.
+
+\subsection{Served load with an overloaded backup}
+
+In the correlated scenario with seed 2203 and failed assets A and D, depth backup serves 181.60 kW across the critical loads. Asset A's 20-kW load is served at 0.990 pu. Its backup supplies 67.14 kVA and 28.24 A, exceeding the 60-kVA and 24.98-A limits.
+
+Opening L83 isolates the branch containing buses 84 and 85. The backup at bus 84 supplies critical load S84c (20 kW, 10 kvar) and ordinary downstream load S85c (40 kW, 20 kvar). Their combined nominal demand is 60 kW and 30 kvar, or 67.08 kVA. Sizing the backup against the critical load alone omits demand connected to the same island. This case therefore contributes restored critical kW to the all-solve mean even though its backup is overloaded.
+
+\subsection{Depth-independent failures}
+
+Table II uses the same six depth assignments as Table I and tests every failure subset of one through four assets independently of depth. The one-, two-, three- and four-failure cases contain 36, 90, 120 and 90 scenarios, respectively.
+
+With two failed assets, depth hardening has 74 feasible cases and a feasible-only mean of 141.20 kW. Depth backup has 62 feasible cases and a feasible-only mean of 140.88 kW. No action has 72 feasible cases and a feasible-only mean of 124.56 kW. Each policy is evaluated over the same 90 scenarios.
+
+A feasible-only mean averages $P_j$ conditional on $F_j=1$ under that policy. Different policies can accept different subsets, so differences between their feasible-only means do not measure paired gains over the same cases. Reporting counts shows how much of the tested set each mean represents. The full records retain common scenario identifiers for comparisons on matching failure sets.
 
 \subsection{Constraint outcomes across the campaign}
 
-Each intervention family has 5,760 results ((1 depth + 15 random placements) $\times$ 360 scenarios): Of these, hardening had 949 infeasible (16.5\%), backup 1,575 (27.3\%), with 899 of these violating a source limit (apparent power or current); violation of a source limit is not the only possible reason for failure; the record includes specified voltage, service, and backup measurements and island-boundary currents; constraint categories may overlap. The worked example above connects the aggregate source-limit count to a specific network path with a specific demand.
+Each intervention family has 5,760 results: one depth-informed placement and 15 random placements across 360 scenarios. Hardening has 949 infeasible results (16.5\%), and backup has 1,575 (27.3\%). Among the infeasible backup results, 899 violate an apparent-power or current limit. Source limits are not the only cause of rejection, and constraint categories may overlap. The records include load voltages, critical-load service, backup-source measurements and island-boundary currents. The worked example shows the network path and connected demand behind one source overload.
 
 \section{Discussion}
 
-We uncover two effects. Correlated design favors depth-informed placement because failure definition and intervention rules use the same depth ranking. In the independent failure sets, placement alignment and electrical acceptance are separate: in contrast, with two correlated failures, depth-informed backup had an all-solve mean served load of 181.35 kW, just 0.30 kW below the depth-informed hardening mean of 181.65 kW (all six feasible), but backup succeeded in only three of six sitings; whether a served-load value belongs to a feasible state is a useful additional comparison to whether protecting the deepest assets helps. The different changes each intervention makes to the supply path are important. Hardening retains upstream connection; backup supplies island loads. In the worked branch above, the backed-up 60-kVA source exceeded the critical load's apparent demand (22.36 kVA) but fell below the nominal sum of critical and ordinary (60 kW, 30 kvar, 67.08 kVA); the relevant sizing quantity is connected island demand, and the performance report pairs restored service with both source and network checks. The combination results in different interpretations of served-load means. Although the means are near ties, this does not imply interchangeable interventions. With two correlated failures, depth-informed hardening succeeded in all six of the six sitings; depth-informed backup succeeded in only three of the six; with four failures, the higher feasible-only mean under depth-informed backup accompanied a lower number of feasible states; retaining the denominator as part of the sum changes interpretation without discarding the rejects.
+The correlated design favors depth-informed placement because the failure and intervention rules use the same depth ranking. Independent failures separate this placement effect from electrical acceptance. Both comparisons require checking whether restored service belongs to a feasible state.
+
+Hardening preserves the upstream connection; backup supplies island loads. In the worked branch, the 60-kVA source exceeds the critical load's nominal apparent demand of 22.36 kVA but falls below the combined critical and ordinary demand of 67.08 kVA. Connected island demand is therefore the relevant sizing quantity.
+
+Similar served-load means do not make the interventions interchangeable. With two correlated failures, similar all-solve means accompany a twofold difference in feasible-case counts. With four failures, backup has a higher feasible-only mean but fewer feasible states. Reporting the mean and feasible-case count preserves this distinction and keeps rejected states visible.
 
 \newpage
 
 \section{Reproducibility}
 
-The public reproduction package \cite{package} contains simulation source code, performance report sources, feeder inputs, the flood raster, Python dependencies and execution instructions, the complete result file, and an integrity checker using the built-in standard library. Full results are available as losslessly compressed JSON \cite{results}, including all 11,880 solves, voltage records per load, source and isolation checks, failure sets, and input hashes. The check\_results.py script recomputes 288 aggregate values and counts from the retained solves, and checks the seed-2203 example in the original report; the published reference outputs [3, 4] are stored separately from newly generated outputs. The reproduction commands \cite{package}, engine versions, and file hashes are provided.
+The public reproduction package \cite{package} contains simulation and report sources, feeder inputs, the flood raster, Python dependencies, execution instructions, the complete result file and a standard-library integrity checker. Full results are also available as losslessly compressed JSON \cite{results}, including all 11,880 solves, per-load voltage records, source and isolation checks, failure sets and input hashes.
+
+The check\_results.py script recomputes 288 aggregate values and counts from the retained solves and checks the seed-2203 example. Published reference outputs are stored separately from newly generated outputs. The package provides reproduction commands, engine versions and file hashes.
 
 \begin{thebibliography}{4}
 

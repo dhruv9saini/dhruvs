@@ -1,0 +1,245 @@
+{
+  "claim_boundary": [
+    "This is an observed June 2016 flood-exposure prioritization result for two public facility point records, not a forecast or a facility-damage model.",
+    "It does not identify utility assets, feeder topology, service connections, equipment elevation, outage causes, road access, personnel availability, protection settings, line ampacities, restoration feasibility, or an operational action.",
+    "The result can prioritize which facility merits first utility and site-data confirmation. It cannot rank power-restoration actions without permissioned utility and facility data."
+  ],
+  "comparison_table": [
+    {
+      "estimator": "nearest_cell_ft",
+      "fire_minus_police_ft": 6.0107421875
+    },
+    {
+      "estimator": "bilinear_ft",
+      "fire_minus_police_ft": 5.714169116166419
+    },
+    {
+      "estimator": "3m_min_ft",
+      "fire_minus_police_ft": 5.217041015625
+    },
+    {
+      "estimator": "3m_p05_ft",
+      "fire_minus_police_ft": 5.2769531249999995
+    },
+    {
+      "estimator": "3m_median_ft",
+      "fire_minus_police_ft": 5.717041015625
+    },
+    {
+      "estimator": "3m_mean_ft",
+      "fire_minus_police_ft": 5.648295084635417
+    },
+    {
+      "estimator": "3m_p95_ft",
+      "fire_minus_police_ft": 5.9714721679687495
+    },
+    {
+      "estimator": "3m_max_ft",
+      "fire_minus_police_ft": 6.0107421875
+    },
+    {
+      "estimator": "15m_min_ft",
+      "fire_minus_police_ft": 0.340576171875
+    },
+    {
+      "estimator": "15m_p05_ft",
+      "fire_minus_police_ft": 2.62806396484375
+    },
+    {
+      "estimator": "15m_median_ft",
+      "fire_minus_police_ft": 3.6187744140625
+    },
+    {
+      "estimator": "15m_mean_ft",
+      "fire_minus_police_ft": 3.8399414391974527
+    },
+    {
+      "estimator": "15m_p95_ft",
+      "fire_minus_police_ft": 5.59078369140625
+    },
+    {
+      "estimator": "15m_max_ft",
+      "fire_minus_police_ft": 5.689208984375
+    },
+    {
+      "estimator": "30m_min_ft",
+      "fire_minus_police_ft": 0.146484375
+    },
+    {
+      "estimator": "30m_p05_ft",
+      "fire_minus_police_ft": 1.857568359375
+    },
+    {
+      "estimator": "30m_median_ft",
+      "fire_minus_police_ft": 3.097900390625
+    },
+    {
+      "estimator": "30m_mean_ft",
+      "fire_minus_police_ft": 3.0552697600679917
+    },
+    {
+      "estimator": "30m_p95_ft",
+      "fire_minus_police_ft": 4.198559570312499
+    },
+    {
+      "estimator": "30m_max_ft",
+      "fire_minus_police_ft": 5.176513671875
+    },
+    {
+      "estimator": "10m_offset_minimum",
+      "fire_minus_police_ft": 1.8134765625
+    }
+  ],
+  "created_at_utc": "2026-09-05T19:52:07.389654+00:00",
+  "engine": {
+    "numpy": "2.5.2",
+    "platform": "Linux-6.18.36-x86_64-with-glibc2.42",
+    "python": "3.13.14 (main, Jun 11 2026, 04:03:13) [Clang 22.1.3 ]",
+    "rasterio": "1.5.1"
+  },
+  "facility_observations": [
+    {
+      "coordinates_wgs84": [
+        -80.76960092278189,
+        37.96905814037339
+      ],
+      "facility": "Rainelle Police Department",
+      "facility_type": "Police Department",
+      "neighborhoods": {
+        "15.0": {
+          "max_ft": 1.42919921875,
+          "mean_ft": 0.8466539884868421,
+          "median_ft": 0.9134521484375,
+          "min_ft": 0.000244140625,
+          "p05_ft": 0.10821533203125,
+          "p95_ft": 1.3250732421875,
+          "radius_m": 15.0,
+          "valid_cell_count": 76
+        },
+        "3.0": {
+          "max_ft": 0.91455078125,
+          "mean_ft": 0.81231689453125,
+          "median_ft": 0.812255859375,
+          "min_ft": 0.710205078125,
+          "p05_ft": 0.710498046875,
+          "p95_ft": 0.91422119140625,
+          "radius_m": 3.0,
+          "valid_cell_count": 4
+        },
+        "30.0": {
+          "max_ft": 1.94189453125,
+          "mean_ft": 1.1211029435800208,
+          "median_ft": 1.218505859375,
+          "min_ft": 0.000244140625,
+          "p05_ft": 0.278662109375,
+          "p95_ft": 1.7367431640625,
+          "radius_m": 30.0,
+          "valid_cell_count": 239
+        }
+      },
+      "point_methods": {
+        "bilinear_ft": 0.929976212731527,
+        "nearest_cell_ft": 0.91455078125,
+        "nearest_cell_row_col": [
+          1369,
+          965
+        ]
+      },
+      "ten_meter_geolocation_sensitivity": {
+        "max_ft": 1.224609375,
+        "median_ft": 0.91455078125,
+        "min_ft": 0.1044921875,
+        "offset_pattern": "center plus eight 10 m radial offsets",
+        "sample_count": 9
+      }
+    },
+    {
+      "coordinates_wgs84": [
+        -80.76538305314689,
+        37.96857636702187
+      ],
+      "facility": "Rainelle Volunteer Fire Department",
+      "facility_type": "Fire Department",
+      "neighborhoods": {
+        "15.0": {
+          "max_ft": 7.118408203125,
+          "mean_ft": 4.686595427684295,
+          "median_ft": 4.5322265625,
+          "min_ft": 0.3408203125,
+          "p05_ft": 2.736279296875,
+          "p95_ft": 6.91585693359375,
+          "radius_m": 15.0,
+          "valid_cell_count": 78
+        },
+        "3.0": {
+          "max_ft": 6.92529296875,
+          "mean_ft": 6.460611979166667,
+          "median_ft": 6.529296875,
+          "min_ft": 5.92724609375,
+          "p05_ft": 5.987451171875,
+          "p95_ft": 6.885693359375,
+          "radius_m": 3.0,
+          "valid_cell_count": 3
+        },
+        "30.0": {
+          "max_ft": 7.118408203125,
+          "mean_ft": 4.1763727036480125,
+          "median_ft": 4.31640625,
+          "min_ft": 0.146728515625,
+          "p05_ft": 2.13623046875,
+          "p95_ft": 5.935302734374999,
+          "radius_m": 30.0,
+          "valid_cell_count": 239
+        }
+      },
+      "point_methods": {
+        "bilinear_ft": 6.644145328897945,
+        "nearest_cell_ft": 6.92529296875,
+        "nearest_cell_row_col": [
+          1386,
+          1089
+        ]
+      },
+      "ten_meter_geolocation_sensitivity": {
+        "max_ft": 6.92529296875,
+        "median_ft": 4.53125,
+        "min_ft": 3.0380859375,
+        "offset_pattern": "center plus eight 10 m radial offsets",
+        "sample_count": 9
+      }
+    }
+  ],
+  "inputs": {
+    "facility_geometry_source": "Preserved WVU critical-facilities service response with coordinate-bearing features",
+    "input_sha256": {
+      "depth_release_zip": "09d7100eca1c5f224c9bb93af4bd02e036e48794a03235622d519ca5903039d8",
+      "facility_geometry": "f37524ef23d3570a339324859995d49a64c023fffa201c5ca87fdbb2ff6ae293"
+    },
+    "raster_cell_size_m": [
+      3.0,
+      3.0
+    ],
+    "raster_crs": "EPSG:26917",
+    "raster_shape": [
+      2432,
+      1975
+    ],
+    "usgs_rainelle_depth_release": "https://doi.org/10.5066/F76T0K4K"
+  },
+  "methods": {
+    "evaluation": "The priority ordering is called robust only if every listed estimator gives Fire Department depth greater than Police Department depth, including the conservative fire minimum versus police maximum under the 10 m perturbation set.",
+    "geolocation_sensitivity": "center point plus eight 10 m radial offsets, sampled by nearest raster cell",
+    "neighborhood_estimators": "3 m, 15 m, and 30 m circular neighborhoods reporting min, p05, median, mean, p95, and max",
+    "point_baselines": [
+      "nearest raster cell",
+      "bilinear interpolation"
+    ]
+  },
+  "research_question": "Do public USGS flood-depth data support a stable facility-level exposure prioritization for the two Rainelle public-safety facilities, before any utility topology or ampacity data are available?",
+  "result": {
+    "estimator_count": 21,
+    "fire_department_higher_observed_event_depth_under_all_estimators": true,
+    "minimum_fire_minus_police_ft": 0.146484375
+  },
+  "study_status": "complete_public_data_exposure_robustness_analysis"
+}

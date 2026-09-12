@@ -1,0 +1,854 @@
+{
+  "aggregate_results": {
+    "1": {
+      "flood_correlated": {
+        "depth_informed_backup": {
+          "feasible_solve_count": 5,
+          "feasible_solve_fraction": 0.8333333333333334,
+          "max_critical_kw_among_feasible_solves": 181.74732088595988,
+          "max_solved_critical_kw_unconstrained": 181.74732088595988,
+          "mean_critical_kw_among_feasible_solves": 181.21206451552925,
+          "mean_solved_critical_kw_unconstrained": 181.29088310459656,
+          "min_critical_kw_among_feasible_solves": 179.7652791914276,
+          "min_solved_critical_kw_unconstrained": 179.7652791914276,
+          "solve_count": 6
+        },
+        "depth_informed_hardening": {
+          "feasible_solve_count": 6,
+          "feasible_solve_fraction": 1.0,
+          "max_critical_kw_among_feasible_solves": 181.64990620789493,
+          "max_solved_critical_kw_unconstrained": 181.64990620789493,
+          "mean_critical_kw_among_feasible_solves": 181.64990620789493,
+          "mean_solved_critical_kw_unconstrained": 181.64990620789493,
+          "min_critical_kw_among_feasible_solves": 181.64990620789493,
+          "min_solved_critical_kw_unconstrained": 181.64990620789493,
+          "solve_count": 6
+        },
+        "no_action": {
+          "feasible_solve_count": 5,
+          "feasible_solve_fraction": 0.8333333333333334,
+          "max_critical_kw_among_feasible_solves": 161.74732088595988,
+          "max_solved_critical_kw_unconstrained": 161.74732088595988,
+          "mean_critical_kw_among_feasible_solves": 145.258864663894,
+          "mean_solved_critical_kw_unconstrained": 147.9965498949005,
+          "min_critical_kw_among_feasible_solves": 139.9992799332513,
+          "min_solved_critical_kw_unconstrained": 139.9992799332513,
+          "solve_count": 6
+        }
+      },
+      "independent_outage": {
+        "depth_informed_backup": {
+          "feasible_solve_count": 30,
+          "feasible_solve_fraction": 0.8333333333333334,
+          "max_critical_kw_among_feasible_solves": 181.74732088595988,
+          "max_solved_critical_kw_unconstrained": 181.74732088595988,
+          "mean_critical_kw_among_feasible_solves": 159.25773903912514,
+          "mean_solved_critical_kw_unconstrained": 160.77338965203757,
+          "min_critical_kw_among_feasible_solves": 139.9992799332513,
+          "min_solved_critical_kw_unconstrained": 139.9992799332513,
+          "solve_count": 36
+        },
+        "depth_informed_hardening": {
+          "feasible_solve_count": 32,
+          "feasible_solve_fraction": 0.8888888888888888,
+          "max_critical_kw_among_feasible_solves": 181.64990620789493,
+          "max_solved_critical_kw_unconstrained": 181.64990620789493,
+          "mean_critical_kw_among_feasible_solves": 160.7368455990751,
+          "mean_solved_critical_kw_unconstrained": 160.84219342694823,
+          "min_critical_kw_among_feasible_solves": 139.9992799332513,
+          "min_solved_critical_kw_unconstrained": 139.9992799332513,
+          "solve_count": 36
+        },
+        "no_action": {
+          "feasible_solve_count": 30,
+          "feasible_solve_fraction": 0.8333333333333334,
+          "max_critical_kw_among_feasible_solves": 161.74732088595988,
+          "max_solved_critical_kw_unconstrained": 161.74732088595988,
+          "mean_critical_kw_among_feasible_solves": 149.26553906385257,
+          "mean_solved_critical_kw_unconstrained": 151.33544522819935,
+          "min_critical_kw_among_feasible_solves": 139.9992799332513,
+          "min_solved_critical_kw_unconstrained": 139.9992799332513,
+          "solve_count": 36
+        }
+      },
+      "random_baselines_under_flood_correlated": {
+        "backup": {
+          "feasible_solve_count": 75,
+          "feasible_solve_fraction": 0.8333333333333334,
+          "max_critical_kw_among_feasible_solves": 181.74732088595988,
+          "max_solved_critical_kw_unconstrained": 181.74732088595988,
+          "mean_critical_kw_among_feasible_solves": 157.24326461443908,
+          "mean_solved_critical_kw_unconstrained": 159.09466096479917,
+          "min_critical_kw_among_feasible_solves": 139.9992799332513,
+          "min_solved_critical_kw_unconstrained": 139.9992799332513,
+          "solve_count": 90
+        },
+        "hardening": {
+          "feasible_solve_count": 80,
+          "feasible_solve_fraction": 0.8888888888888888,
+          "max_critical_kw_among_feasible_solves": 181.64990620789493,
+          "max_solved_critical_kw_unconstrained": 181.64990620789493,
+          "mean_critical_kw_among_feasible_solves": 158.90550524289435,
+          "mean_solved_critical_kw_unconstrained": 159.21433533256533,
+          "min_critical_kw_among_feasible_solves": 139.9992799332513,
+          "min_solved_critical_kw_unconstrained": 139.9992799332513,
+          "solve_count": 90
+        }
+      }
+    },
+    "2": {
+      "flood_correlated": {
+        "depth_informed_backup": {
+          "feasible_solve_count": 3,
+          "feasible_solve_fraction": 0.5,
+          "max_critical_kw_among_feasible_solves": 181.6682710023986,
+          "max_solved_critical_kw_unconstrained": 181.78535520308012,
+          "mean_critical_kw_among_feasible_solves": 181.65184452688968,
+          "mean_solved_critical_kw_unconstrained": 181.35084709203446,
+          "min_critical_kw_among_feasible_solves": 181.6436312891352,
+          "min_solved_critical_kw_unconstrained": 179.7653342197629,
+          "solve_count": 6
+        },
+        "depth_informed_hardening": {
+          "feasible_solve_count": 6,
+          "feasible_solve_fraction": 1.0,
+          "max_critical_kw_among_feasible_solves": 181.64990620789493,
+          "max_solved_critical_kw_unconstrained": 181.64990620789493,
+          "mean_critical_kw_among_feasible_solves": 181.64990620789493,
+          "mean_solved_critical_kw_unconstrained": 181.64990620789493,
+          "min_critical_kw_among_feasible_solves": 181.64990620789493,
+          "min_solved_critical_kw_unconstrained": 181.64990620789493,
+          "solve_count": 6
+        },
+        "no_action": {
+          "feasible_solve_count": 5,
+          "feasible_solve_fraction": 0.8333333333333334,
+          "max_critical_kw_among_feasible_solves": 141.78535520308012,
+          "max_solved_critical_kw_unconstrained": 141.78535520308012,
+          "mean_critical_kw_among_feasible_solves": 125.6679496664888,
+          "mean_solved_critical_kw_unconstrained": 124.72318054900508,
+          "min_critical_kw_among_feasible_solves": 121.5988595486948,
+          "min_solved_critical_kw_unconstrained": 119.99933496158661,
+          "solve_count": 6
+        }
+      },
+      "independent_outage": {
+        "depth_informed_backup": {
+          "feasible_solve_count": 62,
+          "feasible_solve_fraction": 0.6888888888888889,
+          "max_critical_kw_among_feasible_solves": 181.6682710023986,
+          "max_solved_critical_kw_unconstrained": 181.78535520308012,
+          "mean_critical_kw_among_feasible_solves": 140.882767143467,
+          "mean_solved_critical_kw_unconstrained": 139.9695103064427,
+          "min_critical_kw_among_feasible_solves": 99.99911928293497,
+          "min_solved_critical_kw_unconstrained": 99.99911928293497,
+          "solve_count": 90
+        },
+        "depth_informed_hardening": {
+          "feasible_solve_count": 74,
+          "feasible_solve_fraction": 0.8222222222222222,
+          "max_critical_kw_among_feasible_solves": 181.64990620789493,
+          "max_solved_critical_kw_unconstrained": 181.64990620789493,
+          "mean_critical_kw_among_feasible_solves": 141.1987083522579,
+          "mean_solved_critical_kw_unconstrained": 140.0614323754994,
+          "min_critical_kw_among_feasible_solves": 99.99911928293497,
+          "min_solved_critical_kw_unconstrained": 99.99911928293497,
+          "solve_count": 90
+        },
+        "no_action": {
+          "feasible_solve_count": 72,
+          "feasible_solve_fraction": 0.8,
+          "max_critical_kw_among_feasible_solves": 141.78535520308012,
+          "max_solved_critical_kw_unconstrained": 141.78535520308012,
+          "mean_critical_kw_among_feasible_solves": 124.56096075143397,
+          "mean_solved_critical_kw_unconstrained": 121.09362145876621,
+          "min_critical_kw_among_feasible_solves": 99.99911928293497,
+          "min_solved_critical_kw_unconstrained": 99.99911928293497,
+          "solve_count": 90
+        }
+      },
+      "random_baselines_under_flood_correlated": {
+        "backup": {
+          "feasible_solve_count": 65,
+          "feasible_solve_fraction": 0.7222222222222222,
+          "max_critical_kw_among_feasible_solves": 181.6682710023986,
+          "max_solved_critical_kw_unconstrained": 181.78535520308012,
+          "mean_critical_kw_among_feasible_solves": 142.2796177111967,
+          "mean_solved_critical_kw_unconstrained": 143.59906939668153,
+          "min_critical_kw_among_feasible_solves": 121.5988595486948,
+          "min_solved_critical_kw_unconstrained": 119.99933496158661,
+          "solve_count": 90
+        },
+        "hardening": {
+          "feasible_solve_count": 76,
+          "feasible_solve_fraction": 0.8444444444444444,
+          "max_critical_kw_among_feasible_solves": 181.64990620789493,
+          "max_solved_critical_kw_unconstrained": 181.64990620789493,
+          "mean_critical_kw_among_feasible_solves": 143.64055100265378,
+          "mean_solved_critical_kw_unconstrained": 143.6684188263408,
+          "min_critical_kw_among_feasible_solves": 121.5988595486948,
+          "min_solved_critical_kw_unconstrained": 119.99933496158661,
+          "solve_count": 90
+        }
+      }
+    },
+    "3": {
+      "flood_correlated": {
+        "depth_informed_backup": {
+          "feasible_solve_count": 4,
+          "feasible_solve_fraction": 0.6666666666666666,
+          "max_critical_kw_among_feasible_solves": 161.74863415390837,
+          "max_solved_critical_kw_unconstrained": 161.74863415390837,
+          "mean_critical_kw_among_feasible_solves": 151.19475412631675,
+          "mean_solved_critical_kw_unconstrained": 151.36050810389835,
+          "min_critical_kw_among_feasible_solves": 139.76517066227748,
+          "min_solved_critical_kw_unconstrained": 139.76517066227748,
+          "solve_count": 6
+        },
+        "depth_informed_hardening": {
+          "feasible_solve_count": 5,
+          "feasible_solve_fraction": 0.8333333333333334,
+          "max_critical_kw_among_feasible_solves": 161.74732088595988,
+          "max_solved_critical_kw_unconstrained": 161.74732088595988,
+          "mean_critical_kw_among_feasible_solves": 149.5649839841715,
+          "mean_solved_critical_kw_unconstrained": 151.58498266179842,
+          "min_critical_kw_among_feasible_solves": 141.49650453484574,
+          "min_solved_critical_kw_unconstrained": 141.49650453484574,
+          "solve_count": 6
+        },
+        "no_action": {
+          "feasible_solve_count": 5,
+          "feasible_solve_fraction": 0.8333333333333334,
+          "max_critical_kw_among_feasible_solves": 101.74863415390836,
+          "max_solved_critical_kw_unconstrained": 101.74863415390836,
+          "mean_critical_kw_among_feasible_solves": 93.330440730138,
+          "mean_solved_critical_kw_unconstrained": 94.73284156086896,
+          "min_critical_kw_among_feasible_solves": 79.99917140410119,
+          "min_solved_critical_kw_unconstrained": 79.99917140410119,
+          "solve_count": 6
+        }
+      },
+      "independent_outage": {
+        "depth_informed_backup": {
+          "feasible_solve_count": 88,
+          "feasible_solve_fraction": 0.7333333333333333,
+          "max_critical_kw_among_feasible_solves": 161.81425846677513,
+          "max_solved_critical_kw_unconstrained": 161.81425846677513,
+          "mean_critical_kw_among_feasible_solves": 116.12635937154317,
+          "mean_solved_critical_kw_unconstrained": 119.16696278678613,
+          "min_critical_kw_among_feasible_solves": 59.999534010078655,
+          "min_solved_critical_kw_unconstrained": 59.999534010078655,
+          "solve_count": 120
+        },
+        "depth_informed_hardening": {
+          "feasible_solve_count": 98,
+          "feasible_solve_fraction": 0.8166666666666667,
+          "max_critical_kw_among_feasible_solves": 161.74732088595988,
+          "max_solved_critical_kw_unconstrained": 161.74732088595988,
+          "mean_critical_kw_among_feasible_solves": 119.9807105603962,
+          "mean_solved_critical_kw_unconstrained": 119.29116361551539,
+          "min_critical_kw_among_feasible_solves": 59.999534010078655,
+          "min_solved_critical_kw_unconstrained": 59.999534010078655,
+          "solve_count": 120
+        },
+        "no_action": {
+          "feasible_solve_count": 102,
+          "feasible_solve_fraction": 0.85,
+          "max_critical_kw_among_feasible_solves": 121.67511900397716,
+          "max_solved_critical_kw_unconstrained": 121.67511900397716,
+          "mean_critical_kw_among_feasible_solves": 90.11276614731837,
+          "mean_solved_critical_kw_unconstrained": 90.85312951527145,
+          "min_critical_kw_among_feasible_solves": 59.999534010078655,
+          "min_solved_critical_kw_unconstrained": 59.999534010078655,
+          "solve_count": 120
+        }
+      },
+      "random_baselines_under_flood_correlated": {
+        "backup": {
+          "feasible_solve_count": 65,
+          "feasible_solve_fraction": 0.7222222222222222,
+          "max_critical_kw_among_feasible_solves": 161.74863415390837,
+          "max_solved_critical_kw_unconstrained": 161.74863415390837,
+          "mean_critical_kw_among_feasible_solves": 120.95193635209554,
+          "mean_solved_critical_kw_unconstrained": 123.60873040854543,
+          "min_critical_kw_among_feasible_solves": 79.99917140410119,
+          "min_solved_critical_kw_unconstrained": 79.99917140410119,
+          "solve_count": 90
+        },
+        "hardening": {
+          "feasible_solve_count": 78,
+          "feasible_solve_fraction": 0.8666666666666667,
+          "max_critical_kw_among_feasible_solves": 161.74732088595988,
+          "max_solved_critical_kw_unconstrained": 161.74732088595988,
+          "mean_critical_kw_among_feasible_solves": 124.05263983338428,
+          "mean_solved_critical_kw_unconstrained": 123.6823827886165,
+          "min_critical_kw_among_feasible_solves": 79.99917140410119,
+          "min_solved_critical_kw_unconstrained": 79.99917140410119,
+          "solve_count": 90
+        }
+      }
+    },
+    "4": {
+      "flood_correlated": {
+        "depth_informed_backup": {
+          "feasible_solve_count": 4,
+          "feasible_solve_fraction": 0.6666666666666666,
+          "max_critical_kw_among_feasible_solves": 141.78641239260034,
+          "max_solved_critical_kw_unconstrained": 141.85466495070617,
+          "mean_critical_kw_among_feasible_solves": 126.24109317028436,
+          "mean_solved_critical_kw_unconstrained": 124.46976216363522,
+          "min_critical_kw_among_feasible_solves": 119.76756277762641,
+          "min_solved_critical_kw_unconstrained": 99.99953534996766,
+          "solve_count": 6
+        },
+        "depth_informed_hardening": {
+          "feasible_solve_count": 6,
+          "feasible_solve_fraction": 1.0,
+          "max_critical_kw_among_feasible_solves": 141.78535520308012,
+          "max_solved_critical_kw_unconstrained": 141.78535520308012,
+          "mean_critical_kw_among_feasible_solves": 124.68050191256094,
+          "mean_solved_critical_kw_unconstrained": 124.68050191256094,
+          "min_critical_kw_among_feasible_solves": 99.99911928293497,
+          "min_solved_critical_kw_unconstrained": 99.99911928293497,
+          "solve_count": 6
+        },
+        "no_action": {
+          "feasible_solve_count": 6,
+          "feasible_solve_fraction": 1.0,
+          "max_critical_kw_among_feasible_solves": 81.85466495070617,
+          "max_solved_critical_kw_unconstrained": 81.85466495070617,
+          "mean_critical_kw_among_feasible_solves": 67.84209562060585,
+          "mean_solved_critical_kw_unconstrained": 67.84209562060585,
+          "min_critical_kw_among_feasible_solves": 59.999535349967665,
+          "min_solved_critical_kw_unconstrained": 59.999535349967665,
+          "solve_count": 6
+        }
+      },
+      "independent_outage": {
+        "depth_informed_backup": {
+          "feasible_solve_count": 64,
+          "feasible_solve_fraction": 0.7111111111111111,
+          "max_critical_kw_among_feasible_solves": 141.85466495070617,
+          "max_solved_critical_kw_unconstrained": 141.85466495070617,
+          "mean_critical_kw_among_feasible_solves": 98.37658322152521,
+          "mean_solved_critical_kw_unconstrained": 98.33297342467706,
+          "min_critical_kw_among_feasible_solves": 59.99877447594634,
+          "min_solved_critical_kw_unconstrained": 39.99952490945778,
+          "solve_count": 90
+        },
+        "depth_informed_hardening": {
+          "feasible_solve_count": 77,
+          "feasible_solve_fraction": 0.8555555555555555,
+          "max_critical_kw_among_feasible_solves": 141.78535520308012,
+          "max_solved_critical_kw_unconstrained": 141.78535520308012,
+          "mean_critical_kw_among_feasible_solves": 98.65895995791865,
+          "mean_solved_critical_kw_unconstrained": 98.52095076856197,
+          "min_critical_kw_among_feasible_solves": 59.99877447594634,
+          "min_solved_critical_kw_unconstrained": 39.99952490945778,
+          "solve_count": 90
+        },
+        "no_action": {
+          "feasible_solve_count": 84,
+          "feasible_solve_fraction": 0.9333333333333333,
+          "max_critical_kw_among_feasible_solves": 81.85466495070617,
+          "max_solved_critical_kw_unconstrained": 81.85466495070617,
+          "mean_critical_kw_among_feasible_solves": 62.05131507360032,
+          "mean_solved_critical_kw_unconstrained": 60.58119572932416,
+          "min_critical_kw_among_feasible_solves": 39.999766996478606,
+          "min_solved_critical_kw_unconstrained": 39.99952490945778,
+          "solve_count": 90
+        }
+      },
+      "random_baselines_under_flood_correlated": {
+        "backup": {
+          "feasible_solve_count": 60,
+          "feasible_solve_fraction": 0.6666666666666666,
+          "max_critical_kw_among_feasible_solves": 141.85466495070617,
+          "max_solved_critical_kw_unconstrained": 141.85466495070617,
+          "mean_critical_kw_among_feasible_solves": 105.14422885502933,
+          "mean_solved_critical_kw_unconstrained": 105.59387331595877,
+          "min_critical_kw_among_feasible_solves": 59.999535349967665,
+          "min_solved_critical_kw_unconstrained": 59.999535349967665,
+          "solve_count": 90
+        },
+        "hardening": {
+          "feasible_solve_count": 73,
+          "feasible_solve_fraction": 0.8111111111111111,
+          "max_critical_kw_among_feasible_solves": 141.78535520308012,
+          "max_solved_critical_kw_unconstrained": 141.78535520308012,
+          "mean_critical_kw_among_feasible_solves": 107.53173148623152,
+          "mean_solved_critical_kw_unconstrained": 105.74574501964568,
+          "min_critical_kw_among_feasible_solves": 59.999535349967665,
+          "min_solved_critical_kw_unconstrained": 59.999535349967665,
+          "solve_count": 90
+        }
+      }
+    }
+  },
+  "campaign_accounting": {
+    "actual_solve_count": 11880,
+    "expected_solve_count": 11880,
+    "infeasible_backup_results_with_source_limit_violation_count": 899,
+    "infeasible_retained_backup_policy_result_count": 1575,
+    "infeasible_retained_hardening_policy_result_count": 949,
+    "policy_solves_per_scenario": 33,
+    "retained_backup_policy_result_count": 5760,
+    "retained_hardening_policy_result_count": 5760,
+    "scenario_count": 360
+  },
+  "design": {
+    "backup_source": "A modeled 1-phase 2.402 kV, 60 kVA source is placed only behind a disabled terminal line. Each solve checks convergence, all energized feeder-load voltage states, delivered critical kW, source apparent power/current, and zero current on disabled isolation lines.",
+    "flood_correlated_outage": "For each synthetic siting, the highest-depth one through four assets fail. This deliberately aligns the failure mechanism with the depth-informed policy; it is a controlled mechanism test, not an independent prediction validation.",
+    "full_feeder_background": "Every ordinary IEEE 123 load remains enabled. A failed terminal asset disables only its designated line and listed capacitor when applicable; a backup source energizes the actual isolated terminal island, including any ordinary downstream feeder demand. Every solve records voltage state for each enabled feeder load.",
+    "independent_outage": "For the same outage count and siting, every combination of failed assets is evaluated, giving the exact uniform independent-outage baseline.",
+    "interventions": "Every hardening or backup policy receives exactly two abstract intervention slots. Random baselines enumerate all 15 two-slot assignments. Cross-technology costs are not compared.",
+    "synthetic_siting": "For each of six fixed seeds, six valid USGS raster depths are sampled without replacement and assigned in fixed order to six disclosed terminal IEEE 123 assets. This is a controlled synthetic co-location, not a geographic mapping to a real utility.",
+    "thermal_boundary": "No line ampacity or thermal conclusion is made because the public IEEE 123 files do not provide a suitable basis for this study to assert real or synthetic ampacities."
+  },
+  "inputs": {
+    "depth_zip_sha256": "09d7100eca1c5f224c9bb93af4bd02e036e48794a03235622d519ca5903039d8",
+    "native_dss_dependencies": {
+      "model/ieee123_isolated/IEEE123Loads.DSS": "fd28f52836205506a1980b52c5a7e12ca585aa626c52a6249502c1c3b2fc2255",
+      "model/ieee123_isolated/IEEE123Master.dss": "42cf12b93e33ce41e63bf3b8dab23237a555c1a5e9cce51e9292e22a6a7a4552",
+      "model/ieee123_isolated/IEEE123Regulators.DSS": "cd6ad77980dc018631ce39faab528afce40b0b9a50a6bc1c9ac8049ffb8207d7",
+      "model/ieee123_isolated/IEEELineCodes.DSS": "4bc8e3a0b24ad7b1cb4321f1c3b6c8458b646dd3a83b3cd11cccc02444624cb2"
+    },
+    "raster": {
+      "cell_size_m": [
+        3.0,
+        3.0
+      ],
+      "crs": "EPSG:26917",
+      "shape": [
+        2432,
+        1975
+      ],
+      "valid_depth_cell_count": 319264
+    },
+    "usgs_depth_release": "https://doi.org/10.5066/F76T0K4K"
+  },
+  "synthetic_sitings": [
+    {
+      "assets": [
+        {
+          "asset": "A",
+          "bus": "84.3",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L83",
+          "load": "s84c",
+          "synthetic_flood_depth_ft": 4.174072265625
+        },
+        {
+          "asset": "B",
+          "bus": "83.3",
+          "capacitor": "C83",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L84",
+          "load": "s83c",
+          "synthetic_flood_depth_ft": 2.9521484375
+        },
+        {
+          "asset": "C",
+          "bus": "90.2",
+          "capacitor": "C90b",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L89",
+          "load": "s90b",
+          "synthetic_flood_depth_ft": 1.5126953125
+        },
+        {
+          "asset": "D",
+          "bus": "92.3",
+          "capacitor": "C92c",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L91",
+          "load": "s92c",
+          "synthetic_flood_depth_ft": 5.278076171875
+        },
+        {
+          "asset": "E",
+          "bus": "94.1",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L93",
+          "load": "s94a",
+          "synthetic_flood_depth_ft": 12.74365234375
+        },
+        {
+          "asset": "F",
+          "bus": "96.2",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L95",
+          "load": "s96b",
+          "synthetic_flood_depth_ft": 6.134033203125
+        }
+      ],
+      "depth_rank_descending": [
+        "E",
+        "F",
+        "D",
+        "A",
+        "B",
+        "C"
+      ],
+      "seed": 1103
+    },
+    {
+      "assets": [
+        {
+          "asset": "A",
+          "bus": "84.3",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L83",
+          "load": "s84c",
+          "synthetic_flood_depth_ft": 15.84130859375
+        },
+        {
+          "asset": "B",
+          "bus": "83.3",
+          "capacitor": "C83",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L84",
+          "load": "s83c",
+          "synthetic_flood_depth_ft": 5.765625
+        },
+        {
+          "asset": "C",
+          "bus": "90.2",
+          "capacitor": "C90b",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L89",
+          "load": "s90b",
+          "synthetic_flood_depth_ft": 4.263916015625
+        },
+        {
+          "asset": "D",
+          "bus": "92.3",
+          "capacitor": "C92c",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L91",
+          "load": "s92c",
+          "synthetic_flood_depth_ft": 18.171875
+        },
+        {
+          "asset": "E",
+          "bus": "94.1",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L93",
+          "load": "s94a",
+          "synthetic_flood_depth_ft": 0.6201171875
+        },
+        {
+          "asset": "F",
+          "bus": "96.2",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L95",
+          "load": "s96b",
+          "synthetic_flood_depth_ft": 8.62060546875
+        }
+      ],
+      "depth_rank_descending": [
+        "D",
+        "A",
+        "F",
+        "B",
+        "C",
+        "E"
+      ],
+      "seed": 2203
+    },
+    {
+      "assets": [
+        {
+          "asset": "A",
+          "bus": "84.3",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L83",
+          "load": "s84c",
+          "synthetic_flood_depth_ft": 4.611328125
+        },
+        {
+          "asset": "B",
+          "bus": "83.3",
+          "capacitor": "C83",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L84",
+          "load": "s83c",
+          "synthetic_flood_depth_ft": 4.3173828125
+        },
+        {
+          "asset": "C",
+          "bus": "90.2",
+          "capacitor": "C90b",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L89",
+          "load": "s90b",
+          "synthetic_flood_depth_ft": 13.12158203125
+        },
+        {
+          "asset": "D",
+          "bus": "92.3",
+          "capacitor": "C92c",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L91",
+          "load": "s92c",
+          "synthetic_flood_depth_ft": 0.126708984375
+        },
+        {
+          "asset": "E",
+          "bus": "94.1",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L93",
+          "load": "s94a",
+          "synthetic_flood_depth_ft": 5.7353515625
+        },
+        {
+          "asset": "F",
+          "bus": "96.2",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L95",
+          "load": "s96b",
+          "synthetic_flood_depth_ft": 5.748046875
+        }
+      ],
+      "depth_rank_descending": [
+        "C",
+        "F",
+        "E",
+        "A",
+        "B",
+        "D"
+      ],
+      "seed": 3303
+    },
+    {
+      "assets": [
+        {
+          "asset": "A",
+          "bus": "84.3",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L83",
+          "load": "s84c",
+          "synthetic_flood_depth_ft": 4.367919921875
+        },
+        {
+          "asset": "B",
+          "bus": "83.3",
+          "capacitor": "C83",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L84",
+          "load": "s83c",
+          "synthetic_flood_depth_ft": 7.234130859375
+        },
+        {
+          "asset": "C",
+          "bus": "90.2",
+          "capacitor": "C90b",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L89",
+          "load": "s90b",
+          "synthetic_flood_depth_ft": 2.564208984375
+        },
+        {
+          "asset": "D",
+          "bus": "92.3",
+          "capacitor": "C92c",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L91",
+          "load": "s92c",
+          "synthetic_flood_depth_ft": 4.49169921875
+        },
+        {
+          "asset": "E",
+          "bus": "94.1",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L93",
+          "load": "s94a",
+          "synthetic_flood_depth_ft": 3.093505859375
+        },
+        {
+          "asset": "F",
+          "bus": "96.2",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L95",
+          "load": "s96b",
+          "synthetic_flood_depth_ft": 3.0693359375
+        }
+      ],
+      "depth_rank_descending": [
+        "B",
+        "D",
+        "A",
+        "E",
+        "F",
+        "C"
+      ],
+      "seed": 4403
+    },
+    {
+      "assets": [
+        {
+          "asset": "A",
+          "bus": "84.3",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L83",
+          "load": "s84c",
+          "synthetic_flood_depth_ft": 8.306640625
+        },
+        {
+          "asset": "B",
+          "bus": "83.3",
+          "capacitor": "C83",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L84",
+          "load": "s83c",
+          "synthetic_flood_depth_ft": 7.90380859375
+        },
+        {
+          "asset": "C",
+          "bus": "90.2",
+          "capacitor": "C90b",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L89",
+          "load": "s90b",
+          "synthetic_flood_depth_ft": 5.24609375
+        },
+        {
+          "asset": "D",
+          "bus": "92.3",
+          "capacitor": "C92c",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L91",
+          "load": "s92c",
+          "synthetic_flood_depth_ft": 4.5791015625
+        },
+        {
+          "asset": "E",
+          "bus": "94.1",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L93",
+          "load": "s94a",
+          "synthetic_flood_depth_ft": 5.78466796875
+        },
+        {
+          "asset": "F",
+          "bus": "96.2",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L95",
+          "load": "s96b",
+          "synthetic_flood_depth_ft": 1.531982421875
+        }
+      ],
+      "depth_rank_descending": [
+        "A",
+        "B",
+        "E",
+        "C",
+        "D",
+        "F"
+      ],
+      "seed": 5503
+    },
+    {
+      "assets": [
+        {
+          "asset": "A",
+          "bus": "84.3",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L83",
+          "load": "s84c",
+          "synthetic_flood_depth_ft": 3.031494140625
+        },
+        {
+          "asset": "B",
+          "bus": "83.3",
+          "capacitor": "C83",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L84",
+          "load": "s83c",
+          "synthetic_flood_depth_ft": 7.299072265625
+        },
+        {
+          "asset": "C",
+          "bus": "90.2",
+          "capacitor": "C90b",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L89",
+          "load": "s90b",
+          "synthetic_flood_depth_ft": 0.1455078125
+        },
+        {
+          "asset": "D",
+          "bus": "92.3",
+          "capacitor": "C92c",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L91",
+          "load": "s92c",
+          "synthetic_flood_depth_ft": 2.150390625
+        },
+        {
+          "asset": "E",
+          "bus": "94.1",
+          "kvar": 20.0,
+          "kw": 40.0,
+          "line": "L93",
+          "load": "s94a",
+          "synthetic_flood_depth_ft": 15.0595703125
+        },
+        {
+          "asset": "F",
+          "bus": "96.2",
+          "kvar": 10.0,
+          "kw": 20.0,
+          "line": "L95",
+          "load": "s96b",
+          "synthetic_flood_depth_ft": 8.19287109375
+        }
+      ],
+      "depth_rank_descending": [
+        "E",
+        "F",
+        "B",
+        "A",
+        "D",
+        "C"
+      ],
+      "seed": 6603
+    }
+  ],
+  "created_at_utc": "2026-09-05T22:07:31.307773+00:00",
+  "study_sha256": "16bb93472871c6bb17fa9e884259579a27ead0acc3a680dff57544a8cb3e51d4"
+}

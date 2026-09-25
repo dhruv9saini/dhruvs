@@ -1,6 +1,6 @@
 \documentclass[8pt,a4paper]{altacv}
 
-\geometry{left=1cm,right=1cm,top=0.7cm,bottom=0.7cm,columnsep=1.2cm}
+\geometry{left=1cm,right=1cm,top=1cm,bottom=1cm,columnsep=1.2cm}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[default,scale=0.9]{lato}
@@ -15,10 +15,10 @@
 \colorlet{emphasis}{resumeheading}
 \colorlet{body}{resumebody}
 
-\setlist{leftmargin=*,labelsep=0.5em,nosep,itemsep=0pt,after=\vskip0.6pt}
+\setlist{leftmargin=*,labelsep=0.5em,nosep,itemsep=0pt,after=\vskip1.942pt}
 \renewcommand{\itemmarker}{\textbullet}
-\newcommand{\resumebodysize}{\fontsize{8pt}{8.8pt}\selectfont}
-\renewcommand{\divider}{\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.285em}}\vspace{2.2pt}}
+\newcommand{\resumebodysize}{\fontsize{8pt}{9pt}\selectfont}
+\renewcommand{\divider}{\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.285em}}\vspace{4.096pt}}
 \newcommand{\projectdivider}{\vskip-1.937pt\divider}
 
 \makeatletter
@@ -31,7 +31,7 @@
   \endgroup
 }
 \renewcommand{\cvsection}[2][]{%
-  \medskip%
+  \bigskip%
   \vspace{3.686pt}%
   \ifstrequal{#1}{}{}{\marginpar{\vspace*{\dimexpr1pt-\baselineskip}\raggedright\input{#1}}}%
   {\color{heading}\large\bfseries\MakeUppercase{#2}}\\[-1ex]\vspace{1.489pt}%
@@ -43,7 +43,7 @@
     \vspace{2.144pt}
     {\fontsize{9pt}{9pt}\selectfont\textbf{\color{accent}#2}\hspace{0.5em}\resumebodysize\faCalendar\hspace{0.5em}#3\par}%
   }%
-  \vspace{1.5pt}\resumebodysize
+  \vspace{2.145pt}\resumebodysize
 }
 \makeatother
 
@@ -64,24 +64,12 @@
 \cvsection{Experience}
 \vskip0.464pt
 
-\cvevent{\textcolor{black}{\textbf{Arx Labs}}}{\textnormal{Intern |}}{Present}{}
-\begin{itemize}
-\item Solely responsible for circuit board work, including customer communication, design, development, and delivery
-\end{itemize}
-\divider
-
 \cvevent{\textcolor{black}{\textbf{A Sustainable Future}}}{\textnormal{CEO |}}{Oct 2023 - Present}{}
 \begin{itemize}
 \item Built and scaled the \textbf{PCM}, an AI-powered mobile app predicting paper use, to \textbf{30,000 students} nationwide in over 150 schools
 \item Trained a symbolic regression model with \textbf{PySR} to predict paper consumption based on school demographics
 \item Leading \textbf{a team of 20} to develop a nonprofit website and iterating on AI model, now helping save 1.7M sheets of paper per year
 \item Received \textbf{\$30k} in grants supporting sustainability impact
-\end{itemize}
-\divider
-
-\cvevent{\textcolor{black}{\textbf{New Energy Technology / AEM Movement}}}{\textnormal{Student Energy Manager (SEM) |}}{Grade 12}{}
-\begin{itemize}
-\item Helped Washington small business owners cut building energy use, saving more than 600 tons of carbon dioxide per year
 \end{itemize}
 \divider
 
@@ -133,9 +121,10 @@
 \end{itemize}
 \divider
 
-\cvevent{\textcolor{black}{\textbf{NASA Glenn High School Engineering Institute}} \textnormal{| Selected Participant}}{}{}{}
+\cvevent{\textcolor{black}{\textbf{Muon Browser}} \textnormal{| \textit{Typescript, Electron}}}{}{}{}
 \begin{itemize}
-\item Designed and tested jet-noise, spacecraft-power, and lunar-rover prototypes
+\item Created a web browser that allows the user to open and browse pages and notes on an infinite canvas
+\item Available to download and use \href{http://github.com/oof-baroomf/muon}{here}
 \end{itemize}
 \divider
 

@@ -1,0 +1,6 @@
+{
+  "base": "f1afbbf6eb9bf614f354bb5a114915452ecbc58e",
+  "commit": "bd7f7902082c88c293166fd9b5f6e8c0317134bf",
+  "sha256": "d17efc5b6f0b1ca2f8528d1e6a86a11a0a44d24cd9106a8a288d42c301526b68",
+  "issue": "prior extraction left nested closing tags; corrected from original source and parsed complete HTML"
+}

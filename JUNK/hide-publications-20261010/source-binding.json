@@ -1,0 +1,9 @@
+{
+  "base": "b560ec56a7126061c1a17c589b3ac3efb66055b8",
+  "before_sha256": "daf8a8913b0492b668ef0a47a922577c53e576d2c0f88ae11540941cbf5836d3",
+  "after_sha256": "587adbe5d4e520f5397948508b481fab2e0abee6943d707c8f2971613de8015e",
+  "commit": "b225661a312385c6a213af9fca19b150adafec3b",
+  "changed_paths": [
+    "index.html"
+  ]
+}

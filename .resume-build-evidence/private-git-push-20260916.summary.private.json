@@ -1,0 +1,39 @@
+{
+  "canonical_files": [
+    {
+      "mode": 384,
+      "path": "dhruv_resume_arx.tex",
+      "sha256": "1eb6022fb0c67054727ff9da43c5804bdc9f93fa5319e07bff6ca09fc3d12832",
+      "size": 8028
+    },
+    {
+      "mode": 384,
+      "path": "dhruv_resume_arx.pdf",
+      "sha256": "3e4fa14b628f59c3ef011bcf3000d1f74571cb302a0dd487f3fd74bfcbc487f3",
+      "size": 56266
+    }
+  ],
+  "clone_cleanup": {
+    "allocated_bytes_removed": 1934774272,
+    "clone_absent": true,
+    "entry_count": 25294,
+    "manifest_sha256": "a32f106f09bd6a32394e8faf1af12785bbcd7348461f920aa669f130c46da63a",
+    "unique_inodes": 25294
+  },
+  "commit": "7453b115b9802ec8e27ebb47f16946605219d772",
+  "commit_message": "Add accepted Arx resume artifacts",
+  "commit_paths": [
+    "evidence/arx-docs/resume-arx-2026-09-16/dhruv_resume_arx.tex",
+    "evidence/arx-docs/resume-arx-2026-09-16/dhruv_resume_arx.pdf",
+    "evidence/arx-docs/resume-arx-2026-09-16/manifest.private.json"
+  ],
+  "is_private": true,
+  "parent": "30df899508e35b738f9c0b0064fcf726c420c2d1",
+  "pushed_exit_code": 0,
+  "pushed_terminal_stderr_bytes": 0,
+  "pushed_terminal_stdout_sha256": "70070bd8fc0f342376bad8d3d171b9fa3fbd04dfba8bac963377516492b9b113",
+  "remote_ref": "refs/heads/main",
+  "repository": "dhruv9saini/arx-eda-tasks",
+  "schema": "private-git-push-summary-v1",
+  "secret_scan_matches": 0
+}

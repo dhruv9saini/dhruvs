@@ -1,0 +1,28 @@
+{
+  "removed_generated_intermediates": [
+    {
+      "path": "/home/d/coding/dhruvs/.build/resume.aux",
+      "bytes": 256,
+      "allocated_bytes": 4096
+    },
+    {
+      "path": "/home/d/coding/dhruvs/.build/resume.bcf",
+      "bytes": 108044,
+      "allocated_bytes": 110592
+    },
+    {
+      "path": "/home/d/coding/dhruvs/.build/resume.out",
+      "bytes": 0,
+      "allocated_bytes": 0
+    },
+    {
+      "path": "/home/d/coding/dhruvs/.build/resume.run.xml",
+      "bytes": 2244,
+      "allocated_bytes": 4096
+    }
+  ],
+  "allocated_bytes_removed": 118784,
+  "filesystem_used_before": 207252455424,
+  "filesystem_used_after": 207252340736,
+  "transcripts_removed": 0
+}

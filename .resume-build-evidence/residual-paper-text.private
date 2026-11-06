@@ -1,0 +1,1498 @@
+     A Small Internal Signal Marks Thinking-Mode Entry
+                  in Open Language Models
+
+
+                                                  Anonymous Author(s)
+                                                      Afﬁliation
+                                                       Address
+                                                        email
+
+
+
+                                                         Abstract
+1              Some open language models let users switch “thinking” on or off. We ask whether
+2              the activation before generation records that choice and causally selects the re-
+3              sponse branch. For three models, a thinking-minus-off vector averaged over the
+4              last two tokens of 60 training prompts moves held-out distributions toward think-
+5              ing; exact copies localize the effect to response entry. With Qwen3-4B’s soft
+6              switch enabled in both modes, one shared branch-token copy selects the donor to-
+7              ken on 24/24 localization tests. Widths 1, 2, 4, and 8 each work on 72/72 held-out
+8              tests (width-1 controls: 0/432), and one copied token sets donor response format
+9              on 72/72 continuations. On 30 non-math prompts and ten seeds, one Nemotron
+10             vector decision yields an exact thinking opening on 293/300 tests versus 0/300 ran-
+11             dom. On all 30 AIME 2026 problems at a shared 32,768-token cap, the same one-
+12             step intervention enters thinking on 30/30 and scores 16/30, versus 1/30 off, 2/30
+13             random, and 15/30 canonical thinking. It wins 15–0 against off (p = 6.10 × 10−5 )
+14             and 14–0 against random (p = 1.22 × 10−4 ); ﬁxed versus thinking is 4–3 (p = 1).
+15             Successful-entry and all-row comparisons coincide. This fresh cap-only rerun fol-
+16             lowed an 8K truncation audit; all other choices were unchanged. Manual review
+17             covers 120/120 outputs with no strict-scoring false positive or parser error. Re-
+18             peated intervention corrupts text. The activation selects entry and can change later
+19             answer quality in this paired run, but does not establish continued residual control
+20             or seed-averaged accuracy.
+
+
+21   1 Introduction
+22   Open language models increasingly expose a “thinking” button, a template option, or a system
+23   instruction that changes how the model answers. These controls affect latency, cost, response length,
+24   and answer style. But a visible <think> tag or a long response does not by itself show what changed
+25   inside the model.
+26   Three things must be kept separate:
+27          1. the visible text or setting that selects a mode,
+28          2. the internal activation signal present just before generation, and
+29          3. the later response, including its length, style, and accuracy.
+30   This paper studies the second item. We ask whether the mode choice leaves a measurable internal
+31   signal at the end of the prompt and whether changing that signal changes which response style starts.
+32   We do not claim that this signal is reasoning itself.
+33   The basic test is simple. For the same user prompt, run the model once with thinking on and once
+34   with it off. At the last two prompt tokens, subtract the off-mode activations from the on-mode
+
+     Submitted to 40th Conference on Neural Information Processing Systems (NeurIPS 2026). Do not distribute.
+35   activations. Average that difference over public training prompts to obtain one model-speciﬁc mode
+36   vector, denoted cm . Freeze the vector, add it to held-out off-mode activations, and check whether the
+37   model’s next-token probabilities move toward those of the held-out thinking run. The intervention
+38   sees the held-out off-mode state and the training vector only; the held-out thinking activation is used
+39   only afterward for scoring. We call this a prompt-end mode-signal audit.
+40   This question is related to token-level reasoning triggers. Mid-Think shows that visible strings such
+41   as Okay, </think>, and newline patterns can change response style (Yang et al., 2026). Here the
+42   visible switch is held ﬁxed and audited: we directly modify the activation signal it produced. The
+43   main result is that several public switches write a small, causal signal at the end of the prompt. The
+44   important limitation is equally simple: entering a response mode is not the same as producing a
+45   correct or stable long response.
+
+46   Contributions. This paper makes ﬁve contributions.
+47          • We introduce a held-out activation test for whether a public thinking switch writes a recov-
+48            erable mode signal at the end of the prompt.
+49          • We show that ﬁxed, model-speciﬁc mode vectors learned from 60 public paired prompts
+50            transfer to held-out prompts in Qwen3.5-4B, Gemma 4 E2B-it, and Nemotron Nano 4B.
+51          • We localize the causal signal to the last prompt tokens in Qwen3.5 and Nemotron. In
+52            Qwen3-4B, we use the public soft switch and localize causal control to the shared <think>
+53            state immediately before the modes diverge. Controllers learned on 12 prompts transfer on
+54            36 further prompts; a width sweep shows that the one shared position is sufﬁcient. Copying
+55            the full post-attention residual state reproduces the donor effect; copying only the MLP
+56            update does not reproduce the full effect.
+57          • We test simpler explanations using reversed and random vectors, earlier-token copies, al-
+58            tered sufﬁxes, masked opening tokens, and misleading user instructions.
+59          • We replicate Qwen3’s selected branch token on 12 disjoint, category- and template-matched
+60            prompts with three sampling seeds; test Nemotron generation on held-out non-math
+61            prompts and exact copies on six math prompts; and test one-step answer quality on all
+62            30 AIME 2026 problems. An 8K truncation audit motivated a fresh 32K rerun of all 120
+63            rows with every other choice unchanged. We release row-level results and independent
+64            manual, recomputation, and continuation audits.
+
+                 Table 1: Audit overview. Each row gives one component of the evidence chain.
+        Audit question                        Main evidence                                           Result signal
+        Does a public switch leave a reusable A ﬁxed vector learned on public prompts is added to    Next-token probabilities move to-
+        internal signal?                      held-out off-mode activations.                         ward the held-out thinking run.
+        Where is the signal?                  Copy the ﬁnal prompt activations, or Qwen3’s shared    Response-entry        copies    work;
+                                              branch token; compare with earlier positions.          matched earlier copies do not.
+        Which intermediate state is sufﬁ- Copy the full post-attention residual state, or copy only  The former reproduces the donor ef-
+        cient?                                the MLP update.                                        fect; the latter does not reproduce it
+                                                                                                     fully. This asymmetric test does not
+                                                                                                     isolate the attention update.
+        Is this only sufﬁx or ﬁrst-word copy- Alter sufﬁxes, mask likely opening tokens, reverse the The activation effect survives these
+        ing?                                  vector, use random vectors, and contradict the mode in controls.
+                                              user text.
+        What answer quality follows a suc- Grade AIME 2026 after one ﬁxed-vector entry; also Fixed entry succeeds on 30/30 and
+        cessful entry?                        test 64 repeated ﬁxed-vector or exact-copy steps.      scores 16/30, versus 1/30 off, 2/30
+                                                                                                     random, and 15/30 thinking at 32K;
+                                                                                                     repeated intervention can corrupt
+                                                                                                     text.
+
+
+65   Table 2 separates the four same-checkpoint tests from secondary paired-checkpoint comparisons.
+66   This distinction matters: only the same-checkpoint rows study an inference-time switch.
+
+67   2 Setup
+68   Modes and models. The main ﬁxed-vector tests use three open models with public thinking con-
+69   trols: Qwen3.5-4B (Qwen Team, 2026), Gemma 4 E2B-it (Google DeepMind, 2026), and Llama-
+70   3.1 Nemotron Nano 4B v1.1 (NVIDIA, 2025). The new causal audit uses Qwen3-4B (Qwen Team,
+
+                                                                        2
+                     public switch         →          last two prompt tokens      →            ﬁxed mode vector cm
+                same prompt, two modes                 activation difference                 learned on public prompts
+                                                                                                         ↓
+                                                                                               held-out prompt-end test
+                                                                                         no held-out on-mode state or answer
+                                                                                                        labels
+
+     Figure 1: Main protocol. Public paired prompts produce a ﬁxed mode vector. On a held-out prompt,
+     the vector is added to the off-mode activation before the ﬁrst generated token. The corresponding
+     held-out on-mode activation is not used by the intervention; it is used only to score the resulting
+     probability distribution.
+
+     Table 2: What changes between the two modes, what we test, and what we do not infer. “Exact copy”
+     means copying the observed activation from one run into the other; “ﬁxed vector” means adding one
+     average difference learned on other prompts.
+      Model                    How mode is selected             Evidence in this paper                 Important limit
+      Qwen3.5-4B               Same      checkpoint;     chat- Exact copying, ﬁxed vector, broad and One ﬁxed vector is weaker on its 30
+                               template sufﬁx                  contest prompts, controls              broad prompts.
+      Gemma 4 E2B-it           Same checkpoint; template Fixed vector on broad and contest Reverse ﬁxed-vector direction is un-
+                               switch                          prompts                                reliable.
+      Nemotron Nano 4B         Same checkpoint;        system Exact copying, ﬁxed vector, broad Fixed entry scores 16/30 and com-
+                               prompt                          prompts, one-step and sustained gener- pletes 26/30; canonical thinking
+                                                               ation, AIME 2026 answer quality        scores 15/30 and completes 23/30.
+                                                                                                      Repeated intervention corrupts text.
+      Qwen3-4B                 Same               checkpoint; Exact-copy localization; width 1/2/4/8 The ﬁxed controllers test response
+                               enable_thinking=True            ﬁxed controllers on 36 held-out entry, not answer accuracy or con-
+                               with /think or /no_think        prompts; one-token follow-through      tinued control.
+      OLMo 3 7B                Separate Think and Instruct Exact copying and ﬁxed-vector compar- Not an inference-time same-
+                               checkpoints                     ison                                   checkpoint switch.
+      Phi-4 mini / Liquid 1.2B Separate reasoning or thinking Secondary exact-copy localization       Not an inference-time same-
+                               and instruct checkpoints                                               checkpoint switch; Liquid is
+                                                                                                      asymmetric.
+
+
+
+
+71   2025). All four compare two modes of the same checkpoint. OLMo 3 7B (OLMo Team, 2026) is
+72   analyzed separately because it compares Think and Instruct checkpoints. Earlier Phi and Liquid ex-
+73   periments remain secondary appendix results. In the audited Qwen3.5 template, the assistant sufﬁx
+74   differs as follows:
+                                   think          <|im_start|>assistant\n<think>\n
+75                                 no-think       <|im_start|>assistant\n<think>\n
+                                                  \n</think>\n\n
+
+76   The shared preﬁx is intentional: in this Qwen3.5 template, no-think opens and immediately closes
+77   an empty think block before the answer begins.
+78   Qwen3-4B uses its documented soft switch instead.                       Both conditions keep
+79   enable_thinking=True; the user message ends in /think or /no_think. The two prompts
+80   then share the same assistant header, and both modes ﬁrst emit <think>. Their next-token
+81   distributions sharply separate: thinking mode’s top token is the single-newline continuation that
+82   begins nonempty reasoning, while no-think’s top token is the double-newline continuation of an
+83   empty block. We therefore supply the same <think> token to both conditions and perform the
+84   Qwen3 causal audit at that ﬁrst divergent decision. This is not the hard template switch obtained
+85   with enable_thinking=False.
+
+86   Prompt sets. Table 3 states exactly where prompts come from and how they are used. The ﬁxed
+87   vector never sees an AIME prompt during ﬁtting or selection.
+
+88   Terms used below. An activation is the vector of numbers passed between transformer layers. The
+89   residual stream is this main layer-to-layer path. A donor is the run whose mode we copy; the target
+90   is the run we modify. A tail patch of width 2 copies activations only at the ﬁnal two audited tokens.
+91   A ﬁxed mode vector is one average activation difference learned on other prompts. Appendix G
+92   gives intuitive and mathematical deﬁnitions together.
+
+                                                                        3
+      Table 3: Prompt sources and roles. Selection is deterministic; these are not random samples of all
+      possible prompts.
+         Role                         Source and selection                       Use
+         Fixed-vector training     First 30 usable GSM8K test questions and Learn the mean activation difference and choose its
+                                   ﬁrst 30 MATH-500 test rows with a simple scale.
+                                   numeric ﬁnal answer
+         Held-out contest test     All 30 AIME 2025 and all 30 AIME 2026 Prompt text only; no answers, correctness labels, or
+                                   questions                                     thinking-mode activations enter the intervention.
+         AIME 2026 answer-quality All 30 AIME 2026 questions; every choice Grade ordinary continuations after one patched entry de-
+         test                      except the corrective common cap ﬁxed be- cision; after the 8K truncation audit, rerun every row
+                                   fore any AIME generation                      fresh at 32K.
+         Broad transfer            Authored instruction, coding, factual, mul- Test transfer outside the math training distribution.
+                                   titurn, and non-English prompts; Nemotron
+                                   also uses GPQA Diamond
+         Localization and controls Fixed, category-balanced authored suites; Locate the effect and compare post-attention state
+                                   12 Qwen3-4B localization prompts              copies with isolated MLP-update copies.
+         Qwen3 prompt-value repli- The next two authored instances in each of Test whether the selected branch token determines re-
+         cation                    the same six categories and templates; 12 sponse format under three sampling seeds.
+                                   prompts disjoint from localization
+         Qwen3 ﬁxed-controller au- The ﬁnal two instances in those six cate- Test frozen signed controllers of widths 1, 2, 4, and 8 at
+         dit                       gories, plus all 24 prompts from four cate- the shared <think> branch point.
+                                   gories absent from ﬁtting; 36 prompts dis-
+                                   joint from ﬁtting and the prompt-value repli-
+                                   cation
+
+
+
+93    The layer scans use different grids. Qwen3.5 tests every residual-stream boundary from 0 through 32.
+94    Qwen3 tests boundaries 0, 4, . . . , 32, and 36; Nemotron and OLMo test 0, 4, . . . , 32. Boundary 0 is
+95    the embedding output passed into the ﬁrst transformer block. Tables report the ﬁrst tested boundary
+96    where every prompt moves closer to the donor. For Qwen3.5 this is the earliest boundary in a dense
+97    scan. For the other models it is only the ﬁrst successful boundary on a four-layer grid, not an exact
+98    onset or a unique causal source.
+99    Throughout the paper, intervention labels are written as donor mode into target mode. For example,
+100   “think into no-think” means that activations are copied from a thinking run and inserted into the
+101   corresponding no-think run before comparing next-token probabilities.
+
+102   Patch metric. Let pD and pT be the donor and target ﬁnal next-token distributions for the same
+103   user prompt under two modes, and let pP be the distribution after patching target residual state with
+104   donor information. We report donor win when
+                                                     JS(pP , pD ) < JS(pP , pT ),
+105   where JS is Jensen–Shannon divergence, a bounded measure of how different two probability dis-
+106   tributions are. A donor win therefore means that the modiﬁed run is closer to the intended mode
+107   than to its unmodiﬁed mode. We also report margin retention for low-rank patches: the fraction of
+108   the exact-copy improvement retained by the smaller patch. Conﬁdence intervals resample the stored
+109   prompts. They do not cover new checkpoints or all possible prompts, and exact rates such as 60/60
+110   are ﬁnite-suite results rather than population guarantees.
+
+111   Fixed mode vector. The main reusable intervention is one model-speciﬁc vector, cm , that moves
+112   a prompt-end activation toward thinking mode:
+                                                         htail ← htail + αcm .
+113   For the three original ﬁxed-vector models, cm is the average thinking-minus-off difference at the
+114   ﬁnal two prompt tokens over 60 training prompts. For Qwen3-4B, separate width-1/2/4/8 mean
+115   residual tensors are learned from 12 prompts at boundary 28, added for off-to-think, and subtracted
+116   for think-to-off. Each scale is selected on those 12 prompts before evaluating the same 36 held-out
+117   prompts. A held-out test uses only the target activation and frozen tensor; the donor activation is
+118   used afterward for scoring.
+
+119   Exact activation copies. For a layer boundary ℓ and width w, an exact tail patch replaces the
+120   target activation at the ﬁnal w prompt positions with the activation observed in the donor run. This is
+121   stronger than the ﬁxed-vector test because it uses the matching donor run. Its purpose is localization:
+122   matched controls copy the same number of earlier tokens. A separate asymmetric test copies either
+123   the full residual state after attention or only the MLP update.
+
+                                                                      4
+124   Low-rank residual code. For each prompt i, direction d, and decisive layer ℓd , let
+
+                                                   i,ℓd ,tail − hi,ℓd ,tail ).
+                                         ∆i = vec(hD             T
+
+
+125   We ﬁt an uncentered SVD basis to {∆i } on training prompts, then patch only the projection of
+126   each held-out prompt’s exact donor-target difference into the learned subspace. This is a subspace-
+127   sufﬁciency test: at evaluation time, the held-out exact difference supplies the coordinates inside a
+128   basis learned only from training prompts. It therefore tests whether the causal mode information lies
+129   in a shared low-dimensional subspace, not whether a single ﬁxed steering vector fully determines
+130   the branch.
+
+131   How the ﬁxed vector is ﬁtted.    The exact formula for the model- and direction-speciﬁc average is
+                                         1      ∑
+                                                           i,ℓd ,tail − hi,ℓd ,tail ).
+                                 ¯d =
+                                 ∆                   vec(hD              T
+                                      |Strain |
+                                                i∈Strain
+
+132   At held-out evaluation time, we add α∆ ¯ d to the target activation; α is selected on training prompts
+133   only. The intervention uses the held-out target activation and the frozen training vector, but no
+134   held-out thinking-mode activation or difference. For the cross-family rows, a prompt counts as
+135   effective only when the modiﬁed distribution moves toward the donor by a JS margin above 0.1 and
+136   ends within 0.6 JS of it. This prevents tiny movements near the maximum possible distance from
+137   counting as successes.
+
+138   3 The visible switch creates a short-lived internal signal
+139   The ﬁrst Qwen experiments test whether the public switch is serialized in the chat template and
+140   whether the resulting transition states are distinguishable from arbitrary sufﬁx noise. On 60 prompts,
+141   the no-think sufﬁx has a deterministic transient path: immediately before the explicit close, the
+142   model predicts </think> on 60/60 prompts; immediately after the close, it predicts the blank sep-
+143   arator on 60/60 prompts. The full no-think sufﬁx then moves to direct-answer openers such as To,
+144   Let, and Here, while think mode moves to thinking-preface openers such as Thinking and Here.
+145   Matched controls separate the complete template sequence from generic sensitivity to a changed
+146   sufﬁx. On 180 Qwen prompts spanning ten categories, a real </think> outside the empty-block
+147   sequence is close to no-think but not identical (mean JS 0.0534). Fake close tags and moved-close
+148   controls do not reproduce the canonical mode. Same-length Okay, Think, and whitespace sufﬁxes
+149   also remain far from thinking mode (mean JS 0.6519, 0.6767, and 0.6618). The full serialized
+150   sequence matters; merely changing the ﬁnal tokens is insufﬁcient.
+151   Three further audits test simpler explanations. First, Qwen’s ﬁxed-vector suite includes calendar,
+152   coding, dynamic programming, language, logic, and planning prompts as well as math. On the
+153   non-math categories, it reaches donor win 102/108 for no-think into think and 94/108 in reverse; on
+154   math, counting, and probability it reaches 72/72 in both directions.
+155   Second, Table 4 removes likely mode-signaling tokens before computing JS. The ﬁxed mode vec-
+156   tor remains 10/10 in both directions after removing special and whitespace tokens, common think-
+157   ing/direct openers, and a broader hand-written list. A verbose-versus-concise style vector falls to
+158   chance. With a learned mask, the no-think-into-think vector remains 9/10 after removing the 10
+159   most mode-predictive tokens, 8/10 after 100, and 9/10 after 250. Three norm-matched random
+160   vectors never exceed 3/10 and move in the wrong direction on average.
+161   Third, user instructions are made deliberately misleading. Across 10 held-out prompts, seven prompt
+162   variants, and both modes, a classiﬁer using the ﬁnal activation identiﬁes the actual template mode in
+163   140/140 cases. A heuristic using the visible instruction is correct in 60/140; a heuristic using the ﬁrst
+164   predicted token is correct in 107/140. The signal is therefore not explained by an ordinary request
+165   for verbosity or a single opening token.
+
+166   4 The causal signal is present at response entry
+167   Table 5 reports exact activation-copying tests. In Qwen3.5 and Nemotron, copying the ﬁnal two
+168   prompt-token activations makes every tested prompt closer to the copied mode at a tested layer, while
+
+                                                           5
+      Table 4: Qwen token-mask audit. Each cell is held-out donor wins and JS margin after removing
+      the listed tokens and renormalizing. The ﬁxed mode vector survives; a visible verbosity vector does
+      not.
+                         Direction             Method           Unmasked Mask openers Mask branch markers
+                         think into no-think   branch vector    10/10, .571   10/10, .455      10/10, .455
+                         think into no-think   verbosity vector 7/10, .037     5/10, .044      5/10, .044
+                         no-think into think   branch vector    10/10, .064   10/10, .108      10/10, .108
+                         no-think into think   verbosity vector 6/10, -.001   5/10, -.000      5/10, -.000
+
+
+
+
+169   copying two earlier positions never wins. Qwen3 requires a slightly different audit because the pub-
+170   lic soft switch always emits a <think>. . . </think> wrapper. We keep enable_thinking=True,
+171   use /think versus /no_think, supply the same ﬁrst <think> token to both runs, and audit the next
+172   decision. Copying the activation at that one shared token produces donor wins on 12/12 prompts in
+173   both directions; copying the matched user-end positions four tokens earlier or the ﬁrst four prompt
+174   positions produces 0/12. These exact-copy tests use the matching donor run and are separate from
+175   the stronger ﬁxed-vector transfer claim. OLMo is shown separately because it compares two check-
+176   points. Phi and Liquid checks remain secondary appendix results.
+
+      Table 5: Exact copying at response entry. Qwen3.5, Nemotron, and OLMo copy the ﬁnal two prompt
+      positions; Qwen3 copies the single shared <think> state at the soft switch’s ﬁrst divergent decision.
+      A successful tested boundary has donor win on every prompt in that ﬁnite suite.
+
+           Model                     Donor into target          Copied width         First success    Earlier control
+           Same-checkpoint public switch
+           Qwen3.5-4B           think into no-think             2                    3                0.000 best donor win
+           Qwen3.5-4B           no-think into think             2                    0                0.000 best donor win
+           Qwen3-4B soft        think into no-think             1                    24               0.000 best donor win
+           Qwen3-4B soft        no-think into think             1                    28               0.000 best donor win
+           Nemotron Nano 4B think into off                      2                    16               0.000 best donor win
+           Nemotron Nano 4B off into think                      2                    12               0.000 best donor win
+           Paired-checkpoint comparison
+           OLMo 3 7B            think into instruct             2                    0                0.000 best donor win
+           OLMo 3 7B            instruct into think             2                    4                0.000 best donor win
+
+
+177   After localizing the Qwen3 soft-switch decision, we ﬁt controllers of widths 1, 2, 4, and 8 on the
+178   same 12 prompts at boundary 28. Each selects the donor token on 72/72 held-out directional tests.
+179   Width 1 is sufﬁcient and has 0/432 control wins. Wider deterministic controls also have zero wins;
+180   one width-8 random tensor wins on 21/36 prompts because that span reaches the switch instruction.
+181   No held-out donor activation or difference enters any controller. Appendix B gives every denomina-
+182   tor.
+183   The module-labelled tests are asymmetric. The historical attention_only condition copies the
+184   donor’s full residual state after attention, including the donor layer input, and then runs the MLP.
+185   The mlp_only condition keeps the target’s post-attention state and copies only the donor MLP
+186   update. In Qwen3.5-4B, the post-attention-state copy reaches donor win 1.000 in both directions;
+187   the MLP-update copy reaches 0.000 in one direction and at most 0.167 in the other. At Qwen3-4B’s
+188   soft-switch branch point and in Nemotron, post-attention-state copies reach 1.000 in both directions
+189   while MLP-update copies remain 0.000. Thus the post-attention state reproduces the full effect
+190   while the isolated MLP update does not reproduce it fully. This does not isolate the attention update
+191   or one attention head.
+
+192   5 How the signal is written and read
+193   Three tests give a simple picture. First, the signal is present at response entry: exact ﬁnal-prompt
+194   copies work in Qwen3.5 and Nemotron, and both exact copying and held-out ﬁxed controllers work
+195   at Qwen3-4B’s shared soft-switch branch token. Second, Qwen3 width 1 succeeds on 72/72 held-
+196   out tests at the branch point and 0/72 at a non-overlapping earlier position; larger widths do not
+
+                                                                     6
+      Table 6: Fixed-vector selection. The grid and rule are ﬁxed before the held-out AIME prompt test.
+      Effective requires JS margin > 0.1 and JS-to-donor < 0.6.
+                        Model               Direction             Width grid Fixed layer Alpha grid / selected
+                        Qwen3.5-4B          think into no-think   {2}         15          {.25,.5,1,2,4,8} / 1
+                        Qwen3.5-4B          no-think into think   {2}         19          {.25,.5,1,2,4,8} / 2
+                        Gemma 4 E2B-it      think into off        {2}         35          {.25,.5,1,2,4,8} / 2
+                        Gemma 4 E2B-it      off into think        {2}         35          {.25,.5,1,2,4,8} / 1
+                        Nemotron Nano 4B    think into off        {2}         28          {.25,.5,1,2,4,8} / 4
+                        Nemotron Nano 4B    off into think        {2}         28          {.25,.5,1,2,4,8} / 2
+
+
+      Table 7: Held-out contest-prompt test for same-checkpoint ﬁxed vectors. Each vector is learned on
+      60 paired public prompts and tested on all 60 AIME 2025+2026 question strings. It uses no AIME
+      answers, correctness labels, thinking-mode activations, or mode differences.
+                     Model                 Entry path         Think eff.     Think JS    Opp. eff.    Random eff.
+                     Qwen3.5-4B            template sufﬁx          60/60      0.1103         0/60           19/180
+                     Gemma 4 E2B-it        template switch         60/60      0.0002         0/60            0/180
+                     Nemotron Nano 4B      system prompt           60/60      0.0000         0/60            0/180
+
+
+
+
+197   improve it. Nemotron succeeds on 42/42 broad-plus-GPQA prompts at the ﬁnal two positions and
+198   0/42 when moved 8 or 16 tokens earlier. Third, the post-attention residual copy reproduces the
+199   donor effect while the isolated MLP update does not reproduce it fully; because these interventions
+200   are asymmetric, they do not attribute the signal to attention alone.
+
+
+201   6 Transfer beyond the training prompts
+
+202   The main non-AIME test learns ﬁxed vectors on 60 public GSM8K/MATH-500 prompts and evalu-
+203   ates them on instructions, coding, factual questions, multiturn conversations, non-English prompts,
+204   and GPQA Diamond. Gemma succeeds on 30/30 broad prompts (JS-to-donor 0.0204; random vec-
+205   tors 0/90). Nemotron succeeds on 30/30 (JS-to-donor 0.0001; random 0/90), and a reduced broad-
+206   plus-GPQA test succeeds on 42/42; moving the same vector to earlier positions gives 0/42. Qwen3-
+207   4B’s width-1 branch controller succeeds on 72/72 held-out directional tests, including 48/48 in four
+208   categories absent from ﬁtting; widths 2, 4, and 8 do not improve this maximum. Qwen3.5’s broader
+209   width-2 ﬁxed vector transfers less consistently; Section 11 reports that boundary.
+
+
+210   7 Held-out contest-prompt test
+
+211   We ﬁrst test all 60 AIME 2025 and 2026 questions as a disjoint source of prompt text; this boundary
+212   audit does not generate or grade their answers. The original localization copies the ﬁnal two prompt-
+213   token states, so the ﬁxed controller inherits width 2 before held-out generation; answer quality is
+214   not used to choose it. Layer is also ﬁxed before held-out evaluation. The scale α is chosen on the
+215   60 training prompts by prioritizing the number of effective prompts, then donor wins, JS margin,
+216   and JS-to-donor. No AIME prompt, answer, thinking-mode activation, or mode difference enters
+217   that selection. Table 7 then adds the frozen vector to each held-out off-mode activation. The later
+218   AIME 2026 generation test uses the already-frozen Nemotron controller and reports answer quality
+219   separately.
+220   The three model-speciﬁc vectors succeed on 180/180 held-out prompt boundaries. Reversing their
+221   signs gives 0/180. Three norm-matched random vectors per model give 19/540, all in the noisier
+222   Qwen3.5 row. These are prompt-boundary mode results, not AIME accuracy results.
+
+223   Secondary OLMo checkpoint-pair result. OLMo 3 7B compares separately trained Think and
+224   Instruct checkpoints. The same ﬁxed-vector protocol reaches 60/60 held-out prompts toward Think
+225   (mean JS-to-donor 0.0207) and 60/60 toward Instruct (0.2873). This secondary result shows that
+226   the test can ﬁnd an analogous activation difference across checkpoints; it is not evidence about a
+227   same-checkpoint public switch.
+
+                                                                   7
+      Table 8: Cross-validated low-rank residual subspace results. CIs are prompt-bootstrap intervals.
+      Random subspaces of matched rank achieve donor win 0.000 in all rows.
+
+          Model           Donor into target     Rank       Donor win              Margin retention
+          Qwen3.5-4B      think into no-think   2          1.000 [1.000, 1.000]   0.966 [0.906, 1.046]
+          Qwen3.5-4B      no-think into think   2          1.000 [1.000, 1.000]   0.910 [0.869, 0.948]
+          OLMo 3 7B       think into instruct   2          1.000 [1.000, 1.000]   0.862 [0.811, 0.908]
+          OLMo 3 7B       instruct into think   1          1.000 [1.000, 1.000]   1.021 [0.963, 1.074]
+
+
+228   To summarize the leakage controls: width, layer, and the effective threshold are ﬁxed before the
+229   held-out test; only α is selected on training prompts. AIME prompts are disjoint from training, and
+230   neither their answers nor their thinking-mode activations are used.
+
+
+231   8 Low-rank support
+
+232   The ﬁxed-vector audit above is the main deployable prompt-boundary test. A separate low-rank
+233   subspace analysis asks a more mechanistic question: whether the exact held-out mode difference
+234   lies in a shared low-dimensional causal subspace. Table 8 gives that result. We run 3-fold category-
+235   balanced cross-validation over a 60-prompt suite; each fold trains on 40 prompts and evaluates on
+236   20 held-out prompts. The learned spectrum is concentrated in Qwen, where the top two components
+237   explain 0.874 and 0.854 of donor-target tail-difference energy in the two directions. OLMo has
+238   a similarly compressed paired-checkpoint subspace. The subspace interventions transfer causally;
+239   unlike the ﬁxed-vector audit, they use the held-out prompt’s exact donor-target difference to choose
+240   coordinates inside the train-learned subspace, so they support the low-rank mechanism rather than
+241   ﬁxed-vector deployability.
+242   A larger Qwen-only 180-prompt subspace suite clariﬁes what the code represents. Full width-2
+243   patches have donor win 1.000 with JS to donor near zero. Rank-2 SVD patches also reach donor
+244   win 1.000 in both directions; matched random rank-2 subspaces remain at donor win 0.000. Wrong-
+245   prompt exact-difference patches transfer strongly, reaching donor win 0.956 and 0.994 in the two
+246   directions. The branch code is therefore shared rather than prompt-keyed, consistent with the ﬁxed-
+247   vector result above.
+248   Logit attribution of the rank-2 Qwen code is branch-vocabulary-shaped. The ﬁrst component in
+249   the think-donor direction promotes tokens such as Thinking, thinking, and user-analysis tokens,
+250   while suppressing direct-answer openers such as To, To, and ###. This ties the residual subspace
+251   to the visible response program rather than leaving it as an abstract donor-win vector.
+
+
+252   9 Generated behavior diagnostics
+
+253   AIME 2026 answer quality after one entry decision. With the same 32,768-token cap for all
+254   four conditions, the ﬁxed intervention enters <think> on 30/30 AIME 2026 problems and scores
+255   16/30, versus 1/30 off, 2/30 random, and 15/30 canonical thinking. It beats off on 15 problems with
+256   no losses (p = 6.10 × 10−5 ) and random on 14 with no losses (p = 1.22 × 10−4 ); against thinking
+257   it has four wins and three losses (p = 1). Entry succeeds on every ﬁxed row, so restricting the
+258   analysis to successful entries changes nothing. Fixed completes 26/30 and caps on 4/30, compared
+259   with 23/30 and 7/30 for thinking.
+260   The width-2 Nemotron vector was learned only on 60 GSM8K/MATH-500 prompts, then ﬁxed at
+261   boundary 28 with α = 4. It changes only the ﬁrst generated decision; later generation is ordinary.
+262   After the 8,192-token run truncated 65/120 rows, we committed a cap-only correction and generated
+263   all 120 rows again from scratch. Every other choice was unchanged; the correction is post-hoc, not
+264   preregistered. A hash-bound manual audit covers all 120 outputs and ﬁnds no strict-scoring false
+265   positive or parser error. All 55 old completed rows reproduce exactly, all 65 old cap hits share the
+266   exact 8,192-token preﬁx, and zero previously correct row regresses. This shows that one causally
+267   selected entry token can change later answer quality in this paired benchmark run. The one seed
+268   does not establish seed-averaged accuracy. Appendix F.4 gives complete tables and audits.
+
+                                                       8
+269   Other follow-through tests. One copied Qwen3 branch token sets donor response format on 72/72
+270   continuations, while all 72 controls retain the target format. One Nemotron vector decision produces
+271   an exact <think> opening on 293/300 generations versus 0/300 for random vectors. Reapplying
+272   either intervention degrades or corrupts text. Appendix F gives the complete protocols and audits.
+
+273   10    Related work
+274   Hybrid-reasoning work studies when to spend reasoning budget and how visible triggers or steering
+275   vectors change response style (Jiang et al., 2025; Yang et al., 2026; Venhoff et al., 2025). We instead
+276   test the internal prompt-end signal written by a public switch, separating exact copies from vectors
+277   learned on other prompts. Causal-rationale work studies later reasoning traces (Rahim and Rahim,
+278   2025; Sathyanarayanan et al., 2026); we study the state before a long trace exists. We build on
+279   activation patching and layerwise readout (Geva et al., 2023; Belrose et al., 2023; Zhang and Nanda,
+280   2024), adding reversed, random, earlier-position, token-mask, sufﬁx, and misleading-instruction
+281   controls.
+
+282   11    Limitations
+283   We primarily measure response entry, not faithful reasoning. The 60-row AIME boundary audit does
+284   not generate answers. The separate AIME 2026 answer test uses one paired seed over 30 problems;
+285   its bootstrap measures task, not sampling-seed, variation.
+286   The vectors are model-speciﬁc. Qwen3.5, Gemma, and Nemotron use width-2 tails. Qwen3-4B
+287   succeeds at widths 1–8, but only at the ﬁrst branch decision; width 8 reaches switch text and has a
+288   random-control win. OLMo uses separate checkpoints, and Gemma’s reverse ﬁxed vector is unreli-
+289   able.
+290   OLMo, Phi, and Liquid compare paired checkpoints, not same-checkpoint switches; Liquid is asym-
+291   metric. Models without paired modes require a different experiment.
+292   Transfer varies: Gemma and Nemotron succeed broadly, while Qwen3.5 reaches the strict threshold
+293   on 13/30 broad prompts versus 2/90 random controls.
+294   Generated answers are harder because each token changes what follows. At 32K, ﬁxed enters think-
+295   ing on 30/30 and scores 16/30, versus 1/30 off, 2/30 random, and 15/30 thinking. It is signiﬁcantly
+296   better than off and random in this paired task sample but not distinguishable from thinking. Fixed
+297   completes 26/30 and thinking 23/30; the remaining 4 and 7 rows hit the common cap. This is one
+298   paired seed over 30 problems, and the bootstrap varies tasks rather than sampling seeds. It shows
+299   that entry control changes later answer quality in this run, but it does not establish continued residual
+300   control, universal reasoning recovery, or a seed-averaged gain. Reverse entry also misses canonical
+301   direct behavior, and repeated interventions corrupt text.
+302   Localization remains partial: tail post-attention residual copies work where isolated MLP updates
+303   do not, but this isolates neither attention nor one head. We ﬁnd no cross-family vector or benchmark-
+304   solving policy, and proprietary switches may differ.
+
+305   12    Conclusion
+306   Public switches leave causal entry signals. Qwen3-4B controllers of widths 1–8 select 72/72 held-
+307   out donor tokens, and one copied token sets 72/72 continuation formats. Fixed vectors also transfer
+308   in Qwen3.5, Gemma, and Nemotron. On AIME 2026, Nemotron’s ﬁxed entry succeeds on 30/30
+309   and scores 16/30 at 32K, versus 1/30 off, 2/30 random, and 15/30 thinking. It signiﬁcantly beats
+310   off and random in this paired sample and is not distinguishable from thinking. Entry is controllable
+311   and can change later answer quality; continued residual control and seed-averaged recovery remain
+312   open.
+
+313   References
+314   Nora Belrose, Zach Furman, Logan Smith, Danny Halawi, Igor Ostrovsky, Lev McKinney, Stella
+315     Biderman, and Jacob Steinhardt. Eliciting latent predictions from transformers with the tuned
+
+                                                         9
+316     lens. arXiv preprint arXiv:2303.08112, 2023.
+317   Mor Geva, Jasmijn Bastings, Katja Filippova, and Amir Globerson. Dissecting recall of factual
+318    associations in auto-regressive language models. In EMNLP, 2023.
+319   Lingjie Jiang, Xun Wu, Shaohan Huang, Qingxiu Dong, Zewen Chi, Li Dong, Xingxing Zhang,
+320     Tengchao Lv, Lei Cui, and Furu Wei. Think only when you need with large hybrid-reasoning
+321     models. arXiv preprint arXiv:2505.14631, 2025.
+322   Google DeepMind. Gemma thinking capabilities documentation and Gemma 4 E2B-it model card.
+323     https://ai.google.dev/gemma/docs/capabilities/thinking; https://huggingfac
+324     e.co/google/gemma-4-E2B-it, 2026.
+325   Liquid AI. LFM2.5 1.2B Thinking model card. https://huggingface.co/LiquidAI/LFM2.5
+326    -1.2B-Thinking, 2026.
+327   Microsoft. Phi-4-mini-reasoning model card. https://huggingface.co/microsoft/Phi-4-m
+328    ini-reasoning, 2025.
+329   NVIDIA. Llama-3.1-Nemotron-Nano-4B-v1.1 model card. https://huggingface.co/nvidia/
+330    Llama-3.1-Nemotron-Nano-4B-v1.1, 2025.
+331   OLMo Team. OLMo 3 7B Think model card. https://huggingface.co/allenai/Olmo-3-7
+332    B-Think, 2026.
+333   Qwen Team. Qwen3.5-4B model card. https://huggingface.co/Qwen/Qwen3.5-4B, 2026.
+334   Qwen Team. Qwen3-4B model card. https://huggingface.co/Qwen/Qwen3-4B, 2025.
+335   Noor Rahim and Ali Abdul Rahim. Dormant reasoning circuits in RL-trained language models. In
+336    FoRLM, OpenReview, 2025. https://openreview.net/forum?id=mTjGBrkdtz.
+337   Anish Sathyanarayanan, Aditya Nagarsekar, and Aarush Rathore. Bypassing the rationale: Causal
+338     auditing of implicit reasoning in language models. arXiv preprint arXiv:2602.03994, 2026.
+339   Constantin Venhoff, Iván Arcuschin, Philip H. S. Torr, Arthur Conmy, and Neel Nanda. Understand-
+340     ing reasoning in thinking language models via steering vectors. arXiv preprint arXiv:2506.18167,
+341     2025.
+342   Wang Yang, Debargha Ganguly, Xinpeng Li, Chaoda Song, Shouren Wang, Vikash Singh, Vipin
+343    Chaudhary, and Xiaotian Han. Mid-Think: Training-free intermediate-budget reasoning via token-
+344    level triggers. arXiv preprint arXiv:2601.07036, 2026.
+345   Fred Zhang and Neel Nanda. Towards best practices of activation patching in language models:
+346     Metrics and methods. In ICLR, 2024.
+
+
+347   A Artifact map
+348   The row-level artifacts are stored under artifacts/. Artifact directories contain run metadata plus
+349   aggregate and row-level ﬁles where applicable. For double-blind review, the submitted supplement
+350   should be built with scripts/prepare_neurips_supplement.sh; this script copies repro-
+351   duction scripts, selected row-level and aggregate artifacts, prompt splits, and sanitized run metadata
+352   while excluding paper source, written appendices, raw upload logs, and machine-speciﬁc shell logs.
+353   The supplement also includes scripts/verify_claim_artifacts.py, which checks that the
+354   artifact directories and primary ﬁles in the artifact map below are present, and scripts/verify_h
+355   eadline_numbers.py, which checks the paper’s rounded headline values against the stored JSON
+356   artifacts.
+
+         Claim                     Artifact directory                    Primary aggregate ﬁles
+         Qwen tail localization    qwen35-paper-interp-20260422T075824   width_patch_aggregate.json
+                                   Z
+
+
+
+
+                                                        10
+Claim                               Artifact directory                       Primary aggregate ﬁles
+Qwen3.5     post-attention/MLP      qwen35- controller- behavior- 2026042    module_patch_aggregate.json, modu
+comparison                          2T184734Z                                le_patch_rows.json, SUMMARY.md
+Historical Qwen3-4B hard-           rebuttal- 20260724/qwen3- 4b- localiz    patch_aggregate.json, first_perfec
+template width sweep                ation                                    t_layers.json, template_serializa
+                                                                             tion.json, SUMMARY.md
+Qwen3-4B soft-switch prompt-        rebuttal-20260725/qwen3-4b-soft-swi      patch_aggregate.json, first_perfec
+tail width sweep                    tch-localization                         t_layers.json, SUMMARY.md
+Qwen3-4B public soft-switch au-     rebuttal-20260725/qwen3-4b-soft-swi      patch_aggregate.json, module_patch
+dit                                 tch-branch-point                         _aggregate.json, first_perfect_la
+                                                                             yers.json, SUMMARY.md
+Qwen3-4B same-prompt one-           rebuttal-20260727/qwen3-4b-soft-swi      generation_aggregate.json, genera
+token diagnostic                    tch-generation                           tion_rows.json, prompt_suite.json,
+                                                                             SUMMARY.md
+Qwen3-4B      template-matched      rebuttal- 20260727/qwen3- soft- switc    branch_rows.json, generation_agg
+one-token replication               h-one-token-followthrough                regate.json, generation_rows.json,
+                                                                             prompt_suite.json, SUMMARY.md
+Qwen3-4B held-out ﬁxed con-         rebuttal- 20260728/qwen3- soft- switc    audit_aggregate.json, audit_rows.j
+troller                             h-fixed-controller                       son, alpha_selection.json, controll
+                                                                             er_diagnostics.json, SUMMARY.md
+Qwen3-4B       held-out     ﬁxed-   rebuttal- 20260728/qwen3- soft- switc    audit_aggregate.json, audit_rows.j
+controller width sweep              h-fixed-controller-width-1-2-4-8         son, alpha_selection.json, token_sp
+                                                                             an_audit.json, SUMMARY.md
+Qwen token controls and 180         qwen35- neurips- hardening- 20260425T    token_control_aggregate.json, cros
+prompts                             172250Z                                  sval_aggregate.json
+Qwen ﬁxed steering vector           qwen35-fixed-controller-20260427T15      fixed_prompt_controller_aggregat
+                                    2833Z                                    e.json, fixed_prompt_controller_bo
+                                                                             otstrap_summary.json
+Qwen generated-preﬁx rollout        qwen35- multilayer- controller- bench    generation_aggregate.json, genera
+diagnostic                          mark-20260427T233149Z                    tion_rows.json
+Gated public-task steering policy   gated-controller-policy-20260505T05      gated_policy_aggregate.json, gate
+                                    0337Z                                    d_policy_aggregate_by_model.json,
+                                                                             gated_policy_rows.json, crossvalid
+                                                                             ated_gated_policy_rows.json, gate
+                                                                             d_policy_paired_deltas.json
+Cross-family ﬁxed vectors           cross-family-fixed-controller-20260      fixed_controller_aggregate.json,
+                                    427T195227Z                              fixed_controller_rows.json
+Contest-style      prompt-string    aime- fixed- branch- controller- 20260   aime_controller_aggregate.json,
+branch-state audit                  429T194405Z                              aime_controller_rows.json, contro
+                                                                             ller_vectors.json
+Gemma/Nemotron              ﬁxed    gemma-nemotron-fixed-switch-2026050      aime_controller_aggregate.json,
+thinking-branch switch              5T070908Z                                aime_controller_rows.json, contro
+                                                                             ller_selection.json, controller_v
+                                                                             ectors.json
+Broad branch-state claim synthe-    branch- state- broad- claim- 20260506T   branch_state_broad_claim_summary
+sis                                 034229Z                                  .json, SUMMARY.md
+Branch-entry robustness audits      branch-entry-paper-audits-20260506T      paper_audit_summary.json, SUMMARY.
+                                    210000Z                                  md, svd_top_token_proxy.json
+Qwen masked-JS/style control        qwen35- masked-js- style- control- 202   masked_js_style_aggregate.json,
+audit                               60506T215634Z                            masked_js_style_rows.json, mask_m
+                                                                             etadata.json
+Qwen learned        branch-token    qwen35-learned-token-mask-20260507T      learned_mask_aggregate.json, lear
+mask audit                          040000Z                                  ned_mask_rows.json, learned_branch
+                                                                             _tokens_top250.json
+Qwen adversarial branch audit       qwen35-adversarial-branch-audit-202      classifier_aggregate.json, patch_
+                                    60507T000000Z                            aggregate.json, SUMMARY.md
+Nemotron broad+GPQA robust-         prompt- boundary- robustness- nemotro    fixed_aggregate.json, random_direc
+ness                                n-reduced-20260507T061500Z               tion_summary_aggregate.json, subs
+                                                                             et_aggregate.json, wrong_position
+                                                                             _aggregate.json
+Historical direct-erasure adapter   shared-latent-step-direct-erasure-2      shared_latent_aggregate.json, shar
+diagnostics                         0260430T040633Z                          ed_latent_rows.json, latent_adapt
+                                                                             ers.json
+Historical    Nemotron    adapter   shared-latent-nemotron4b-direct-era      shared_latent_aggregate.json, shar
+stress test                         sure-step-20260505T040225Z               ed_latent_rows.json, latent_adapt
+                                                                             ers.json
+Closed-loop direct-erasure diag-    closed-loop-shared-direct-erasure-r      closed_loop_step_aggregate.json,
+nostic                              educed-20260505T041600Z                  closed_loop_prompt_aggregate.jso
+                                                                             n, closed_loop_prompt_rows.json
+Historical Phi kernel induction     shared-latent-step-thinking-phi-ker      shared_latent_aggregate.json, shar
+diagnostic                          nel-layer28-20260430T052209Z             ed_latent_rows.json, latent_adapt
+                                                                             ers.json
+OLMo localization                   olmo3-localization-20260423T160830Z      block_patch_aggregate.json, module
+                                                                             _patch_aggregate.json
+Nemotron localization               nemotron-localization-20260507T0000      patch_aggregate.json, module_patch
+                                    00Z                                      _aggregate.json, first_perfect_la
+                                                                             yers.json
+Nemotron focused generation         rebuttal- 20260724/nemotron- combine     combined_generation_aggregate.js
+audit                               d-analysis                               on, combined_generation_rows.json,
+                                                                             fidelity_by_step.json
+
+
+
+                                                          11
+         Claim                               Artifact directory                                     Primary aggregate ﬁles
+         Nemotron one-step ﬁxed-vector       rebuttal- 20260724/nemotron- fixed- v                 generation_aggregate.json, genera
+         generation                          ector-one-step-generation                             tion_rows.json, controller_step_ro
+                                                                                                   ws.json, PAIRED_QUALITY_ANALYSIS.
+                                                                                                   md
+         Nemotron 64-step stress test        rebuttal- 20260724/nemotron- fixed- v                 generation_aggregate.json, genera
+                                             ector-broad-generation                                tion_rows.json, controller_step_ro
+                                                                                                   ws.json
+         Nemotron ten-seed entry audit       rebuttal- 20260727/nemotron- ten- see                 analysis.json, SUMMARY.md, per-seed
+                                             d-entry-analysis and rebuttal-2026072                 generation_rows.json and controll
+                                             7/nemotron-ten-seed-entry-runs                        er_step_rows.json
+         Nemotron AIME 2026 answer           rebuttal-20260728/nemotron-aime-ans                   generation_aggregate.json, paired
+         quality (primary 32K correction)    wer-quality-32k-protocol.json; rebutt                 _answer_quality.json, independen
+                                             al-20260728/nemotron-aime26-one-ste                   t_answer_quality_32k_audit.json,
+                                             p-answer-quality-32k                                  manual_output_audit_32k.json, MANU
+                                                                                                   AL_OUTPUT_AUDIT_32K.md, comparison
+                                                                                                   -8k-vs-32k/
+         Nemotron AIME 2026 answer           rebuttal-20260728/nemotron-aime-ans                   generation_aggregate.json, paired
+         quality (superseded 8K prove-       wer-quality-protocol.json; rebuttal-2                 _answer_quality.json, independent_
+         nance)                              0260728/nemotron- aime26- one- step- a                answer_quality_audit.json, manual
+                                             nswer-quality                                         _output_audit.json, MANUAL_OUTPUT_
+                                                                                                   AUDIT.md
+         Liquid localization                 liquid-causal-patch-20260426T044355                   patch_aggregate.json, canonical_ag
+                                             Z, liquid- causal- layer- scan- 2026043               gregate.json
+                                             0T051648Z
+         Phi localization                    phi-causal-patch-20260423T231120Z                      patch_aggregate.json
+         Low-rank cross-validation           residual- subspace- crossval- 2026042                  crossval_aggregate.json, spectrum
+                                             4T205031Z                                              _aggregate.json
+         Public behavior diagnostics         qwen35- public- benchmark- behavior- 2                 aggregate_by_variant.json
+                                             0260424T104510Z
+         Sustained patch generation          qwen35-sustained-patch-generation-2                    generation_aggregate.json, sustai
+                                             0260425T193507Z                                        ned_step_aggregate.json
+
+
+
+
+357   B Qwen3 width sweeps and ﬁxed-controller audit details
+358   B.1    Earlier exact-copy width sweeps
+
+359   Two earlier 12-prompt experiments tested widths 1, 2, 4, and 8 using the matching donor activation
+360   for each prompt. Table 10 reports them because they motivated the cleaner branch-point design,
+361   not because they establish held-out controller transfer. The ﬁrst used the hard chat-template switch,
+362   enable_thinking=True versus False; its serialized prompts differ by a four-token assistant sufﬁx.
+363   The second kept enable_thinking=True and used /think versus /no_think, but patched the
+364   ordinary serialized prompt tail before adding the shared <think> token. In that soft-switch sweep,
+365   non-tail width-2/4/8 copies also reach donor win 1.0, so it does not uniquely localize the effect to
+366   the tail. The ﬁrst four prompt positions never win in either direction.
+
+                                  Switch and copied block Direction            Width 1   Width 2   Width 4   Width 8
+                                  Hard template, tail          off to think        20         0         0         0
+                                  Hard template, tail          think to off        28         4         0         8
+                                  Hard template, non-tail      off to think         –      none      none      none
+                                  Hard template, non-tail      think to off         –      none      none      none
+                                  Soft instruction, tail       off to think        32        28        24          0
+                                  Soft instruction, tail       think to off        32        24        24          0
+                                  Soft instruction, non-tail   off to think         –         8         0          0
+                                  Soft instruction, non-tail   think to off         –         8         0          0
+      Table 10: Earlier Qwen3-4B exact-copy width sweeps. Entries are the ﬁrst tested residual boundary
+      with donor wins on all 12 prompts; the grid is 0, 4, . . . , 36, “none” means no tested boundary, and “–”
+      means the block was not tested. Every tail width reaches 12/12 at some boundary in both directions.
+      These are same-prompt donor copies, not ﬁxed controllers, and have no ﬁt/held-out split.
+
+
+367   B.2    Held-out ﬁxed-controller width sweep
+
+368   The new width protocol, runner, prompt IDs, layer boundary, alpha grid, selection rule, controls,
+369   random seeds, and interpretation limits were committed before inference. Both conditions use model
+370   revision 4dcb3d101c2a062e5c1d4bb173588c54ea6c4d25, keep enable_thinking=True, and
+371   differ only through the public /think and /no_think instructions. We supply the same <think>
+
+                                                                              12
+372   token, then audit the ﬁrst divergent next-token decision. For each width, the frozen controller is the
+373   mean thinking-minus-off residual tensor over the same 12 ﬁt prompts at boundary 28. The ﬁt-only
+374   selection rule chooses α = 1 for every width. Evaluation uses 12 new values from the same six
+375   authored categories and 24 prompts from four categories absent from ﬁtting. It never uses a held-out
+376   donor activation or difference.
+
+                               Width α Fixed wins Token matches Zero Reversed Earlier span Random
+                                  1    1       72/72      72/72   0/72       0/72         0/72       0/216
+                                  2    1       72/72      72/72   0/72       0/72         0/72       0/216
+                                  4    1       72/72      72/72   0/72       0/72         0/72       0/216
+                                  8    1       72/72      72/72   0/72       0/72         0/72      21/216
+      Table 11: Held-out Qwen3-4B ﬁxed-controller width sweep over 36 prompts and both directions.
+      Every ﬁxed row comprises 24 same-category and 48 category-shift directional tests. The earlier-span
+      control has the same width but never overlaps the active response-entry span. Random denominators
+      contain three preregistered norm-matched tensors. All 21 random wins are one width-8 seed in the
+      off-to-think direction.
+
+
+377   Width 1 already reaches the maximum binary result, so more positions add no success beneﬁt. Its
+378   mean JS-to-donor is 8.05 × 10−9 off-to-think and 9.94 × 10−7 think-to-off; mean donor margins are
+379   0.69315 and 0.69313. Controller norms for widths 1/2/4/8 are 112.587/144.613/201.942/303.778,
+380   and the corresponding mean ﬁt-prompt cosines to the mean tensor are 0.975/0.951/0.963/0.960. The
+381   tokenizer audit shows that widths 1, 2, and 4 stay within the shared <think> and assistant-header
+382   sufﬁx, while width 8 reaches the differently tokenized /think and /no_think instruction frag-
+383   ments. This explains why width 1 is the cleanest sufﬁciency and speciﬁcity result. These tests do
+384   not measure accuracy, reasoning quality, or later-token control.
+
+385   C Localization effect sizes
+386   Table 12 expands the headline localization rows from Table 5. The Qwen3.5 JS columns are point
+387   estimates from the stored aggregate. Qwen3, Nemotron, OLMo, Liquid, and Phi include prompt-
+388   bootstrap intervals. Qwen3 reports the shared-token soft-switch decision after both modes receive
+389   <think>. Phi reports the main 8-prompt set; the alternate set reaches the same ﬁrst successful tested
+390   boundaries.
+
+          Model                   Donor into target         n        Layer            Donor win       JS to donor   JS to target
+          Qwen3.5-4B              think into no-think      60          3     1.000 [1.000, 1.000]          0.0632       0.6283
+          Qwen3.5-4B              no-think into think      60          0     1.000 [1.000, 1.000]          0.1113       0.6080
+          Qwen3-4B soft           think into no-think      12         24     1.000 [1.000, 1.000]      0.0000001        0.6931
+          Qwen3-4B soft           no-think into think      12         28     1.000 [1.000, 1.000]      0.0000002        0.6931
+          Nemotron Nano 4B        think into off           12         16     1.000 [1.000, 1.000]          0.1404       0.6893
+          Nemotron Nano 4B        off into think           12         12     1.000 [1.000, 1.000]          0.1222       0.6748
+          OLMo 3 7B               think into instruct      12          0     1.000 [1.000, 1.000]          0.2552       0.6925
+          OLMo 3 7B               instruct into think      12          4     1.000 [1.000, 1.000]          0.5022       0.6927
+          Liquid LFM2.5 1.2B      think into instruct      60     16 best    0.000 [0.000, 0.000]          0.6924       0.6037
+          Liquid LFM2.5 1.2B      instruct into think      60         12     1.000 [1.000, 1.000]          0.1246       0.6931
+          Phi-4 mini              think into instruct       8         28     1.000 [1.000, 1.000]          0.0110       0.6932
+          Phi-4 mini              instruct into think       8         16     1.000 [1.000, 1.000]          0.2996       0.6921
+      Table 12: Effect sizes for the response-entry localization rows. Qwen3 uses a width-1 copy of
+      the shared <think> state; the other headline rows use width 2. Qwen3, Nemotron, and OLMo
+      boundaries are the ﬁrst successes on coarse four-layer grids, not exact onsets. The Liquid think-into-
+      instruct row reports the best tested tail boundary because no tested boundary produced donor wins.
+      Matched non-tail controls have donor win 0.000 [0.000, 0.000] for all rows with bootstrap intervals
+      in the artifacts.
+
+
+
+391   D Compute and existing assets
+392   Experiments were run on an Apple M4 Mac Mini with 16GB uniﬁed memory using MLX and MLX-
+393   LM. The BF16 Qwen replication covers fewer conﬁgurations than the 4-bit cross-validation because
+394   of this memory limit. The sustained-generation suite is also smaller because it recomputes full
+
+                                                                13
+395   donor and target traces at each generated step. The supplement’s per-run run_metadata.json ﬁles
+396   record UTC start times, platform strings, model identiﬁers, layer and alpha grids, prompt counts,
+397   and generation caps for the included runs.
+398   The primary AIME 2026 answer-quality experiment contains 120 fresh generations under one equal
+399   32,768-token cap, matching NVIDIA’s public model-card example (NVIDIA, 2025). We report
+400   every cap hit without retrying it. This is a post-hoc corrective rerun: an earlier equal-cap run was
+401   inspected ﬁrst and had truncated 65/120 responses at 8,192 tokens. The controller, tasks, prompts,
+402   four conditions, sampling policies, seeds, grading, and uncertainty procedure were unchanged; only
+403   the common cap changed. We preserve the earlier run as superseded resource-bounded provenance
+404   rather than combining its rows with the primary analysis.
+405   The model checkpoints are open Hugging Face assets: Qwen3.5-4B and Qwen3-4B are Apache-
+406   2.0, OLMo 3 7B Think/Instruct is Apache-2.0 with Ai2 Responsible Use Guidelines, Gemma 4
+407   E2B-it is documented by Google DeepMind with thinking-mode controls, LiquidAI LFM2.5 1.2B
+408   uses the LFM Open License v1.0, Phi-4-mini-reasoning is MIT, and Llama-3.1-Nemotron-Nano-
+409   4B-v1.1 uses the NVIDIA Open Model License with additional Llama 3.1 terms. The prompt-
+410   boundary branch audits use math-ai/aime25 and math-ai/aime26, which are Apache-2.0 licensed on
+411   their Hugging Face dataset pages. Public generation diagnostics are provided as behavior artifacts
+412   for the same intervention family.
+
+413   E Broader impacts
+414   This work gives a concrete audit target for hybrid-reasoning systems: an activation measured before
+415   generation is easier to test than a vague claim that thinking is on. The main dual-use risk is superﬁcial
+416   manipulation of thinking-style behavior, so we pair the result with held-out tests and failures that
+417   distinguish mode entry from answer quality.
+
+418   F    Generated behavior diagnostics
+419   F.1 Qwen3 template-matched one-token replication
+
+420   The follow-through suite freezes every choice made by the 12-prompt localization audit, then
+421   uses the next two authored instances from each of its six categories and templates. The result-
+422   ing 12 prompts are disjoint from localization but category- and template-matched. This tests new
+423   prompt values within the same authored structures, not broad-distribution transfer. Both modes keep
+424   enable_thinking=True, use /think or /no_think, and receive the same supplied <think> to-
+425   ken. The copied residual state is used only to choose the next argmax token at layer 24 for off-
+426   to-think and layer 28 for think-to-off. We then delete every copied state, insert the selected token
+427   into the untouched target context, and sample with temperature 0.6, top-p 0.95, and top-k 20. Each
+428   prompt and direction uses three seeds with common random numbers across conditions. The design
+429   reports 216 direction-labeled analysis rows. Because a canonical reference completion serves as the
+430   donor in one direction and the target in the other, these rows correspond to 144 prompt/context/seed
+431   generation conditions.
+
+      Table 13: Qwen3-4B response format after one residual-selected branch token on 12 disjoint,
+      template-matched prompts under three sampling seeds. The target control inserts the unmodiﬁed
+      target mode’s argmax token into the same target context.
+                   Direction      Condition               Observed format   Completed   Reopened think   Mean tokens
+                   Off to think   Donor-token reference    36/36 thinking       36/36             0/36        1976.9
+                   Off to think   One-token mediation      36/36 thinking       36/36             0/36        1809.1
+                   Off to think   Target-token control       36/36 direct       36/36             0/36         224.2
+                   Think to off   Donor-token reference      36/36 direct       36/36             0/36         224.2
+                   Think to off   One-token mediation        36/36 direct       36/36             0/36         218.1
+                   Think to off   Target-token control     36/36 thinking       36/36             0/36        1976.9
+
+
+
+432   The copied state selects the donor token on 12/12 prompts in each direction. The 72 mediated
+433   continuations then match the donor response format, while all 72 paired target-control rows retain
+
+                                                                   14
+434   the target format. Every row has exactly one closing think tag and a nonempty answer, and none
+435   reaches the 4,096-token limit. The intervention also transfers the large length difference: off-to-
+436   think averages 1809.1 tokens versus 224.2 for its direct control, while think-to-off averages 218.1
+437   versus 1976.9 for its thinking control. This establishes that the causally selected branch decision is
+438   sufﬁcient for the later visible format on this template-matched prompt-value replication. It does not
+439   show broad-distribution transfer or that the discarded residual state controls later tokens.
+
+440   F.2 Earlier Qwen generated-preﬁx diagnostics
+
+441   Generated-preﬁx tests ask what happens after sampled tokens begin changing the next model state.
+442   In a Qwen diagnostic, a vector is learned on 24 public prompts and evaluated on 40 disjoint
+443   GSM8K/MATH-500 prompts. It is added for the ﬁrst generated decision and then for up to 64
+444   later decisions before the model continues freely. The selected no-think-to-think vector changes
+445   response style and performs favorably on this one held-out set; the reverse row shows that style
+446   movement need not improve answers.
+
+                     Condition                                                        Acc. Direct Self-corr. Tokens Trunc.
+                     canonical no-think                                              0.725    0.925     0.075 530.5      0.150
+447
+                     canonical think                                                 0.200    0.125     0.850 1012.8     0.950
+                     no-think → think generated-preﬁx vector                         0.800    0.000     0.000 516.1      0.100
+                     think → no-think generated-preﬁx vector                         0.075    1.000     0.225 1013.0     0.950
+
+
+448   The serialized-sufﬁx diagnostic asks whether downstream behavior moves after the prompt-
+449   boundary state enters the transient no-think branch. On a separate 24-prompt public subset, canoni-
+450   cal Qwen think is much longer and more self-correcting but truncates on 75.0% of prompts; no-think
+451   transient states are shorter, less self-correcting, and match no-think-style direct-answer behavior. Ac-
+452   curacy is included to conﬁrm complete responses.
+
+                                     Variant               Think Direct Self-corr.     Acc. Tokens Trunc.
+                                     think sufﬁx           0.750   0.167      0.917   0.417    3585.9   0.750
+453                                  shared preﬁx          0.208   0.708      0.500   0.500    2022.2   0.375
+                                     no-think preclose     0.000   0.875      0.167   0.708     984.4   0.125
+                                     closed, no gap        0.000   0.875      0.167   0.708    1028.0   0.125
+                                     full no-think sufﬁx   0.000   0.875      0.250   0.708    1071.7   0.125
+
+
+454   F.3 Nemotron generation details
+
+455   Ten-seed entry-format audit. We ﬁrst test the opening under ten paired generation/random-vector
+456   seed settings, using the same 30 frozen non-math prompts and the same frozen width-2 controller.
+457   Each run changes exactly the ﬁrst generated decision and is capped at 64 tokens. We pre-specify
+458   an exact <think> opening as the forward generated-format endpoint. The ﬁxed vector reaches that
+459   endpoint on 293/300 generations, versus 0/300 for the norm-matched random vectors. The paired
+460   difference is .977. A two-way bootstrap that resamples both prompts and paired run settings gives
+461   a 95% interval of [.930, 1.000] from 10,000 resamples. Every individual run scores between 27/30
+462   and 30/30 for the ﬁxed vector, while every random-vector run scores 0/30.
+
+      Table 14: Nemotron ten-seed branch-entry audit. “First-step donor win” compares the intervened
+      next-token distribution with the canonical donor and target distributions; the exact-opening row
+      instead evaluates sampled text.
+          Endpoint                                                   Fixed vector     Random vector     Per-run counts
+          Exact <think> opening, off to think                              293/300              0/300   Fixed 27–30/30; random 0/30
+          First-step donor win, off to think                               300/300              5/300   Fixed 30/30; random 0–2/30
+          First-step donor win, think to off                               300/300              0/300   Fixed 30/30; random 0/30
+
+
+
+463   All 300 ﬁxed off-to-think interventions select <th as the ﬁrst token. The seven strict opening
+464   failures occur during ordinary sampling after that intervened token and produce malformed con-
+465   tinuations such as <think offhand or <think off-topic>; they remain counted as failures.
+466   They are concentrated on three prompt values: multiturn_02 twice, nonenglish_02 once, and
+467   nonenglish_04 four times. We omit a reverse generated-format rate because merely failing to open
+
+                                                                       15
+468   with <think> does not distinguish a clean direct answer from an unrelated or malformed random-
+469   vector output. We instead report the saved ﬁrst-step donor-win endpoint in both directions. For
+470   each prompt, the ﬁxed ﬁrst-step distribution is deterministic and therefore repeats across the ten run
+471   settings; the 300/300 ﬁxed rows in each direction are descriptive, not 300 independent distributional
+472   replications. The random-vector controls vary across runs. Reverse ﬁxed generation is also greedy,
+473   so its output repeats across seeds. The 64-token cap makes this an entry-format audit; the separate
+474   experiment below supplies the 1,024-token completion, length, and repetition evidence.
+
+475   F.4 AIME 2026 answer quality after a frozen entry intervention
+
+476   This experiment asks the reviewer’s downstream question directly: what answer quality follows after
+477   the recovered thinking branch is entered? The controller is the previously frozen Nemotron off-to-
+478   thinking vector: width 2, boundary 28, and α = 4, ﬁtted and selected only on the 30 GSM8K and
+479   30 numeric MATH-500 prompts. It uses all 30 AIME 2026 problems, one paired seed (20260728),
+480   four conditions, and one equal budget without retries. The controller, tasks, prompts, conditions,
+481   samplers, seeds, grading, and uncertainty procedure were ﬁxed before the ﬁrst AIME 2026 genera-
+482   tion. After inspecting the initial 8,192-token run and ﬁnding that 65/120 rows were truncated, we
+483   committed a corrective protocol and reran all 120 generations from scratch at the 32,768-token set-
+484   ting in NVIDIA’s model-card example (NVIDIA, 2025). This longer run is the primary analysis;
+485   the initial run remains separate as superseded resource-bounded provenance. The correction was
+486   speciﬁed before any 32,768-token generation, but it was post-hoc to the 8,192-token result and is
+487   not a preregistration. An earlier AIME 2025 timing pilot is excluded from every result.
+488   Canonical off generation is greedy; the other three conditions use the protocol’s thinking sampler.
+489   For the ﬁxed and norm-matched random conditions, the intervention changes only the ﬁrst next-
+490   token distribution. The sampled token is appended to the untouched off-mode prompt, the patched
+491   state is discarded, and the model generates every later token normally. The primary score requires
+492   the response to stop before the cap and its last syntactically valid \boxed{N} integer to match the
+493   gold answer. A ﬁnal standalone-integer parser is secondary. Table 15 reports every condition; no
+494   entry, completion, cap, or repetition failure is removed.
+
+      Table 15: Nemotron pass@1 answer quality on all 30 AIME 2026 problems. “Entry” is an exact
+      initial <think> tag; capped responses are incomplete and incorrect under the strict metric.
+                         Condition                   Entry Strict Complete     Cap Tail rep. Mean tokens
+                         Canonical off                0/30 1/30        21/30   9/30      13/30      10890.6
+                         Canonical thinking          30/30 15/30       23/30   7/30       3/30      19607.5
+                         Fixed off-to-thinking entry 30/30 16/30       26/30   4/30       4/30      18497.3
+                         Norm-matched random entry 0/30 2/30           25/30   5/30      10/30       9092.2
+
+
+
+      Table 16: Paired strict-answer comparisons for the ﬁxed one-step entry condition on AIME 2026.
+      Intervals are 10,000-resample task-bootstrap intervals; p is the exact two-sided McNemar test over
+      discordant problems.
+                     Reference             Fixed / reference       Difference [95% CI]     W/L/T               p
+                                                                                                              −5
+                     Canonical off             16/30 / 1/30    +.500 [+.333, +.667]       15/0/15   6.10×10
+                     Canonical thinking       16/30 / 15/30    +.033 [−.133, +.200]        4/3/23           1
+                     Norm-matched random       16/30 / 2/30    +.467 [+.300, +.633]       14/0/16   1.22×10−4
+
+
+
+495   The ﬁxed vector produces the exact <think> opening, the thinking donor’s top-1 entry token, a
+496   donor win, and effective control on all 30 problems. Its successful-entry subset is therefore the full
+497   ﬁxed-condition population, and every conditional comparison is identical to the unconditional one.
+498   Fixed is 15–0 against off and 14–0 against random, which uses the same thinking sampler, while
+499   its 4–3 comparison with canonical thinking is not signiﬁcant. Fixed also completes more often than
+500   thinking, 26/30 versus 23/30.
+501   The hash-bound manual audit covers all 120 traces. All 34 strict positives have supported ﬁnal an-
+502   swers and no false positive. The 25 cap hits contain two incidental or intermediate gold-number
+503   occurrences and 23 with no gold occurrence; none contains a supported or later-retracted gold an-
+504   swer. All 32 boxed/ﬁnal-integer disagreements are faithful, with no parser false positive or false
+
+                                                                16
+505   negative. All 36 ﬁxed/reference strict discordances reﬂect answer quality (33 ﬁxed wins and three
+506   losses), not termination or parsing. One supported ﬁxed answer, task 22’s 754, triggers the conserva-
+507   tive tail-repetition heuristic; manual review conﬁrms that its derivation and ﬁnal answer are coherent,
+508   so the primary strict score retains it. Removing only the completion gate changes no score.
+509   The cap-only rerun also provides a continuation check. All 55 rows that stopped at 8K are exactly
+510   identical in text and token IDs, and all 65 old cap hits reproduce their exact 8,192-token and decoded-
+511   text preﬁxes. By 32K, 21 of those rows stop correct, 19 stop wrong, and 25 remain capped; no
+512   previously correct row regresses. Fixed tasks 3, 4, and 8 were capped at 8K and now ﬁnish with
+513   supported correct boxes; task 3 had already emitted its correct box before the cap, while tasks 4 and
+514   8 had not. In contrast, task 28 canonical thinking derives the correct candidate 107, then rejects it
+515   and ﬁnishes with 139, illustrating why intermediate number mentions are not scored as answers.
+516   An independent post-run script reconstructs the frozen prompts and vectors, veriﬁes recorded to-
+517   ken IDs against decoded text, recomputes strict and secondary correctness, and regenerates every
+518   aggregate, bootstrap interval, paired count, and McNemar test. It passes on all 120 unique prompt-
+519   by-condition rows. The one-seed experiment establishes that a causally selected entry token can
+520   change later answer quality in this paired run; its task bootstrap does not estimate sampling-seed
+521   variation. The hash manifest, machine-readable report, exhaustive manual audit, and 8K-to-32K
+522   comparison are included with the artifact.
+
+523   One ﬁxed-vector step on 30 held-out non-math prompts. We use the frozen width-2 vector
+524   learned from the 60 GSM8K/MATH-500 training prompts and apply it for exactly the ﬁrst generated
+525   decision. We then let the model continue freely for up to 1,024 tokens. The evaluation set has
+526   30 previously frozen prompts: six each from ﬁve non-mathematical categories. The experiment
+527   contains exactly 180 generations: two canonical modes, two ﬁxed-vector directions, and two norm-
+528   matched random-vector directions for every prompt.
+
+      Table 17: Nemotron generation after one ﬁxed-vector step. “Donor opening” means starting with
+      <think> in the forward direction and starting without it in reverse. The random vector is norm
+      matched and uses the same scale and decoding policy.
+                          Condition                  Donor opening   Completed   Repetitive   Mean tokens
+                          Canonical off                          –       24/30        0/30          643.7
+                          Canonical thinking                     –       16/30        0/30          889.1
+                          Off plus thinking vector           29/30       15/30        0/30          863.1
+                          Thinking plus off vector           30/30       12/30        0/30          857.0
+                          Random vector, forward              0/30       24/30        0/30          697.5
+                          Random vector, reverse              0/30       12/30        0/30          915.7
+
+
+
+
+529   The ﬁxed and random vectors differ on every prompt at the ﬁrst generated decision in both directions.
+530   The ﬁxed vector produces the donor opening on 29/30 forward prompts versus 0/30 for random
+531   (paired exact p = 3.73×10−9 ) and 30/30 reverse prompts versus 0/30 for random (p = 1.86×10−9 ).
+532   None of the 60 ﬁxed-vector outputs triggers the pre-speciﬁed repetition test, and none has low token
+533   diversity over its ﬁrst 64 tokens. The one forward miss begins with the malformed fragment <think
+534   offhand; two reverse outputs enter a think block later.
+535   The forward effect continues beyond the opening: its completion count is 15/30 versus 16/30 for
+536   canonical thinking, and its mean length differs by −26.0 tokens (95% prompt-bootstrap interval
+537   [−78.8, 25.1]). The reverse intervention selects the direct opening but does not restore the full
+538   direct-answer trajectory: it completes 12/30 responses versus 24/30 for canonical off (p = .00183)
+539   and is 213.3 tokens longer on average (95% interval [124.5, 308.5]). This is reliable entry control,
+540   not symmetric control of the complete response.
+541   As a stress test, we reapplied the same ﬁxed vector for 64 generated decisions on the same 30
+542   prompts. The ﬁrst-step records and canonical baselines are identical to the one-step run, but all 30
+543   forward outputs begin with a repeated <th fragment and all 30 ﬁxed-vector outputs in each direction
+544   fail the carried-forward ﬁrst-64 diversity test. Nine of 30 reverse outputs also meet the full-output
+545   repetition rule. The corruption is caused by repeatedly forcing a prompt-end vector after generation
+546   has moved into a different state; it is evidence against using this ﬁxed intervention as a long-horizon
+547   controller.
+
+                                                                17
+548   Repeated exact activation copies on six math prompts. The second test uses six public math
+549   prompts. At each of the ﬁrst 64 generated decisions, it recomputes the donor and target trajectories
+550   using their respective mode prompts plus the same generated preﬁx, then replaces the target’s ﬁnal
+551   two residual positions with the matching donor positions. After 64 such decisions it continues freely.
+552   Thinking mode used three seeds per prompt, giving 18 thinking runs and 18 off-runs modiﬁed with
+553   the matching thinking activation. The reverse direction used one run per prompt. Table 18 includes
+554   every run, including failures.
+
+
+
+
+      Table 18: Nemotron generation after recomputing and reapplying the matching donor tail activation
+      at each of the ﬁrst 64 decisions, then continuing freely. “Correct (all)” retains the last reported
+      answer even for a repetitive run; “correct (ﬁnished)” excludes runs still repeating at 8,192 tokens.
+                  Condition                           Finished Degenerate Correct (all) Correct (ﬁnished)
+                  Unmodiﬁed off mode                      6/6           0          4/6               4/6
+                  Unmodiﬁed thinking mode               18/18           0        17/18             17/18
+                  Off run given thinking activation     17/18           1        17/18             17/17
+                  Thinking run given off activation       4/6           2          6/6               4/4
+
+
+
+
+555   The intervention is strongest at response entry and then fades even while the matching copy is reap-
+556   plied. For off runs given the thinking activation, cumulative donor-win rates across the ﬁrst 1, 4, 8,
+557   16, 32, and 64 patched decisions are 1.000, .958, .694, .535, .450, and .382. In the reverse direction
+558   they are 1.000, .708, .542, .417, .349, and .284. Manual inspection found two reverse runs repeat-
+559   ing 477 and 350 boxed answers and one forward run cycling among incompatible interpretations.
+560   All ﬁve initially capped runs were repeated with an 8,192-token limit and exactly reproduced their
+561   original 4,096-token preﬁxes. Complete modiﬁed answers often match the donor mode, but these
+562   failures show that repeated exact copying is not reliable long-horizon control.
+
+                                                       18
+563   G Plain-language glossary
+
+        Term                    Intuitive meaning                        Exact use in this paper
+        Thinking switch        The public setting that asks a model A chat-template option for Qwen and
+                               to produce a thinking-style response Gemma; a system instruction for
+                                                                        Nemotron
+        Activation             The model’s internal state at one to- A vector read from the residual
+                               ken and layer                            stream before the next transformer
+                                                                        layer
+        Prompt end or tail     The point immediately before the The ﬁnal one, two, four, or eight
+                               model writes its answer                  input-token positions; width 2 is the
+                                                                        main setting
+        Donor and target       The mode copied from, and the run The donor activation replaces or shifts
+                               being changed                            the target activation for the same user
+                                                                        prompt
+        Exact patch            Copy the actual internal state from the Used to locate where and through
+                               matching donor run                       which module the mode signal is car-
+                                                                        ried
+564     Fixed mode vector      One reusable average shift learned on Mean paired donor-minus-target ac-
+                               other prompts                            tivation, scaled on training prompts
+                                                                        only; 60 ﬁt prompts in the original
+                                                                        suites and 12 in the Qwen3 branch-
+                                                                        point audit
+        Donor win              The changed run looks more like the Its next-token distribution has lower
+                               desired mode than its original mode      JS distance to the donor than to the
+                                                                        target
+        Effective              A donor win large enough to matter Donor win with JS margin > 0.1 and
+                               under a ﬁxed threshold                   JS-to-donor < 0.6
+        Post-attention state / The full residual state after attention, The former is copied in full; the latter
+        MLP update             versus the MLP’s added update            is copied alone, so the asymmetric re-
+                                                                        sult does not isolate attention
+        Low-rank subspace      A small set of shared activation direc- An SVD basis ﬁtted on training differ-
+                               tions                                    ences; unlike the ﬁxed vector, evalu-
+                                                                        ation uses each held-out donor differ-
+                                                                        ence’s coordinates
+
+
+565   NeurIPS Paper Checklist
+566       1. Claims
+567          Question: Do the main claims made in the abstract and introduction accurately reﬂect the
+568          paper’s contributions and scope?
+569          Answer: [Yes].
+570          Justiﬁcation: The abstract and introduction state the positive claim as a prompt-boundary
+571          branch-state audit for thinking-mode entry with model-speciﬁc residual-tail controllers.
+572          The limitations section scopes this claim by separating prompt-boundary branch control
+573          from rollout correctness, bidirectional erasure, and contest-math solving.
+574          Guidelines:
+575             • The answer [N/A] means that the abstract and introduction do not include the claims
+576               made in the paper.
+577             • The abstract and/or introduction should clearly state the claims made, including the
+578               contributions made in the paper and important assumptions and limitations. A [No] or
+579               [N/A] answer to this question will not be perceived well by the reviewers.
+580             • The claims made should match theoretical and experimental results, and reﬂect how
+581               much the results can be expected to generalize to other settings.
+582             • It is ﬁne to include aspirational goals as motivation as long as it is clear that these
+583               goals are not attained by the paper.
+584       2. Limitations
+585          Question: Does the paper discuss the limitations of the work performed by the authors?
+
+                                                          19
+586     Answer: [Yes].
+587     Justiﬁcation: The limitations section discusses model-family scope, paired-checkpoint ver-
+588     sus same-checkpoint evidence, direction-speciﬁc controller asymmetries, Qwen’s mixed
+589     broad ﬁxed-vector transfer, generated-preﬁx diagnostics, and the distinction between
+590     prompt-boundary branch-state control and rollout correctness.
+591     Guidelines:
+592        • The answer [N/A] means that the paper has no limitation while the answer [No] means
+593          that the paper has limitations, but those are not discussed in the paper.
+594        • The authors are encouraged to create a separate “Limitations” section in their paper.
+595        • The paper should point out any strong assumptions and how robust the results are to
+596          violations of these assumptions (e.g., independence assumptions, noiseless settings,
+597          model well-speciﬁcation, asymptotic approximations only holding locally). The au-
+598          thors should reﬂect on how these assumptions might be violated in practice and what
+599          the implications would be.
+600        • The authors should reﬂect on the scope of the claims made, e.g., if the approach was
+601          only tested on a few datasets or with a few runs. In general, empirical results often
+602          depend on implicit assumptions, which should be articulated.
+603        • The authors should reﬂect on the factors that inﬂuence the performance of the ap-
+604          proach. For example, a facial recognition algorithm may perform poorly when image
+605          resolution is low or images are taken in low lighting. Or a speech-to-text system might
+606          not be used reliably to provide closed captions for online lectures because it fails to
+607          handle technical jargon.
+608        • The authors should discuss the computational efﬁciency of the proposed algorithms
+609          and how they scale with dataset size.
+610        • If applicable, the authors should discuss possible limitations of their approach to ad-
+611          dress problems of privacy and fairness.
+612        • While the authors might fear that complete honesty about limitations might be used by
+613          reviewers as grounds for rejection, a worse outcome might be that reviewers discover
+614          limitations that aren’t acknowledged in the paper. The authors should use their best
+615          judgment and recognize that individual actions in favor of transparency play an impor-
+616          tant role in developing norms that preserve the integrity of the community. Reviewers
+617          will be speciﬁcally instructed to not penalize honesty concerning limitations.
+618   3. Theory assumptions and proofs
+619     Question: For each theoretical result, does the paper provide the full set of assumptions and
+620     a complete (and correct) proof?
+621     Answer: [N/A].
+622     Justiﬁcation: The paper is empirical and does not present theoretical theorems or proofs.
+623     Guidelines:
+624        • The answer [N/A] means that the paper does not include theoretical results.
+625        • All the theorems, formulas, and proofs in the paper should be numbered and cross-
+626          referenced.
+627        • All assumptions should be clearly stated or referenced in the statement of any theo-
+628          rems.
+629        • The proofs can either appear in the main paper or the supplemental material, but if
+630          they appear in the supplemental material, the authors are encouraged to provide a
+631          short proof sketch to provide intuition.
+632        • Inversely, any informal proof provided in the core of the paper should be comple-
+633          mented by formal proofs provided in appendix or supplemental material.
+634        • Theorems and Lemmas that the proof relies upon should be properly referenced.
+635   4. Experimental result reproducibility
+636     Question: Does the paper fully disclose all the information needed to reproduce the main
+637     experimental results of the paper to the extent that it affects the main claims and/or conclu-
+638     sions of the paper (regardless of whether the code and data are provided or not)?
+
+                                                20
+639      Answer: [Yes].
+640      Justiﬁcation: The setup deﬁnes the intervention metrics, patch widths, low-rank and ﬁxed-
+641      vector ﬁtting procedures, model families, prompt splits, and generated-preﬁx diagnostic
+642      setting; the artifact map points to scripts, row-level JSON ﬁles, aggregate JSON ﬁles, and
+643      run metadata for the reported results.
+644      Guidelines:
+645         • The answer [N/A] means that the paper does not include experiments.
+646         • If the paper includes experiments, a [No] answer to this question will not be per-
+647            ceived well by the reviewers: Making the paper reproducible is important, regardless
+648            of whether the code and data are provided or not.
+649         • If the contribution is a dataset and/or model, the authors should describe the steps
+650            taken to make their results reproducible or veriﬁable.
+651         • Depending on the contribution, reproducibility can be accomplished in various ways.
+652            For example, if the contribution is a novel architecture, describing the architecture
+653            fully might sufﬁce, or if the contribution is a speciﬁc model and empirical evaluation,
+654            it may be necessary to either make it possible for others to replicate the model with
+655            the same dataset, or provide access to the model. In general. releasing code and data
+656            is often one good way to accomplish this, but reproducibility can also be provided via
+657            detailed instructions for how to replicate the results, access to a hosted model (e.g., in
+658            the case of a large language model), releasing of a model checkpoint, or other means
+659            that are appropriate to the research performed.
+660         • While NeurIPS does not require releasing code, the conference does require all sub-
+661            missions to provide some reasonable avenue for reproducibility, which may depend
+662            on the nature of the contribution. For example
+663           (a) If the contribution is primarily a new algorithm, the paper should make it clear
+664                how to reproduce that algorithm.
+665           (b) If the contribution is primarily a new model architecture, the paper should describe
+666                the architecture clearly and fully.
+667           (c) If the contribution is a new model (e.g., a large language model), then there should
+668                either be a way to access this model for reproducing the results or a way to re-
+669                produce the model (e.g., with an open-source dataset or instructions for how to
+670                construct the dataset).
+671           (d) We recognize that reproducibility may be tricky in some cases, in which case au-
+672                thors are welcome to describe the particular way they provide for reproducibility.
+673                In the case of closed-source models, it may be that access to the model is limited in
+674                some way (e.g., to registered users), but it should be possible for other researchers
+675                to have some path to reproducing or verifying the results.
+676   5. Open access to data and code
+677      Question: Does the paper provide open access to the data and code, with sufﬁcient instruc-
+678      tions to faithfully reproduce the main experimental results, as described in supplemental
+679      material?
+680      Answer: [Yes].
+681      Justiﬁcation: The experiments use open model checkpoints and public datasets where ap-
+682      plicable. The anonymous supplement contains reproduction scripts, selected row-level and
+683      aggregate artifacts, prompt splits, and a README with fast veriﬁcation commands and
+684      model-level reproduction requirements. Written appendices and the checklist are included
+685      in the main PDF rather than in the supplement.
+686      Guidelines:
+687         • The answer [N/A] means that paper does not include experiments requiring code.
+688         • Please see the NeurIPS code and data submission guidelines (https://neurips.cc
+689            /public/guides/CodeSubmissionPolicy) for more details.
+690         • While we encourage the release of code and data, we understand that this might not
+691            be possible, so [No] is an acceptable answer. Papers cannot be rejected simply for not
+692            including code, unless this is central to the contribution (e.g., for a new open-source
+693            benchmark).
+
+                                                  21
+694         • The instructions should contain the exact command and environment needed to run to
+695            reproduce the results. See the NeurIPS code and data submission guidelines (https:
+696            //neurips.cc/public/guides/CodeSubmissionPolicy) for more details.
+697         • The authors should provide instructions on data access and preparation, including how
+698            to access the raw data, preprocessed data, intermediate data, and generated data, etc.
+699         • The authors should provide scripts to reproduce all experimental results for the new
+700            proposed method and baselines. If only a subset of experiments are reproducible, they
+701            should state which ones are omitted from the script and why.
+702         • At submission time, to preserve anonymity, the authors should release anonymized
+703            versions (if applicable).
+704         • Providing as much information as possible in supplemental material (appended to the
+705            paper) is recommended, but including URLs to data and code is permitted.
+706   6. Experimental setting/details
+707      Question: Does the paper specify all the training and test details (e.g., data splits, hyperpa-
+708      rameters, how they were chosen, type of optimizer) necessary to understand the results?
+709      Answer: [Yes].
+710      Justiﬁcation: The paper states the 3-fold 40/20 prompt cross-validation, ﬁxed-vector
+711      train/eval splits, generated-preﬁx diagnostic setting, tail width 2, key layer boundaries,
+712      prompt counts, and generation caps. The supplement includes the corresponding experi-
+713      ment scripts, prompt splits, aggregate and row-level artifacts, and sanitized run metadata.
+714      Guidelines:
+715         • The answer [N/A] means that the paper does not include experiments.
+716         • The experimental setting should be presented in the core of the paper to a level of
+717            detail that is necessary to appreciate the results and make sense of them.
+718         • The full details can be provided either with the code, in appendix, or as supplemental
+719            material.
+720   7. Experiment statistical signiﬁcance
+721      Question: Does the paper report error bars suitably and correctly deﬁned or other appropri-
+722      ate information about the statistical signiﬁcance of the experiments?
+723      Answer: [Yes].
+724      Justiﬁcation: The main low-rank and ﬁxed-vector tables report prompt-bootstrap conﬁ-
+725      dence intervals where space permits, the setup deﬁnes the bootstrap procedure, and the
+726      text reports ﬁnite-suite caveats for exact 60/60 or 0/60 rates. Null opposite-sign, random,
+727      wrong-position, and non-tail controls are reported alongside the learned interventions.
+728      Guidelines:
+729         • The answer [N/A] means that the paper does not include experiments.
+730         • The authors should answer [Yes] if the results are accompanied by error bars, conﬁ-
+731            dence intervals, or statistical signiﬁcance tests, at least for the experiments that support
+732            the main claims of the paper.
+733         • The factors of variability that the error bars are capturing should be clearly stated (for
+734            example, train/test split, initialization, random drawing of some parameter, or overall
+735            run with given experimental conditions).
+736         • The method for calculating the error bars should be explained (closed form formula,
+737            call to a library function, bootstrap, etc.)
+738         • The assumptions made should be given (e.g., Normally distributed errors).
+739         • It should be clear whether the error bar is the standard deviation or the standard error
+740            of the mean.
+741         • It is OK to report 1-sigma error bars, but one should state it. The authors should prefer-
+742            ably report a 2-sigma error bar than state that they have a 96% CI, if the hypothesis of
+743            Normality of errors is not veriﬁed.
+744         • For asymmetric distributions, the authors should be careful not to show in tables or ﬁg-
+745            ures symmetric error bars that would yield results that are out of range (e.g., negative
+746            error rates).
+
+                                                   22
+747         • If error bars are reported in tables or plots, the authors should explain in the text how
+748           they were calculated and reference the corresponding ﬁgures or tables in the text.
+749    8. Experiments compute resources
+750      Question: For each experiment, does the paper provide sufﬁcient information on the com-
+751      puter resources (type of compute workers, memory, time of execution) needed to reproduce
+752      the experiments?
+753      Answer: [Yes].
+754      Justiﬁcation: The appendix states that the reported runs used MLX/MLX-LM on an Ap-
+755      ple M4 Mac Mini class machine with 16GB uniﬁed memory. The included run metadata
+756      records start timestamps, platform, model identiﬁer, prompt counts, patch grids or genera-
+757      tion caps where applicable, and the paper notes the memory-driven BF16 and generation-
+758      cap constraints.
+759      Guidelines:
+760         • The answer [N/A] means that the paper does not include experiments.
+761         • The paper should indicate the type of compute workers CPU or GPU, internal cluster,
+762           or cloud provider, including relevant memory and storage.
+763         • The paper should provide the amount of compute required for each of the individual
+764           experimental runs as well as estimate the total compute.
+765         • The paper should disclose whether the full research project required more compute
+766           than the experiments reported in the paper (e.g., preliminary or failed experiments
+767           that didn’t make it into the paper).
+768    9. Code of ethics
+769      Question: Does the research conducted in the paper conform, in every respect, with the
+770      NeurIPS Code of Ethics https://neurips.cc/public/EthicsGuidelines?
+771      Answer: [Yes].
+772      Justiﬁcation: The work studies open model internals and public benchmarks, does not
+773      involve human subjects, and does not train or release a new high-risk model.
+774      Guidelines:
+775         • The answer [N/A] means that the authors have not reviewed the NeurIPS Code of
+776           Ethics.
+777         • If the authors answer [No], they should explain the special circumstances that require
+778           a deviation from the Code of Ethics.
+779         • The authors should make sure to preserve anonymity (e.g., if there is a special consid-
+780           eration due to laws or regulations in their jurisdiction).
+781   10. Broader impacts
+782      Question: Does the paper discuss both potential positive societal impacts and negative
+783      societal impacts of the work performed?
+784      Answer: [Yes].
+785      Justiﬁcation: The Broader Impacts section discusses the positive auditability beneﬁt and
+786      the dual-use risk that better understanding of public thinking switches could improve both
+787      oversight and manipulation of thinking-style behavior.
+788      Guidelines:
+789         • The answer [N/A] means that there is no societal impact of the work performed.
+790         • If the authors answer [N/A] or [No], they should explain why their work has no soci-
+791           etal impact or why the paper does not address societal impact.
+792         • Examples of negative societal impacts include potential malicious or unintended uses
+793           (e.g., disinformation, generating fake proﬁles, surveillance), fairness considerations
+794           (e.g., deployment of technologies that could make decisions that unfairly impact spe-
+795           ciﬁc groups), privacy considerations, and security considerations.
+
+                                                 23
+796          • The conference expects that many papers will be foundational research and not tied
+797            to particular applications, let alone deployments. However, if there is a direct path to
+798            any negative applications, the authors should point it out. For example, it is legitimate
+799            to point out that an improvement in the quality of generative models could be used to
+800            generate Deepfakes for disinformation. On the other hand, it is not needed to point out
+801            that a generic algorithm for optimizing neural networks could enable people to train
+802            models that generate Deepfakes faster.
+803          • The authors should consider possible harms that could arise when the technology is
+804            being used as intended and functioning correctly, harms that could arise when the
+805            technology is being used as intended but gives incorrect results, and harms following
+806            from (intentional or unintentional) misuse of the technology.
+807          • If there are negative societal impacts, the authors could also discuss possible mitiga-
+808            tion strategies (e.g., gated release of models, providing defenses in addition to attacks,
+809            mechanisms for monitoring misuse, mechanisms to monitor how a system learns from
+810            feedback over time, improving the efﬁciency and accessibility of ML).
+811   11. Safeguards
+812       Question: Does the paper describe safeguards that have been put in place for responsible
+813       release of data or models that have a high risk for misuse (e.g., pre-trained language models,
+814       image generators, or scraped datasets)?
+815       Answer: [N/A].
+816       Justiﬁcation: The paper does not release a new pretrained model, scraped dataset, or gener-
+817       ative system. It releases analysis scripts and small artifacts derived from open checkpoints.
+818       Guidelines:
+819          • The answer [N/A] means that the paper poses no such risks.
+820          • Released models that have a high risk for misuse or dual-use should be released with
+821            necessary safeguards to allow for controlled use of the model, for example by re-
+822            quiring that users adhere to usage guidelines or restrictions to access the model or
+823            implementing safety ﬁlters.
+824          • Datasets that have been scraped from the Internet could pose safety risks. The authors
+825            should describe how they avoided releasing unsafe images.
+826          • We recognize that providing effective safeguards is challenging, and many papers do
+827            not require this, but we encourage authors to take this into account and make a best
+828            faith effort.
+829   12. Licenses for existing assets
+830       Question: Are the creators or original owners of assets (e.g., code, data, models), used in
+831       the paper, properly credited and are the license and terms of use explicitly mentioned and
+832       properly respected?
+833       Answer: [Yes].
+834       Justiﬁcation: The appendix lists the model checkpoints and public branch-audit datasets
+835       used, with license notes for Qwen, OLMo, Gemma, LiquidAI, Phi, Nemotron, and math-ai
+836       AIME 2025/2026 where available from the source cards. Public generation diagnostics are
+837       documented as behavior artifacts for the same intervention family.
+838       Guidelines:
+839          • The answer [N/A] means that the paper does not use existing assets.
+840          • The authors should cite the original paper that produced the code package or dataset.
+841          • The authors should state which version of the asset is used and, if possible, include a
+842            URL.
+843          • The name of the license (e.g., CC-BY 4.0) should be included for each asset.
+844          • For scraped data from a particular source (e.g., website), the copyright and terms of
+845            service of that source should be provided.
+846          • If assets are released, the license, copyright information, and terms of use in the pack-
+847            age should be provided. For popular datasets, paperswithcode.com/datasets
+848            has curated licenses for some datasets. Their licensing guide can help determine the
+849            license of a dataset.
+
+                                                   24
+850         • For existing datasets that are re-packaged, both the original license and the license of
+851           the derived asset (if it has changed) should be provided.
+852         • If this information is not available online, the authors are encouraged to reach out to
+853           the asset’s creators.
+854   13. New assets
+855      Question: Are new assets introduced in the paper well documented and is the documenta-
+856      tion provided alongside the assets?
+857      Answer: [Yes].
+858      Justiﬁcation: The new assets are experiment scripts and derived activation-analysis artifacts.
+859      They are organized by run directory with summaries, sanitized metadata, aggregate ﬁles,
+860      row-level ﬁles, prompt splits, and selected reasoning-mode adapter metadata.
+861      Guidelines:
+862         • The answer [N/A] means that the paper does not release new assets.
+863         • Researchers should communicate the details of the dataset/code/model as part of their
+864           submissions via structured templates. This includes details about training, license,
+865           limitations, etc.
+866         • The paper should discuss whether and how consent was obtained from people whose
+867           asset is used.
+868         • At submission time, remember to anonymize your assets (if applicable). You can
+869           either create an anonymized URL or include an anonymized zip ﬁle.
+870   14. Crowdsourcing and research with human subjects
+871      Question: For crowdsourcing experiments and research with human subjects, does the pa-
+872      per include the full text of instructions given to participants and screenshots, if applicable,
+873      as well as details about compensation (if any)?
+874      Answer: [N/A].
+875      Justiﬁcation: The paper does not involve crowdsourcing or human-subject experiments.
+876      Guidelines:
+877         • The answer [N/A] means that the paper does not involve crowdsourcing nor research
+878           with human subjects.
+879         • Including this information in the supplemental material is ﬁne, but if the main contri-
+880           bution of the paper involves human subjects, then as much detail as possible should
+881           be included in the main paper.
+882         • According to the NeurIPS Code of Ethics, workers involved in data collection, cura-
+883           tion, or other labor should be paid at least the minimum wage in the country of the
+884           data collector.
+885   15. Institutional review board (IRB) approvals or equivalent for research with human
+886       subjects
+887      Question: Does the paper describe potential risks incurred by study participants, whether
+888      such risks were disclosed to the subjects, and whether Institutional Review Board (IRB)
+889      approvals (or an equivalent approval/review based on the requirements of your country or
+890      institution) were obtained?
+891      Answer: [N/A].
+892      Justiﬁcation: The paper does not involve human-subject research and therefore does not
+893      require IRB approval.
+894      Guidelines:
+895         • The answer [N/A] means that the paper does not involve crowdsourcing nor research
+896           with human subjects.
+897         • Depending on the country in which research is conducted, IRB approval (or equiva-
+898           lent) may be required for any human subjects research. If you obtained IRB approval,
+899           you should clearly state this in the paper.
+
+                                                  25
+900          • We recognize that the procedures for this may vary signiﬁcantly between institutions
+901            and locations, and we expect authors to adhere to the NeurIPS Code of Ethics and the
+902            guidelines for their institution.
+903          • For initial submissions, do not include any information that would break anonymity
+904            (if applicable), such as the institution conducting the review.
+905   16. Declaration of LLM usage
+906       Question: Does the paper describe the usage of LLMs if it is an important, original, or
+907       non-standard component of the core methods in this research? Note that if the LLM is used
+908       only for writing, editing, or formatting purposes and does not impact the core methodology,
+909       scientiﬁc rigor, or originality of the research, declaration is not required.
+910       Answer: [N/A].
+911       Justiﬁcation: LLMs were not important, original, or non-standard components of the core
+912       method development in this research.
+913       Guidelines:
+914          • The answer [N/A] means that the core method development in this research does not
+915            involve LLMs as any important, original, or non-standard components.
+916          • Please refer to our LLM policy in the NeurIPS handbook for what should or should
+917            not be described.
+
+
+
+
+                                                 26
+

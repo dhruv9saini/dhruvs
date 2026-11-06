@@ -1,0 +1,85 @@
+DHRUV SAINI
+ dhruvs.pages.dev      dhruv9saini@gmail.com
+
+
+EXPERIENCE
+
+Arx Labs
+• Built PCB design automation workflows for placement and routing
+• Validated native KiCad ERC/DRC/CAM outputs for PCB design artifacts and training data
+
+
+A Sustainable Future
+CEO |  Oct 2023 ‐ Present
+• Built and scaled the PCM, an AI‐powered mobile app predicting paper use, to 30,000 students nationwide in over 150 schools
+• Trained a symbolic regression model with PySR to predict paper consumption based on school demographics
+• Leading a team of 20 to develop a nonprofit website and iterating on AI model, now helping save 1.7M sheets of paper per year
+• Received $30k in grants supporting sustainability impact
+
+
+Dimension
+Software Engineer Intern |  Jun 2025 ‐ Sept 2025
+• Implemented webhooks to allow external companies to integrate with the enterprise collaboration platform
+• Led the process to allow Stripe, Vercel, Github, and many other hosted bots in channels
+• Revamped and modernized the UI, completing several refactors that culminated in a 70% reduction of load time
+
+
+University of Washington
+Quantum Technical Writing Intern |  Aug 2024 – Sept 2024
+• Worked with Prof. Anantram to develop an editing workflow for his book Quantum Mechanics for Scientists and Engineers
+• Used Python and React to automatically compare textbook versions and allow students to easily select the best version of any paragraph
+• Accelerated editing time by 15x
+
+PROJECTS
+
+CAD‐bench: Benchmarking Language Models on Functional CAD Generation
+• Built a benchmark for CAD generation that evaluates whether parts satisfy functional requirements, not just renderability or visual similarity
+• Executed rigid‐body simulations for complex mechanisms such as gearboxes to verify that generated CAD parts function as intended
+• Accepted to the ICML AIWILD and FAGEN workshops; currently under review at NeurIPS, with code available here and paper available here
+
+
+EDA Bench: An Execution‐Based Benchmark for Language Model Agents on Functional PCB Construction
+• Built a benchmark for PCB generation that evaluates electrical behavior, not just whether generated boards build successfully
+• Integrated KiCad, routed‐connectivity extraction, ERC/DRC checks, ngspice simulation, and external I/O specifications to verify circuit functionality
+• Accepted to the ICML FAGEN workshop; currently under review at NeurIPS, with code available here and paper available here
+
+
+ThinkSwitch: Iterative LoRA training and Weight Interpolation for Low‐Compute Improvement on Specific‐Purpose Reasoning Tasks
+• Applied weight interpolation and LoRA to iterative distillation and amplification to greatly improve Qwen3‐4B AIME score with only $3 in compute
+• Awarded 1st place at the Washington State Science and Engineering Fair, preprint available here
+
+
+Muon Browser | Typescript, Electron
+• Created a web browser that allows the user to open and browse pages and notes on an infinite canvas
+• Available to download and use here
+
+
+Residual Controllers: Steering Thinking Modes in Open Language Models
+• Built fixed residual‐stream controllers that steer open language models between thinking and direct‐answer response modes
+• On AIME 2026, a one‐step controller entered thinking mode on all 30 problems and scored 16/30, versus 1/30 with thinking off and 2/30 with random control; paper here
+
+AWARDS AND HONORS
+
+National Science Bowl
+Team Captain |  2021‐Present
+• Founded Bellevue High School’s first science bowl team, winning 1st place at the nationwide virtual competition
+• Won a fully‐funded trip to Washington D.C. for the National Finals
+
+
+USAAIO
+Competition |  2024‐Present
+• National Finalist, Bronze Medal
+• Competition covered AI theory and programming in machine learning, deep learning, transformers, natural language processing, computer vision, and generative AI
+
+
+ARC ‐ The American Rocketry Challenge
+Team Captain |  2025
+• Captained a team of five to build a model rocket following specific criteria, qualified for National Finals twice
+
+
+EDUCATION
+
+Bellevue High School
+• 36 ACT, 100+ hours of community service, DECA ICDC finalist
+• President of Programming Club, coach at Tyee MS and Odle MS programming clubs
+

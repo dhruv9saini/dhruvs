@@ -1,0 +1,15 @@
+--- /home/d/JUNK/resume-five-minute-20260916/dhruv_resume.base.tex	2026-08-27 13:00:16.758234540 -0700
++++ /home/d/JUNK/resume-five-minute-20260916/dhruv_resume_residual_controllers.tex	2026-09-16 13:18:02.891817412 -0700
+@@ -73,12 +73,6 @@
+ \end{itemize}
+ \divider
+ 
+-\cvevent{\textcolor{black}{\textbf{West Virginia University: SG-REAL Lab}}}{\textnormal{GIS/Software Research Intern |}}{Jul 2025 - Present}{}
+-\begin{itemize}
+-\item Created a 3D modeling and flood segmentation pipeline on any power grid to determine which nodes need most investment
+-\end{itemize}
+-\divider
+-
+ \cvevent{\textcolor{black}{\textbf{Dimension}}}{\textnormal{Software Engineer Intern |}}{Jun 2025 - Sept 2025}{}
+ \begin{itemize}
+ \item Implemented webhooks to allow external companies to integrate with the enterprise collaboration platform

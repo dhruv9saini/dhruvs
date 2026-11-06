@@ -1,0 +1,53 @@
+{
+  "removed": [
+    {
+      "name": "index.before.html",
+      "sha256": "daf8a8913b0492b668ef0a47a922577c53e576d2c0f88ae11540941cbf5836d3",
+      "allocated_bytes": 20480
+    },
+    {
+      "name": "index.after.html",
+      "sha256": "587adbe5d4e520f5397948508b481fab2e0abee6943d707c8f2971613de8015e",
+      "allocated_bytes": 16384
+    },
+    {
+      "name": "removed-publications.html",
+      "sha256": "38b3b018c9751648db821d410c7a53574e08721c6d03ccaa72245f56df9d5f2e",
+      "allocated_bytes": 4096
+    },
+    {
+      "name": "icml.after.html",
+      "sha256": "7546ca8eb701e0128c800078829d696c3dc3be08ffb3e3d16992c7d581146ca5",
+      "allocated_bytes": 8192
+    },
+    {
+      "name": "icml.after-r2.html",
+      "sha256": "d17efc5b6f0b1ca2f8528d1e6a86a11a0a44d24cd9106a8a288d42c301526b68",
+      "allocated_bytes": 8192
+    },
+    {
+      "name": "live-home.html",
+      "sha256": "587adbe5d4e520f5397948508b481fab2e0abee6943d707c8f2971613de8015e",
+      "allocated_bytes": 16384
+    },
+    {
+      "name": "live-icml.html",
+      "sha256": "7546ca8eb701e0128c800078829d696c3dc3be08ffb3e3d16992c7d581146ca5",
+      "allocated_bytes": 8192
+    },
+    {
+      "name": "live-icml-r2.html",
+      "sha256": "d17efc5b6f0b1ca2f8528d1e6a86a11a0a44d24cd9106a8a288d42c301526b68",
+      "allocated_bytes": 8192
+    }
+  ],
+  "retained_evidence": [
+    "source-binding.json",
+    "icml-binding.json",
+    "correction-binding.json",
+    "published-verification.json",
+    "cleanup-receipt.json"
+  ],
+  "committed_source_retained": true,
+  "transcripts_removed": 0
+}

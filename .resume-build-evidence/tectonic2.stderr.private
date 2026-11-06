@@ -1,0 +1,76 @@
+warning: lato.sty:120: 
+Requested font "[Lato-Regular.ttf]/OT" at 7.99997pt
+warning: lato.sty:120: Requested font "[Lato-Regular.ttf]/OT" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Hairline.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-HairlineItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Thin.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-ThinItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Light.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-LightItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Medium.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-MediumItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Semibold.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-SemiboldItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Bold.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-BoldItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Heavy.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-HeavyItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Black.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-BlackItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Italic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:156: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 7.19995pt
+warning: hyperref.sty:4873: Requested font "pzdr" at 0.00002pt
+warning: hyperref.sty:4873:  -> pzdr
+warning: dhruv_resume_residual_controllers.tex:60: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 15.55188pt
+warning: dhruv_resume_residual_controllers.tex:60: Requested font "[Lato-Bold.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 15.55188pt
+warning: dhruv_resume_residual_controllers.tex:60: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 6.29996pt
+warning: dhruv_resume_residual_controllers.tex:60: Requested font "[Lato-Bold.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 6.29996pt
+warning: dhruv_resume_residual_controllers.tex:60: Requested font "[FontAwesome.otf]/OT:language=dflt;" at 7.0pt
+warning: dhruv_resume_residual_controllers.tex:64: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 8.99994pt
+warning: dhruv_resume_residual_controllers.tex:64: Requested font "[Lato-Bold.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 8.99994pt
+warning: dhruv_resume_residual_controllers.tex:67: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 8.09995pt
+warning: dhruv_resume_residual_controllers.tex:67: Requested font "[Lato-Bold.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 8.09995pt
+warning: dhruv_resume_residual_controllers.tex:67: Requested font "[FontAwesome.otf]/OT:language=dflt;" at 8.0pt
+warning: dhruv_resume_residual_controllers.tex:69: Requested font "[Lato-Bold.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 7.19995pt
+warning: dhruv_resume_residual_controllers.tex:86: Requested font "[Lato-Italic.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 7.19995pt
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 5.39996pt
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 4.49997pt
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "cmmi8" at 8.0pt
+warning: dhruv_resume_residual_controllers.tex:114:  -> cmmi8
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "cmmi6" at 6.0pt
+warning: dhruv_resume_residual_controllers.tex:114:  -> cmmi6
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "cmsy8" at 8.0pt
+warning: dhruv_resume_residual_controllers.tex:114:  -> cmsy8
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "cmsy6" at 6.0pt
+warning: dhruv_resume_residual_controllers.tex:114:  -> cmsy6
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "cmex8" at 8.0pt
+warning: dhruv_resume_residual_controllers.tex:114:  -> cmex8
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "cmex7" scaled 1000
+warning: dhruv_resume_residual_controllers.tex:114:  -> cmex7
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "cmr8" at 8.0pt
+warning: dhruv_resume_residual_controllers.tex:114:  -> cmr8
+warning: dhruv_resume_residual_controllers.tex:114: Requested font "cmr6" at 6.0pt
+warning: dhruv_resume_residual_controllers.tex:114:  -> cmr6
+warning: dhruv_resume_residual_controllers.tex:118: Requested font "[Lato-Italic.ttf]/OT:script=latn;language=dflt;+liga;+tnum;+lnum;mapping=tex-text;" at 8.09995pt
+warning: lato.sty:120: 
+Requested font "[Lato-Regular.ttf]/OT" at 7.99997pt
+warning: lato.sty:120: Requested font "[Lato-Regular.ttf]/OT" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Hairline.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-HairlineItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Thin.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-ThinItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Light.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-LightItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Medium.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-MediumItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Semibold.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-SemiboldItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Bold.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-BoldItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Heavy.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-HeavyItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Black.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-BlackItalic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Regular.ttf]/OT:script=latn;language=dflt;" at 8.00003pt
+warning: lato.sty:120: Requested font "[Lato-Italic.ttf]/OT:script=latn;language=dflt;" at 8.00003pt

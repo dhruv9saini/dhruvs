@@ -1,0 +1,17 @@
+note: Running TeX ...
+note: Running external tool biber ...
+note: Rerunning TeX because biber was run ...
+note: Rerunning TeX because "dhruv_resume_residual_controllers.run.xml" changed ...
+note: Running xdvipdfmx ...
+note: downloading pdftex.map
+note: downloading kanjix.map
+note: downloading ckx.map
+note: downloading texglyphlist.txt
+note: downloading pdfglyphlist.txt
+note: downloading glyphlist.txt
+note: Writing `/home/d/JUNK/resume-five-minute-20260916/dhruv_resume_residual_controllers.pdf` (53.7431640625 KiB)
+note: Writing `/home/d/JUNK/resume-five-minute-20260916/dhruv_resume_residual_controllers.aux` (762 B)
+note: Writing `/home/d/JUNK/resume-five-minute-20260916/dhruv_resume_residual_controllers.run.xml` (2.41015625 KiB)
+note: Not writing `dhruv_resume_residual_controllers.out`: it would be empty.
+note: Writing `/home/d/JUNK/resume-five-minute-20260916/dhruv_resume_residual_controllers.bcf` (104.037109375 KiB)
+note: Not writing `dhruv_resume_residual_controllers.bbl`: it would be empty.

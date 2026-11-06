@@ -1,0 +1,53 @@
+{
+  "commit": "bd7f7902082c88c293166fd9b5f6e8c0317134bf",
+  "pages": [
+    {
+      "path": "index.html",
+      "live_matches_commit": true,
+      "bytes": 15599,
+      "sha256": "587adbe5d4e520f5397948508b481fab2e0abee6943d707c8f2971613de8015e",
+      "headings": [
+        "Dhruv Saini",
+        ".",
+        "Publications",
+        "CAD Bench",
+        "(Accepted to",
+        "ICML 2026 Workshop AIWILD",
+        ")",
+        "EDA Bench",
+        "(Accepted to",
+        "ICML 2026 Workshop FAGEN",
+        ")",
+        "Experience",
+        "A Sustainable Future",
+        "University of West Virginia: SG-REAL Lab",
+        "Dimension",
+        "University of Washington",
+        "Awards and Honors",
+        "National Science Bowl",
+        "USAAIO",
+        "ARC - The American Rocketry Challenge",
+        "Projects",
+        "Muon",
+        "PromptMaxx",
+        "Chat with Google Docs",
+        "MuseFalcon",
+        "Raspberry Pi Smart Glasses"
+      ]
+    },
+    {
+      "path": "icml2026/index.html",
+      "live_matches_commit": true,
+      "bytes": 5565,
+      "sha256": "d17efc5b6f0b1ca2f8528d1e6a86a11a0a44d24cd9106a8a288d42c301526b68",
+      "headings": [
+        "Dhruv Saini",
+        ".",
+        "Contact",
+        "Work",
+        "CAD-bench",
+        "EDA-bench"
+      ]
+    }
+  ]
+}
